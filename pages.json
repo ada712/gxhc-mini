@@ -1,95 +1,317 @@
 {
-	"easycom": {
-		"autoscan": true,
-		"custom": {
-			"^x-(.*)": "@/components/x-$1/x-$1.vue",
-			"^uni-(.*)": "@dcloudio/uni-ui/lib/uni-$1/uni-$1.vue"
-		}
-	},
-	"pages": [{
-			"path": "pages/home/index/index",
-			"style": {
-				"navigationBarTitleText": "国信合创理事会"
-			}
-		},
-		{
-			"path": "pages/domain/index/index",
-			"style": {
-				"navigationBarTitleText": "功能"
-			}
-		},
-		{
-			"path": "pages/mine/index/index",
-			"style": {
-				"navigationStyle": "custom"
-			}
-		},
-		{
-			"path": "pages/web/index",
-			"style": {
-				"navigationBarTitleText": "国信合创理事会"
-			}
-		}
-	],
-	"subPackages": [{
-			"root": "explainPages",
-			"name": "explain",
-			"pages": [
-
-			]
-		},
-		{
-			"root": "campusPages",
-			"name": "campus",
-			"pages": [
-
-			]
-		},
-		{
-			"root": "managePages",
-			"name": "manage",
-			"pages": [
-
-			]
-		},
-		{
-			"root": "projectPages",
-			"name": "project",
-			"pages": [
-
-			]
-		}
-	],
-	"tabBar": { // 底部菜单
-		"color": "#D8D8D8",
-		"selectedColor": "#218DFF",
-		"backgroundColor": "#ffffff",
-		"list": [{
-				"pagePath": "pages/home/index/index",
-				"iconPath": "static/images/tabbar/icon_home_default.png",
-				"selectedIconPath": "static/images/tabbar/icon_home_active.png",
-				"text": "首页"
-			},
-			{
-				"pagePath": "pages/domain/index/index",
-				"iconPath": "static/images/tabbar/icon_gn_default.png",
-				"selectedIconPath": "static/images/tabbar/icon_gn_active.png",
-				"text": "功能"
-			},
-			{
-				"pagePath": "pages/mine/index/index",
-				"iconPath": "static/images/tabbar/icon_mine_default.png",
-				"selectedIconPath": "static/images/tabbar/icon_mine_acitve.png",
-				"text": "我的"
-			}
-		]
-	},
-	"globalStyle": {
-		"backgroundColor": "#F6F6F6",
-		"backgroundTextStyle": "light",
-		"navigationBarTitleText": "国信合创理事会",
-		"navigationBarTextStyle": "black",
-		"navigationBarBackgroundColor": "#ffffff"
-	},
-	"uniIdRouter": {}
+  "easycom": {
+    "autoscan": true,
+    "custom": {
+      "^x-(.*)": "@/components/x-$1/x-$1.vue",
+      "^uni-(.*)": "@dcloudio/uni-ui/lib/uni-$1/uni-$1.vue"
+    }
+  },
+  "pages": [
+    {
+      "path": "pages/home/index/index",
+      "style": {
+        "navigationBarTitleText": "国信合创理事会"
+      }
+    },
+    {
+      "path": "pages/domain/index/index",
+      "style": {
+        "navigationBarTitleText": "功能"
+      }
+    },
+    {
+      "path": "pages/mine/index/index",
+      "style": {
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/web/index",
+      "style": {
+        "navigationBarTitleText": "国信合创理事会"
+      }
+    }
+  ],
+  "subPackages": [
+    {
+      "root": "explainPages",
+      "name": "explain",
+      "pages": [
+        {
+          "path": "project/apply/index",
+          "style": {
+            "navigationBarTitleText": ""
+          }
+        },
+        {
+          "path": "protocol/index",
+          "style": {
+            "navigationBarTitleText": ""
+          }
+        },
+        {
+          "path": "protocol/serve/index",
+          "style": {
+            "navigationBarTitleText": ""
+          }
+        },
+        {
+          "path": "protocol/privacy/index",
+          "style": {
+            "navigationBarTitleText": ""
+          }
+        },
+        {
+          "path": "campus/intro/index",
+          "style": {
+            "navigationBarTitleText": ""
+          }
+        },
+        {
+          "path": "points/ruleState/index",
+          "style": {
+            "navigationBarTitleText": ""
+          }
+        },
+        {
+          "path": "points/obtain/index",
+          "style": {
+            "navigationBarTitleText": ""
+          }
+        },
+        {
+          "path": "news/mohe/index",
+          "style": {
+            "navigationBarTitleText": ""
+          }
+        },
+        {
+          "path": "news/opencsg/index",
+          "style": {
+            "navigationBarTitleText": ""
+          }
+        }
+      ]
+    },
+    {
+      "root": "campusPages",
+      "name": "campus",
+      "pages": [
+        {
+          "path": "parter/apply/index",
+          "style": {
+            "navigationBarTitleText": ""
+          }
+        },
+        {
+          "path": "parter/list/index",
+          "style": {
+            "navigationBarTitleText": ""
+          }
+        },
+        {
+          "path": "activity/apply/index",
+          "style": {
+            "navigationBarTitleText": ""
+          }
+        },
+        {
+          "path": "activity/list/index",
+          "style": {
+            "navigationBarTitleText": ""
+          }
+        },
+        {
+          "path": "activity/detail/index",
+          "style": {
+            "navigationBarTitleText": ""
+          }
+        },
+        {
+          "path": "activity/launch/index",
+          "style": {
+            "navigationBarTitleText": ""
+          }
+        },
+        {
+          "path": "experience/rankingList/index",
+          "style": {
+            "navigationBarTitleText": ""
+          }
+        },
+        {
+          "path": "experience/apply/index",
+          "style": {
+            "navigationBarTitleText": ""
+          }
+        },
+        {
+          "path": "experience/detail/index",
+          "style": {
+            "navigationBarTitleText": ""
+          }
+        }
+      ]
+    },
+    {
+      "root": "managePages",
+      "name": "manage",
+      "pages": [
+        {
+          "path": "index/index",
+          "style": {
+            "navigationBarTitleText": ""
+          }
+        },
+        {
+          "path": "director/addDirector/index",
+          "style": {
+            "navigationBarTitleText": ""
+          }
+        },
+        {
+          "path": "point/enter/index",
+          "style": {
+            "navigationBarTitleText": ""
+          }
+        },
+        {
+          "path": "users/index/index",
+          "style": {
+            "navigationBarTitleText": ""
+          }
+        },
+        {
+          "path": "banner/add/index",
+          "style": {
+            "navigationBarTitleText": ""
+          }
+        },
+        {
+          "path": "banner/delete/index",
+          "style": {
+            "navigationBarTitleText": ""
+          }
+        },
+        {
+          "path": "users/contract/index",
+          "style": {
+            "navigationBarTitleText": ""
+          }
+        }
+      ]
+    },
+    {
+      "root": "projectPages",
+      "name": "project",
+      "pages": [
+        {
+          "path": "memberInfo/index",
+          "style": {
+            "navigationBarTitleText": ""
+          }
+        },
+        {
+          "path": "workExperience/index",
+          "style": {
+            "navigationBarTitleText": ""
+          }
+        },
+        {
+          "path": "eduExperience/index",
+          "style": {
+            "navigationBarTitleText": ""
+          }
+        },
+        {
+          "path": "practiceExperience/index",
+          "style": {
+            "navigationBarTitleText": ""
+          }
+        },
+        {
+          "path": "hatchList/index",
+          "style": {
+            "navigationBarTitleText": ""
+          }
+        },
+        {
+          "path": "directorJoined/index",
+          "style": {
+            "navigationBarTitleText": ""
+          }
+        },
+        {
+          "path": "directorTBC/index",
+          "style": {
+            "navigationBarTitleText": ""
+          }
+        },
+        {
+          "path": "directorFeedback/index",
+          "style": {
+            "navigationBarTitleText": ""
+          }
+        },
+        {
+          "path": "list/index",
+          "style": {
+            "navigationBarTitleText": ""
+          }
+        },
+        {
+          "path": "updateBP/index",
+          "style": {
+            "navigationBarTitleText": ""
+          }
+        },
+        {
+          "path": "updateIndex/index",
+          "style": {
+            "navigationBarTitleText": ""
+          }
+        },
+        {
+          "path": "updateFinance/index",
+          "style": {
+            "navigationBarTitleText": ""
+          }
+        }
+      ]
+    }
+  ],
+  "tabBar": {
+    // 底部菜单
+    "color": "#D8D8D8",
+    "selectedColor": "#218DFF",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/home/index/index",
+        "iconPath": "static/images/tabbar/icon_home_default.png",
+        "selectedIconPath": "static/images/tabbar/icon_home_active.png",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/domain/index/index",
+        "iconPath": "static/images/tabbar/icon_gn_default.png",
+        "selectedIconPath": "static/images/tabbar/icon_gn_active.png",
+        "text": "功能"
+      },
+      {
+        "pagePath": "pages/mine/index/index",
+        "iconPath": "static/images/tabbar/icon_mine_default.png",
+        "selectedIconPath": "static/images/tabbar/icon_mine_acitve.png",
+        "text": "我的"
+      }
+    ]
+  },
+  "globalStyle": {
+    "backgroundColor": "#F6F6F6",
+    "backgroundTextStyle": "light",
+    "navigationBarTitleText": "国信合创理事会",
+    "navigationBarTextStyle": "black",
+    "navigationBarBackgroundColor": "#ffffff"
+  },
+  "uniIdRouter": {}
 }
