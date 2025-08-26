@@ -1,9 +1,18 @@
 <template>
-	asdf
+  
 </template>
 
 <script>
+export default {
+  data: function () {
+    return {};
+  },
+  methods: {
+    
+  },
+};
 </script>
 
-<style>
+<style lang="scss" scoped>
+
 </style>
