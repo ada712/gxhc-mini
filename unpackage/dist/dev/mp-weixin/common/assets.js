@@ -1,0 +1,22 @@
+"use strict";
+const logo = "/static/images/logo.png";
+const _imports_0$4 = "/static/images/f.png";
+const _imports_0$3 = "/static/images/orderTime.png";
+const _imports_0$2 = "/pages/users/static/login-bg_1.jpg";
+const _imports_0$1 = "/pages/users/static/phone_1.png";
+const _imports_1$1 = "/pages/users/static/code_1.png";
+const _imports_2 = "/pages/users/static/code_2.png";
+const _imports_0 = "/pages/users/static/left.png";
+const _imports_1 = "/pages/users/static/home.png";
+const def_avatar = "/static/images/def_avatar.png";
+exports._imports_0 = _imports_0$4;
+exports._imports_0$1 = _imports_0$3;
+exports._imports_0$2 = _imports_0$2;
+exports._imports_0$3 = _imports_0$1;
+exports._imports_0$4 = _imports_0;
+exports._imports_1 = _imports_1$1;
+exports._imports_1$1 = _imports_1;
+exports._imports_2 = _imports_2;
+exports.def_avatar = def_avatar;
+exports.logo = logo;
+//# sourceMappingURL=../../.sourcemap/mp-weixin/common/assets.js.map

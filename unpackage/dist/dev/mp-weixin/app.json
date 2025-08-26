@@ -1,0 +1,58 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/user/index",
+    "pages/goods_details/index"
+  ],
+  "subPackages": [
+    {
+      "root": "pages/goods",
+      "pages": [
+        "order_list/index",
+        "order_details/index",
+        "order_apply/index"
+      ],
+      "name": "goods"
+    },
+    {
+      "root": "pages/users",
+      "pages": [
+        "wechat_login/index",
+        "login/index",
+        "user_spread_code/index",
+        "user_info/index",
+        "binding_phone/index",
+        "privacy/index"
+      ],
+      "name": "users"
+    }
+  ],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "加载中",
+    "navigationBarBackgroundColor": "#fff",
+    "backgroundColor": "#F8F8F8",
+    "titleNView": false
+  },
+  "tabBar": {
+    "color": "#282828",
+    "selectedColor": "#ff3366",
+    "borderStyle": "white",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "static/images/1-001.png",
+        "selectedIconPath": "static/images/1-002.png",
+        "text": "游戏"
+      },
+      {
+        "pagePath": "pages/user/index",
+        "iconPath": "static/images/4-001.png",
+        "selectedIconPath": "static/images/4-002.png",
+        "text": "我的"
+      }
+    ]
+  },
+  "usingComponents": {}
+}

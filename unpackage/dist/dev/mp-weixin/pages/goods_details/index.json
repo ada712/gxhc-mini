@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "",
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "x-navbar": "../../components/x-navbar/x-navbar"
+  }
+}

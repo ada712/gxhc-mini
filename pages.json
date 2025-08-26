@@ -1,0 +1,129 @@
+{
+	"easycom": {
+		"autoscan": true,
+		"custom": {
+			"^x-(.*)": "@/components/x-$1/x-$1.vue",
+			"^uni-(.*)": "@dcloudio/uni-ui/lib/uni-$1/uni-$1.vue"
+		}
+	},
+	"pages": [{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/user/index",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationBarTextStyle": "white",
+				"navigationStyle": "custom"
+			}
+		},
+
+		{
+			"path": "pages/goods_details/index",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationStyle": "custom"
+			}
+		}
+	],
+	"subPackages": [{
+			"root": "pages/goods",
+			"name": "goods",
+			"pages": [{
+					"path": "order_list/index",
+					"style": {
+						"navigationBarTitleText": "我的游戏"
+					}
+				},
+				{
+					"path": "order_details/index",
+					"style": {
+						"navigationBarTitleText": "游戏详情"
+					}
+				},
+				{
+					"path": "order_apply/index",
+					"style": {
+						"navigationBarTitleText": "游戏申请"
+					}
+				}
+			]
+		},
+		{
+			"root": "pages/users",
+			"name": "users",
+			"pages": [{
+					"path": "wechat_login/index",
+					"style": {
+						"navigationBarTitleText": "",
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path": "login/index",
+					"style": {
+						"navigationBarTitleText": ""
+					}
+				},
+				{
+					"path": "user_spread_code/index",
+					"style": {
+						"navigationBarTitleText": ""
+					}
+				},
+				{
+					"path": "user_info/index",
+					"backgroundColor": "#f5f5f5",
+					"style": {
+						"navigationBarTitleText": "设置"
+					}
+				},
+				{
+					"path": "binding_phone/index",
+					"backgroundColor": "#f5f5f5",
+					"style": {
+						"navigationBarTitleText": "",
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path": "privacy/index",
+					"style": {
+						"navigationBarTitleText": "隐私协议"
+					}
+				}
+			]
+		}
+	],
+	"tabBar": { // 底部菜单
+		"color": "#282828",
+		"selectedColor": "#ff3366",
+		"borderStyle": "white",
+		"backgroundColor": "#ffffff",
+		"list": [{
+				"pagePath": "pages/index/index",
+				"iconPath": "static/images/1-001.png",
+				"selectedIconPath": "static/images/1-002.png",
+				"text": "游戏"
+			},
+			{
+				"pagePath": "pages/user/index",
+				"iconPath": "static/images/4-001.png",
+				"selectedIconPath": "static/images/4-002.png",
+				"text": "我的"
+			}
+		]
+	},
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "加载中",
+		"navigationBarBackgroundColor": "#fff",
+		"backgroundColor": "#F8F8F8",
+		"titleNView": false
+	},
+	"uniIdRouter": {}
+}
