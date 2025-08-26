@@ -1,0 +1,8 @@
+.idea
+.idea/*
+.vite
+.vite/*
+/unpackage/cache
+/unpackage/resources
+/unpackage/dist
+/unpackage/debug
