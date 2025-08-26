@@ -207,34 +207,34 @@ export default {
   width: 100%;
   box-sizing: border-box;
   padding: 52rpx 40rpx;
-}
-.wripper .normal-row {
-  font-size: 32rpx;
-  line-height: 52rpx;
-  margin-bottom: 20rpx;
-  color: #2f3031;
-}
-.wripper .txtr {
-  text-align: right;
-}
-.wripper .title {
-  font-size: 38rpx;
-  line-height: 52rpx;
-  margin-top: 48rpx;
-  margin-bottom: 32rpx;
-  font-weight: bold;
-}
-.wripper .ft48 {
-  font-size: 38rpx;
-  line-height: 52rpx;
-}
-.wripper .bold {
-  font-weight: bold;
-}
-.wripper .bottom-txt {
-  margin-top: 60rpx;
-  font-size: 32rpx;
-  text-align: right;
-  margin-bottom: 120rpx;
+  .normal-row {
+    font-size: 32rpx;
+    line-height: 52rpx;
+    margin-bottom: 20rpx;
+    color: #2f3031;
+  }
+  .txtr {
+    text-align: right;
+  }
+  .title {
+    font-size: 38rpx;
+    line-height: 52rpx;
+    margin-top: 48rpx;
+    margin-bottom: 32rpx;
+    font-weight: bold;
+  }
+  .ft48 {
+    font-size: 38rpx;
+    line-height: 52rpx;
+  }
+  .bold {
+    font-weight: bold;
+  }
+  .bottom-txt {
+    margin-top: 60rpx;
+    font-size: 32rpx;
+    text-align: right;
+    margin-bottom: 120rpx;
+  }
 }
 </style>

@@ -161,7 +161,7 @@
 					}
 				],
 				userInfo: '',
-				isLogin: false,
+				isLogin: true,
 				showCampusModule: false,
 				isCampusManage: false,
 				isAdmin: false,

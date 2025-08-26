@@ -84,7 +84,6 @@ page {
     width: 100%;
     font-size: 32rpx;
     line-height: 48rpx;
-
     color: #2f3031;
   }
   .h3 {

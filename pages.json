@@ -70,25 +70,25 @@
     {
       "path": "pages/mine/customer/adress/index",
       "style": {
-        "navigationBarTitleText": ""
+        "navigationBarTitleText": "收件地址"
       }
     },
     {
       "path": "pages/mine/customer/realName/index",
       "style": {
-        "navigationBarTitleText": ""
+        "navigationBarTitleText": "实名认证"
       }
     },
     {
       "path": "pages/mine/customer/personInfo/index",
       "style": {
-        "navigationBarTitleText": ""
+        "navigationBarTitleText": "个人信息"
       }
     },
     {
       "path": "pages/mine/customer/index/index",
       "style": {
-        "navigationBarTitleText": ""
+        "navigationBarTitleText": "客户中心"
       }
     },
     {
@@ -100,7 +100,7 @@
     {
       "path": "pages/mine/message/index",
       "style": {
-        "navigationBarTitleText": ""
+        "navigationBarTitleText": "消息中心"
       }
     },
     {
@@ -148,7 +148,7 @@
         {
           "path": "project/apply/index",
           "style": {
-            "navigationBarTitleText": ""
+            "navigationBarTitleText": "项目发起标准和流程"
           }
         },
         {
@@ -172,19 +172,19 @@
         {
           "path": "campus/intro/index",
           "style": {
-            "navigationBarTitleText": ""
+            "navigationBarTitleText": "校园合伙人介绍"
           }
         },
         {
           "path": "points/ruleState/index",
           "style": {
-            "navigationBarTitleText": ""
+            "navigationBarTitleText": "积分管理制度"
           }
         },
         {
           "path": "points/obtain/index",
           "style": {
-            "navigationBarTitleText": ""
+            "navigationBarTitleText": "积分获取方式说明"
           }
         },
         {
