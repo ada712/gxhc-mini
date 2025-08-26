@@ -7,22 +7,20 @@
 		}
 	},
 	"pages": [{
-			"path": "pages/index/index",
+			"path": "pages/home/index/index",
 			"style": {
 				"navigationBarTitleText": "国信合创理事会"
 			}
 		},
 		{
-			"path": "pages/domain/index",
+			"path": "pages/domain/index/index",
 			"style": {
 				"navigationBarTitleText": "功能"
 			}
 		},
 		{
-			"path": "pages/user/index",
+			"path": "pages/mine/index/index",
 			"style": {
-				"navigationBarTitleText": "",
-				"navigationBarTextStyle": "white",
 				"navigationStyle": "custom"
 			}
 		},
@@ -33,50 +31,32 @@
 			}
 		}
 	],
-	"subPackages": [
+	"subPackages": [{
+			"root": "explainPages",
+			"name": "explain",
+			"pages": [
+
+			]
+		},
 		{
-			"root": "pages/users",
-			"name": "users",
-			"pages": [{
-					"path": "wechat_login/index",
-					"style": {
-						"navigationBarTitleText": "",
-						"navigationStyle": "custom"
-					}
-				},
-				{
-					"path": "login/index",
-					"style": {
-						"navigationBarTitleText": ""
-					}
-				},
-				{
-					"path": "user_spread_code/index",
-					"style": {
-						"navigationBarTitleText": ""
-					}
-				},
-				{
-					"path": "user_info/index",
-					"backgroundColor": "#f5f5f5",
-					"style": {
-						"navigationBarTitleText": "设置"
-					}
-				},
-				{
-					"path": "binding_phone/index",
-					"backgroundColor": "#f5f5f5",
-					"style": {
-						"navigationBarTitleText": "",
-						"navigationStyle": "custom"
-					}
-				},
-				{
-					"path": "privacy/index",
-					"style": {
-						"navigationBarTitleText": "隐私协议"
-					}
-				}
+			"root": "campusPages",
+			"name": "campus",
+			"pages": [
+
+			]
+		},
+		{
+			"root": "managePages",
+			"name": "manage",
+			"pages": [
+
+			]
+		},
+		{
+			"root": "projectPages",
+			"name": "project",
+			"pages": [
+
 			]
 		}
 	],
@@ -85,19 +65,19 @@
 		"selectedColor": "#218DFF",
 		"backgroundColor": "#ffffff",
 		"list": [{
-				"pagePath": "pages/index/index",
+				"pagePath": "pages/home/index/index",
 				"iconPath": "static/images/tabbar/icon_home_default.png",
 				"selectedIconPath": "static/images/tabbar/icon_home_active.png",
 				"text": "首页"
 			},
 			{
-				"pagePath": "pages/domain/index",
+				"pagePath": "pages/domain/index/index",
 				"iconPath": "static/images/tabbar/icon_gn_default.png",
 				"selectedIconPath": "static/images/tabbar/icon_gn_active.png",
 				"text": "功能"
 			},
 			{
-				"pagePath": "pages/user/index",
+				"pagePath": "pages/mine/index/index",
 				"iconPath": "static/images/tabbar/icon_mine_default.png",
 				"selectedIconPath": "static/images/tabbar/icon_mine_acitve.png",
 				"text": "我的"
