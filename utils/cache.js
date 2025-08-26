@@ -216,5 +216,16 @@ class Cache {
 	}
 }
 
+/**
+ * 清除项目信息的相关缓存
+ */
+export const clearProjectStorage = () => {
+  uni.removeStorageSync('teamList')
+  uni.removeStorageSync('tempTeamParamData')
+  uni.removeStorageSync('workExpList')
+  uni.removeStorageSync('enterprises')
+  uni.removeStorageSync('colleges')
+}
+
 
 export default new Cache;

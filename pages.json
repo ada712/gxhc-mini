@@ -9,8 +9,13 @@
 	"pages": [{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "",
-				"navigationStyle": "custom"
+				"navigationBarTitleText": "国信合创理事会"
+			}
+		},
+		{
+			"path": "pages/domain/index",
+			"style": {
+				"navigationBarTitleText": "功能"
 			}
 		},
 		{
@@ -21,38 +26,14 @@
 				"navigationStyle": "custom"
 			}
 		},
-
 		{
-			"path": "pages/goods_details/index",
+			"path": "pages/web/index",
 			"style": {
-				"navigationBarTitleText": "",
-				"navigationStyle": "custom"
+				"navigationBarTitleText": "国信合创理事会"
 			}
 		}
 	],
-	"subPackages": [{
-			"root": "pages/goods",
-			"name": "goods",
-			"pages": [{
-					"path": "order_list/index",
-					"style": {
-						"navigationBarTitleText": "我的游戏"
-					}
-				},
-				{
-					"path": "order_details/index",
-					"style": {
-						"navigationBarTitleText": "游戏详情"
-					}
-				},
-				{
-					"path": "order_apply/index",
-					"style": {
-						"navigationBarTitleText": "游戏申请"
-					}
-				}
-			]
-		},
+	"subPackages": [
 		{
 			"root": "pages/users",
 			"name": "users",
@@ -100,30 +81,35 @@
 		}
 	],
 	"tabBar": { // 底部菜单
-		"color": "#282828",
-		"selectedColor": "#ff3366",
-		"borderStyle": "white",
+		"color": "#D8D8D8",
+		"selectedColor": "#218DFF",
 		"backgroundColor": "#ffffff",
 		"list": [{
 				"pagePath": "pages/index/index",
-				"iconPath": "static/images/1-001.png",
-				"selectedIconPath": "static/images/1-002.png",
-				"text": "游戏"
+				"iconPath": "static/images/tabbar/icon_home_default.png",
+				"selectedIconPath": "static/images/tabbar/icon_home_active.png",
+				"text": "首页"
+			},
+			{
+				"pagePath": "pages/domain/index",
+				"iconPath": "static/images/tabbar/icon_gn_default.png",
+				"selectedIconPath": "static/images/tabbar/icon_gn_active.png",
+				"text": "功能"
 			},
 			{
 				"pagePath": "pages/user/index",
-				"iconPath": "static/images/4-001.png",
-				"selectedIconPath": "static/images/4-002.png",
+				"iconPath": "static/images/tabbar/icon_mine_default.png",
+				"selectedIconPath": "static/images/tabbar/icon_mine_acitve.png",
 				"text": "我的"
 			}
 		]
 	},
 	"globalStyle": {
+		"backgroundColor": "#F6F6F6",
+		"backgroundTextStyle": "light",
+		"navigationBarTitleText": "国信合创理事会",
 		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "加载中",
-		"navigationBarBackgroundColor": "#fff",
-		"backgroundColor": "#F8F8F8",
-		"titleNView": false
+		"navigationBarBackgroundColor": "#ffffff"
 	},
 	"uniIdRouter": {}
 }
