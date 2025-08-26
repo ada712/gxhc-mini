@@ -154,19 +154,19 @@
         {
           "path": "protocol/index",
           "style": {
-            "navigationBarTitleText": ""
+            "navigationBarTitleText": "协议说明"
           }
         },
         {
           "path": "protocol/serve/index",
           "style": {
-            "navigationBarTitleText": ""
+            "navigationBarTitleText": "用户服务协议"
           }
         },
         {
           "path": "protocol/privacy/index",
           "style": {
-            "navigationBarTitleText": ""
+            "navigationBarTitleText": "隐私协议"
           }
         },
         {
