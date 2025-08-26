@@ -47,8 +47,7 @@
 </template>
 
 <script>
-const imgUrls =
-  "https://7072-prod-cloud-env-9gqq29j68db5f470-1326719267.tcb.qcloud.la/miniprogram/images";
+import { imgUrls } from "@/config/app";
 export default {
   data: function () {
     return {

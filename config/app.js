@@ -1,3 +1,6 @@
+export const imgUrls =
+  "https://7072-prod-cloud-env-9gqq29j68db5f470-1326719267.tcb.qcloud.la/miniprogram/images";
+
 // 小程序 / APP请求配置
 // #ifdef MP || APP-PLUS
 // 请求域名 格式： https://您的域名
