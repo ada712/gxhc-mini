@@ -12129,21 +12129,24 @@ COMMIT;
 DROP TABLE IF EXISTS `eb_banners`;
 CREATE TABLE `eb_banners` (
   `id` int NOT NULL AUTO_INCREMENT COMMENT '自增ID',
-  `imagePath` varchar(64) NOT NULL DEFAULT '' COMMENT 'bannert图⽚路径',
-  `linkPath` varchar(64) NOT NULL DEFAULT '' COMMENT '链接路径',
+  `imagePath` varchar(255) NOT NULL DEFAULT '' COMMENT 'bannert图⽚路径',
+  `linkPath` varchar(255) NOT NULL DEFAULT '' COMMENT '链接路径',
   `isWeb` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否是微信公众号⽂章（是否外部访问）【true | false】',
   `position` tinyint(1) NOT NULL DEFAULT '0' COMMENT '【位置默认⾸⻚，未来可能是其他位置的图⽚】',
   `add_time` int NOT NULL DEFAULT '0' COMMENT '添加时间',
-  `update_time` int NOT NULL COMMENT '更新时间',
+  `update_time` int NOT NULL DEFAULT '0' COMMENT '更新时间',
   `created_at` int NOT NULL COMMENT '创建人',
   `updated_bt` int NOT NULL COMMENT '更新人',
-  PRIMARY KEY (`id`),
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='banner表';
 
 -- ----------------------------
 -- Records of eb_banners
 -- ----------------------------
+
 BEGIN;
+INSERT INTO `eb_banners` (`imagePath`, `linkPath`, `isWeb`, `position`, `add_time`) VALUES ('/miniprogram/upload/banner/202503200937-indexbanner1742434628572.jpg', '/explainPages/news/mohe/index', 0, 0, 1756276678);
+INSERT INTO `eb_banners` (`imagePath`, `linkPath`, `isWeb`, `position`, `add_time`) VALUES ('/miniprogram/upload/banner/202503200937-indexbanner1742435031514.jpg', 'https://mp.weixin.qq.com/s/zVu4raklWoYQwRDCw_XOTg', 1, 0, 1756276678);
 COMMIT;
 
 -- ----------------------------
@@ -12159,10 +12162,10 @@ CREATE TABLE `eb_messages` (
   `content` text NOT NULL DEFAULT '' COMMENT '消息内容',
   `readStatus` tinyint(1) NOT NULL DEFAULT '0' COMMENT '消息阅读状态;如：已读true、未读false',
   `add_time` int NOT NULL DEFAULT '0' COMMENT '添加时间',
-  `update_time` int NOT NULL COMMENT '更新时间',
+  `update_time` int NOT NULL DEFAULT '0' COMMENT '更新时间',
   `created_at` int NOT NULL COMMENT '创建人',
   `updated_bt` int NOT NULL COMMENT '更新人',
-  PRIMARY KEY (`id`),
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='站内消息表';
 
 -- ----------------------------
@@ -12185,10 +12188,10 @@ CREATE TABLE `eb_user_dau` (
   `user_id` varchar(64) NOT NULL DEFAULT '' COMMENT '用户ID',
   `device` varchar(64) NOT NULL DEFAULT '' COMMENT '访问终端系统',
   `add_time` int NOT NULL DEFAULT '0' COMMENT '添加时间',
-  `update_time` int NOT NULL COMMENT '更新时间',
+  `update_time` int NOT NULL DEFAULT '0' COMMENT '更新时间',
   `created_at` int NOT NULL COMMENT '创建人',
   `updated_bt` int NOT NULL COMMENT '更新人',
-  PRIMARY KEY (`id`),
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='用户访问记录表';
 
 -- ----------------------------
@@ -12204,26 +12207,28 @@ DROP TABLE IF EXISTS `eb_contracts`;
 CREATE TABLE `eb_contracts` (
   `id` int NOT NULL AUTO_INCREMENT COMMENT '自增ID',
   `fileURL` varchar(255) NOT NULL DEFAULT '' COMMENT '文件路径',
-  `signDate` int unsigned NOT NULL DEFAULT '0' COMMENT '签署日期',
-  `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '合同状态;“待签署=wait”、“已签署=already”、“已过期=expired”、“已取消=cancel”等',
-  `endDate` varchar(64) NOT NULL DEFAULT '' COMMENT '合同结束日期',
-  `startDate` varchar(64) NOT NULL DEFAULT '' COMMENT '合同开始生效日期',
+  `signDate` int NOT NULL DEFAULT '0' COMMENT '签署日期',
+  `status` varchar(10) NOT NULL DEFAULT '' COMMENT '合同状态;“待签署=wait”、“已签署=already”、“已过期=expired”、“已取消=cancel”等',
+  `endDate` varchar(10) NOT NULL DEFAULT '' COMMENT '合同结束日期',
+  `startDate` varchar(10) NOT NULL DEFAULT '' COMMENT '合同开始生效日期',
   `contractType` tinyint(1) NOT NULL DEFAULT '0' COMMENT '合同类型;【保密协议=1、积分持有协议=2、咨询顾问协议=3】',
   `description` varchar(255) NOT NULL DEFAULT '' COMMENT '合同摘要',
   `title` varchar(64) NOT NULL DEFAULT '' COMMENT '合同标题或名称',
   `userId` int unsigned NOT NULL DEFAULT '0' COMMENT '用户ID',
   `contractNumber` varchar(64) NOT NULL DEFAULT '' COMMENT '合同编号',
   `add_time` int NOT NULL DEFAULT '0' COMMENT '添加时间',
-  `update_time` int NOT NULL COMMENT '更新时间',
+  `update_time` int NOT NULL DEFAULT '0' COMMENT '更新时间',
   `created_at` int NOT NULL COMMENT '创建人',
   `updated_bt` int NOT NULL COMMENT '更新人',
-  PRIMARY KEY (`id`),
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='合同表';
+
 
 -- ----------------------------
 -- Records of eb_contracts
 -- ----------------------------
 BEGIN;
+-- INSERT INTO `eb_contracts` (`fileURL`, `signDate`, `status`, `endDate`, `startDate`, `contractType`, `description`, `title`, `userId`, `contractNumber`, `add_time`) VALUES ('/miniprogram/upload/contract/002-理事会积分协议-20241220-赵书君海南鹿鹏投资合伙企业（有限合伙）&国信合创.pdf', '1734624000', 'already', '', '2024-12-20', 2, '理事会积分协议-20241220-赵书君海南鹿鹏投资合伙企业（有限合伙）&国信合创', '理事会积分协议-赵书君海南鹿鹏投资合伙企业（有限合伙）&国信合创', 0, 'GXHC1742447980274', 1742448162);
 COMMIT;
 
 -- ----------------------------
@@ -12238,10 +12243,10 @@ CREATE TABLE `eb_point_details` (
   `points` decimal(12,2) NOT NULL DEFAULT '0.00' COMMENT '本次积分变化数量',
   `userId` int unsigned NOT NULL DEFAULT '0' COMMENT '用户ID',
   `add_time` int NOT NULL DEFAULT '0' COMMENT '添加时间',
-  `update_time` int NOT NULL COMMENT '更新时间',
+  `update_time` int NOT NULL DEFAULT '0' COMMENT '更新时间',
   `created_at` int NOT NULL COMMENT '创建人',
   `updated_bt` int NOT NULL COMMENT '更新人',
-  PRIMARY KEY (`id`),
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='积分明细表';
 
 -- ----------------------------
@@ -12277,10 +12282,10 @@ CREATE TABLE `eb_project_team_info` (
   `projectName` varchar(255) NOT NULL DEFAULT '' COMMENT '关联的项目名称',
   `projectId` int unsigned NOT NULL DEFAULT '0' COMMENT '关联的项目ID',
   `add_time` int NOT NULL DEFAULT '0' COMMENT '添加时间',
-  `update_time` int NOT NULL COMMENT '更新时间',
+  `update_time` int NOT NULL DEFAULT '0' COMMENT '更新时间',
   `created_at` int NOT NULL COMMENT '创建人',
   `updated_bt` int NOT NULL COMMENT '更新人',
-  PRIMARY KEY (`id`),
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='项目团队成员信息表';
 
 -- ----------------------------
@@ -12333,10 +12338,10 @@ CREATE TABLE `eb_init_projects` (
   `bizPlan` varchar(64) NOT NULL DEFAULT '' COMMENT '商业计划书',
   `benchmarks` varchar(64) NOT NULL DEFAULT '' COMMENT '对标公司/产品',
   `add_time` int NOT NULL DEFAULT '0' COMMENT '添加时间',
-  `update_time` int NOT NULL COMMENT '更新时间',
+  `update_time` int NOT NULL DEFAULT '0' COMMENT '更新时间',
   `created_at` int NOT NULL COMMENT '创建人',
   `updated_bt` int NOT NULL COMMENT '更新人',
-  PRIMARY KEY (`id`),
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='原始项目库表';
 
 -- ----------------------------
@@ -12357,10 +12362,10 @@ CREATE TABLE `eb_experience_details` (
   `type` tinyint(1) NOT NULL DEFAULT '0' COMMENT '经验值类型',
   `content` varchar(255) NOT NULL DEFAULT '' COMMENT '贡献的内容',
   `add_time` int NOT NULL DEFAULT '0' COMMENT '添加时间',
-  `update_time` int NOT NULL COMMENT '更新时间',
+  `update_time` int NOT NULL DEFAULT '0' COMMENT '更新时间',
   `created_at` int NOT NULL COMMENT '创建人',
   `updated_bt` int NOT NULL COMMENT '更新人',
-  PRIMARY KEY (`id`),
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='校园合伙人经验值明细表';
 
 -- ----------------------------
@@ -12383,10 +12388,10 @@ CREATE TABLE `eb_experience_apply` (
   `activityType` tinyint(1) NOT NULL DEFAULT '0' COMMENT '申报经验值活动类型;参加线上会议；推荐成员；提出创新想法/建议；资料整理；组织发起活动；参与直播共创；其他',
   `name` varchar(255) NOT NULL DEFAULT '' COMMENT '姓名;⾮校园⼤使或合伙⼈⽆法进⾏经验值申报',
   `add_time` int NOT NULL DEFAULT '0' COMMENT '添加时间',
-  `update_time` int NOT NULL COMMENT '更新时间',
+  `update_time` int NOT NULL DEFAULT '0' COMMENT '更新时间',
   `created_at` int NOT NULL COMMENT '创建人',
   `updated_bt` int NOT NULL COMMENT '更新人',
-  PRIMARY KEY (`id`),
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='校园合伙人经验值申报表';
 
 -- ----------------------------
@@ -12408,10 +12413,10 @@ CREATE TABLE `eb_exp_ranking_list` (
   `userId` int unsigned NOT NULL DEFAULT '0' COMMENT '校园合伙人openid',
   `partnerLevel` tinyint(1) NOT NULL DEFAULT '0' COMMENT '校园合伙人等级',
   `add_time` int NOT NULL DEFAULT '0' COMMENT '添加时间',
-  `update_time` int NOT NULL COMMENT '更新时间',
+  `update_time` int NOT NULL DEFAULT '0' COMMENT '更新时间',
   `created_at` int NOT NULL COMMENT '创建人',
   `updated_bt` int NOT NULL COMMENT '更新人',
-  PRIMARY KEY (`id`),
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='校园合伙人经验值排行榜';
 
 -- ----------------------------
@@ -12435,10 +12440,10 @@ CREATE TABLE `eb_project_feedback` (
   `comments` varchar(255) NOT NULL DEFAULT '' COMMENT '项目反馈',
   `score` tinyint(2) NOT NULL DEFAULT '0' COMMENT '项目评分;1-10分',
   `add_time` int NOT NULL DEFAULT '0' COMMENT '添加时间',
-  `update_time` int NOT NULL COMMENT '更新时间',
+  `update_time` int NOT NULL DEFAULT '0' COMMENT '更新时间',
   `created_at` int NOT NULL COMMENT '创建人',
   `updated_bt` int NOT NULL COMMENT '更新人',
-  PRIMARY KEY (`id`),
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='项目反馈表';
 
 -- ----------------------------
@@ -12461,10 +12466,10 @@ CREATE TABLE `eb_campus_activity` (
   `endTime` int NOT NULL DEFAULT '0' COMMENT '活动结束时间',
   `startTime` int NOT NULL DEFAULT '0' COMMENT '活动开始时间',
   `add_time` int NOT NULL DEFAULT '0' COMMENT '添加时间',
-  `update_time` int NOT NULL COMMENT '更新时间',
+  `update_time` int NOT NULL DEFAULT '0' COMMENT '更新时间',
   `created_at` int NOT NULL COMMENT '创建人',
   `updated_bt` int NOT NULL COMMENT '更新人',
-  PRIMARY KEY (`id`),
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='校园活动信息表';
 
 -- ----------------------------
@@ -12483,7 +12488,7 @@ CREATE TABLE `eb_campus_partners` (
   `approvals` int NOT NULL DEFAULT '0' COMMENT '审批人数;3个管理⼈员，最少2个同意',
   `reviewers` text NOT NULL COMMENT '审核人列表',
   `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '审批状态;待审核【pending】通过[pass]拒绝[rejected]',
-  `partnerLevel` tinyint(1) NOT NULL DEFAULT 'ambassador' COMMENT '校园合伙人等级;默认⼤使：partnerLevel:'ambassador',校园⼤使【ambassador】，校园合伙⼈【partner】',
+  `partnerLevel` tinyint(1) NOT NULL DEFAULT '0' COMMENT '校园合伙人等级;默认⼤使：partnerLevel:ambassador,校园⼤使【ambassador】，校园合伙⼈【partner】',
   `profilePhoto` varchar(255) NOT NULL DEFAULT '' COMMENT '形象照片',
   `resumePath` varchar(255) NOT NULL DEFAULT '' COMMENT '简历路径',
   `whisper` varchar(255) NOT NULL DEFAULT '' COMMENT '想对我们说什么',
@@ -12505,10 +12510,10 @@ CREATE TABLE `eb_campus_partners` (
   `gender` tinyint(1) NOT NULL DEFAULT '0' COMMENT '性别',
   `openid` varchar(255) NOT NULL DEFAULT '' COMMENT '微信id',
   `add_time` int NOT NULL DEFAULT '0' COMMENT '添加时间',
-  `update_time` int NOT NULL COMMENT '更新时间',
+  `update_time` int NOT NULL DEFAULT '0' COMMENT '更新时间',
   `created_at` int NOT NULL COMMENT '创建人',
   `updated_bt` int NOT NULL COMMENT '更新人',
-  PRIMARY KEY (`id`),
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='校园合伙人信息表';
 
 -- ----------------------------
@@ -12574,7 +12579,7 @@ CREATE TABLE `eb_invest_projects` (
   `openid` varchar(255) NOT NULL DEFAULT '' COMMENT '当前登录者的微信Id',
   `companyName` varchar(255) NOT NULL DEFAULT '' COMMENT '项目名称或公司名称',
   `add_time` int NOT NULL DEFAULT '0' COMMENT '添加时间',
-  `update_time` int NOT NULL COMMENT '更新时间',
+  `update_time` int NOT NULL DEFAULT '0' COMMENT '更新时间',
   `created_at` int NOT NULL COMMENT '创建人',
   `updated_bt` int NOT NULL COMMENT '更新人',
   `is_del` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否删除',
@@ -12610,10 +12615,10 @@ CREATE TABLE `eb_director_member` (
   `openid` varchar(64) NOT NULL DEFAULT '' COMMENT '微信Id',
   `name` varchar(255) NOT NULL DEFAULT '' COMMENT '姓名',
   `add_time` int NOT NULL DEFAULT '0' COMMENT '添加时间',
-  `update_time` int NOT NULL COMMENT '更新时间',
+  `update_time` int NOT NULL DEFAULT '0' COMMENT '更新时间',
   `created_at` int NOT NULL COMMENT '创建人',
   `updated_bt` int NOT NULL COMMENT '更新人',
-  PRIMARY KEY (`id`),
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='理事会成员信息';
 
 -- ----------------------------
