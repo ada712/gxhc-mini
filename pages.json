@@ -136,7 +136,6 @@
     {
       "path": "pages/home/serviceList/index",
       "style": {
-        "navigationBarTitleText": ""
       }
     }
   ],
@@ -340,7 +339,7 @@
         {
           "path": "hatchList/index",
           "style": {
-            "navigationBarTitleText": ""
+            "navigationBarTitleText": "孵化项目"
           }
         },
         {
