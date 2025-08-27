@@ -33,9 +33,7 @@
     },
     {
       "path": "pages/videos/index/index",
-      "style": {
-        "navigationBarTitleText": ""
-      }
+      "style": {}
     },
     {
       "path": "pages/director/list/index",
@@ -52,19 +50,19 @@
     {
       "path": "pages/director/contract/index",
       "style": {
-        "navigationBarTitleText": ""
+        "navigationBarTitleText": "我的合同"
       }
     },
     {
       "path": "pages/points/ranking/index",
       "style": {
-        "navigationBarTitleText": ""
+        "navigationBarTitleText": "积分排行榜"
       }
     },
     {
       "path": "pages/points/detail/index",
       "style": {
-        "navigationBarTitleText": ""
+        "navigationBarTitleText": "我的积分"
       }
     },
     {
@@ -93,9 +91,7 @@
     },
     {
       "path": "pages/mine/login/index",
-      "style": {
-        "navigationBarTitleText": ""
-      }
+      "style": {}
     },
     {
       "path": "pages/mine/message/index",
@@ -106,37 +102,34 @@
     {
       "path": "pages/project/detail/index",
       "style": {
-        "navigationBarTitleText": ""
+        "navigationBarTitleText": "项目详情"
       }
     },
     {
       "path": "pages/project/evolve/index",
       "style": {
-        "navigationBarTitleText": ""
+        "navigationBarTitleText": "项目进展"
       }
     },
     {
       "path": "pages/project/apply/index",
       "style": {
-        "navigationBarTitleText": ""
+        "navigationBarTitleText": "发起项目"
       }
     },
     {
       "path": "pages/home/serviceDetail/index",
-      "style": {
-        "navigationBarTitleText": ""
-      }
+      "style": {}
     },
     {
       "path": "pages/home/vipServiceList/index",
       "style": {
-        "navigationBarTitleText": ""
+        "navigationBarTitleText": "资源列表"
       }
     },
     {
       "path": "pages/home/serviceList/index",
-      "style": {
-      }
+      "style": {}
     }
   ],
   "subPackages": [
@@ -188,15 +181,11 @@
         },
         {
           "path": "news/mohe/index",
-          "style": {
-            "navigationBarTitleText": ""
-          }
+          "style": {}
         },
         {
           "path": "news/opencsg/index",
-          "style": {
-            "navigationBarTitleText": ""
-          }
+          "style": {}
         }
       ]
     },
@@ -207,55 +196,51 @@
         {
           "path": "parter/apply/index",
           "style": {
-            "navigationBarTitleText": ""
+            "navigationBarTitleText": "校园大使申请"
           }
         },
         {
           "path": "parter/list/index",
           "style": {
-            "navigationBarTitleText": ""
+            "navigationBarTitleText": "校园合伙人风采"
           }
         },
         {
           "path": "activity/apply/index",
           "style": {
-            "navigationBarTitleText": ""
+            "navigationBarTitleText": "活动报名"
           }
         },
         {
           "path": "activity/list/index",
           "style": {
-            "navigationBarTitleText": ""
+            "navigationBarTitleText": "热门活动"
           }
         },
         {
           "path": "activity/detail/index",
-          "style": {
-            "navigationBarTitleText": ""
-          }
+          "style": {}
         },
         {
           "path": "activity/launch/index",
-          "style": {
-            "navigationBarTitleText": ""
-          }
+          "style": {}
         },
         {
           "path": "experience/rankingList/index",
           "style": {
-            "navigationBarTitleText": ""
+            "navigationBarTitleText": "经验值排行榜"
           }
         },
         {
           "path": "experience/apply/index",
           "style": {
-            "navigationBarTitleText": ""
+            "navigationBarTitleText": "经验值申报"
           }
         },
         {
           "path": "experience/detail/index",
           "style": {
-            "navigationBarTitleText": ""
+            "navigationBarTitleText": "经验值明细"
           }
         }
       ]
@@ -267,43 +252,39 @@
         {
           "path": "index/index",
           "style": {
-            "navigationBarTitleText": ""
+            "navigationBarTitleText": "管理员操作中心"
           }
         },
         {
           "path": "director/addDirector/index",
           "style": {
-            "navigationBarTitleText": ""
+            "navigationBarTitleText": "添加理事会成员"
           }
         },
         {
           "path": "point/enter/index",
           "style": {
-            "navigationBarTitleText": ""
+            "navigationBarTitleText": "积分登记"
           }
         },
         {
           "path": "users/index/index",
           "style": {
-            "navigationBarTitleText": ""
+            "navigationBarTitleText": "用户列表"
           }
         },
         {
           "path": "banner/add/index",
-          "style": {
-            "navigationBarTitleText": ""
-          }
+          "style": {}
         },
         {
           "path": "banner/delete/index",
-          "style": {
-            "navigationBarTitleText": ""
-          }
+          "style": {}
         },
         {
           "path": "users/contract/index",
           "style": {
-            "navigationBarTitleText": ""
+            "navigationBarTitleText": "上传合同"
           }
         }
       ]
@@ -315,25 +296,25 @@
         {
           "path": "memberInfo/index",
           "style": {
-            "navigationBarTitleText": ""
+            "navigationBarTitleText": "成员信息"
           }
         },
         {
           "path": "workExperience/index",
           "style": {
-            "navigationBarTitleText": ""
+            "navigationBarTitleText": "工作经历"
           }
         },
         {
           "path": "eduExperience/index",
           "style": {
-            "navigationBarTitleText": ""
+            "navigationBarTitleText": "教育经历"
           }
         },
         {
           "path": "practiceExperience/index",
           "style": {
-            "navigationBarTitleText": ""
+            "navigationBarTitleText": "实习经历"
           }
         },
         {
@@ -344,45 +325,39 @@
         },
         {
           "path": "directorJoined/index",
-          "style": {
-            "navigationBarTitleText": ""
-          }
+          "style": {}
         },
         {
           "path": "directorTBC/index",
-          "style": {
-            "navigationBarTitleText": ""
-          }
+          "style": {}
         },
         {
           "path": "directorFeedback/index",
           "style": {
-            "navigationBarTitleText": ""
+            "navigationBarTitleText": "项目反馈"
           }
         },
         {
           "path": "list/index",
           "style": {
-            "navigationBarTitleText": ""
+            "navigationBarTitleText": "项目列表"
           }
         },
         {
           "path": "updateBP/index",
           "style": {
-            "navigationBarTitleText": ""
+            "navigationBarTitleText": "更新商业计划书"
           }
         },
         {
           "path": "updateIndex/index",
           "style": {
-            "navigationBarTitleText": ""
+            "navigationBarTitleText": "项目资料更新"
           }
         },
         {
           "path": "updateFinance/index",
-          "style": {
-            "navigationBarTitleText": ""
-          }
+          "style": {}
         }
       ]
     }
