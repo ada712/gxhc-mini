@@ -1,6 +1,6 @@
 <template>
   <view class="wripper">
-    <view class="tips" wx:if="{{isUpdate}}"
+    <view class="tips" v-if="isUpdate"
       >您已经填写收件地址信息，如需更改请直接修改即可</view
     >
     <view class="content">
@@ -12,7 +12,7 @@
           class="same-input"
           maxlength="20"
           placeholder-style="color: rgba(47,48,49,0.3);"
-          value="{{userInfo.recipient}}"
+          :value="userInfo.recipient"
           bindinput="bandInputName"
         />
       </view>
@@ -24,14 +24,14 @@
           class="same-input"
           maxlength="11"
           placeholder-style="color: rgba(47,48,49,0.3);"
-          value="{{userInfo.receiveMobile}}"
+          :value="userInfo.receiveMobile"
           bindinput="bandInputMobile"
         />
       </view>
       <view class="col">
         <view class="label">收件地址信息</view>
         <textarea
-          value="{{userInfo.receiveAddress}}"
+          :value="userInfo.receiveAddress"
           class="address"
           placeholder="请输入收件地址信息"
           placeholder-style="color: rgba(47,48,49,0.3);"
@@ -40,7 +40,7 @@
         />
       </view>
     </view>
-    <view class="save-btn" bind:tap="handleSaveAddress">保存地址</view>
+    <view class="save-btn" @click="handleSaveAddress">保存地址</view>
   </view>
 </template>
 

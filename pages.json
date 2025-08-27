@@ -40,13 +40,13 @@
     {
       "path": "pages/director/list/index",
       "style": {
-        "navigationBarTitleText": ""
+        "navigationBarTitleText": "理事成员"
       }
     },
     {
       "path": "pages/director/detail/index",
       "style": {
-        "navigationBarTitleText": ""
+        "navigationBarTitleText": "成员简介"
       }
     },
     {

@@ -1,5 +1,8 @@
 export const imgUrls =
   "https://7072-prod-cloud-env-9gqq29j68db5f470-1326719267.tcb.qcloud.la/miniprogram/images";
+export const imgUrls2 = "/cloud/miniprogram/images";
+export const directorUrl = "https://7072-prod-cloud-env-9gqq29j68db5f470-1326719267.tcb.qcloud.la/miniprogram/";
+
 
 // 小程序 / APP请求配置
 // #ifdef MP || APP-PLUS
