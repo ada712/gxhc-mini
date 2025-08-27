@@ -1,17 +1,8 @@
 <template>
 	<view class="wripper">
 		<view class="content">
-			<view class="same-module" v-if="showInvestorModule">
-				<view class="title">投资专区</view>
-				<view class="list">
-					<view class="item" v-for="(item,key) in investMenus" :key="key" @click="navigateToPage(item)">
-						<image :src="item.icon" class="item-icon" />
-						<view class="item-text">{{item.label}}</view>
-					</view>
-				</view>
-			</view>
 			<view class="same-module">
-				<view class="title">孵化专区</view>
+				<view class="title">项目专区</view>
 				<view class="list">
 					<view class="item" v-for="(item,key) in projectMenus" :key="key" @click="navigateToPage(item)">
 						<image :src="item.icon" class="item-icon" />
@@ -22,7 +13,7 @@
 			<view class="same-module">
 				<view class="title">积分专区</view>
 				<view class="list">
-					<view class="item" v-for="(item,key) in projectMenus" :key="key" @click="navigateToPage(item)">
+					<view class="item" v-for="(item,key) in pointsMenus" :key="key" @click="navigateToPage(item)">
 						<image :src="item.icon" class="item-icon" />
 						<view class="item-text">{{item.label}}</view>
 					</view>
@@ -47,7 +38,7 @@
 				</view>
 			</view>
 			<view class="same-module" v-if="showInvestorModule">
-				<view class="title">社群专区</view>
+				<view class="title">投资专区</view>
 				<view class="list">
 					<view class="item" v-for="(item,key) in investMenus" :key="key" @click="navigateToPage(item)">
 						<image :src="item.icon" class="item-icon" />
@@ -164,10 +155,10 @@
 					iswebUrl: false,
 					route: '/projectPages/list/index'
 				}],
-				showPointModule: false,
-				showCampusModule: false,
-				showDirectorModule: false,
-				showInvestorModule: false,
+				showPointModule: true,
+				showCampusModule: true,
+				showDirectorModule: true,
+				showInvestorModule: true,
 			};
 		},
 		methods: {
