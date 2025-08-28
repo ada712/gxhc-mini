@@ -53,11 +53,32 @@
         <view class="report-item"></view>
       </view>
     </view>
-		<view class="invest">
+    <view class="invest">
       <text class="title">智能投顾助手</text>
-      <view class="report-list">
-        <view class="report-item"></view>
-        <view class="report-item"></view>
+      <view class="invest-list">
+        <view class="invest-item">
+          <image class="invest-icon" :src="imgUrl + '/index/gw_icon1.png'" />
+          <text class="invest-t">上市公司服务AI</text>
+          <text class="invest-d">暂未开放 敬请期待</text>
+        </view>
+        <view class="invest-item">
+          <image class="invest-icon" :src="imgUrl + '/index/gw_icon2.png'" />
+          <text class="invest-t">行业研究AI</text>
+          <text class="invest-d">暂未开放 敬请期待</text>
+        </view>
+        <view class="invest-item">
+          <image class="invest-icon" :src="imgUrl + '/index/gw_icon3.png'" />
+          <text class="invest-t">专家BOT</text>
+          <text class="invest-d">暂未开放 敬请期待</text>
+        </view>
+      </view>
+    </view>
+    <view class="media">
+      <image class="media-bd" :src="imgUrl + '/index/xmt_bj.png'" />
+      <view class="media-t">
+        <text class="media-t1">新媒体赋能</text>
+        <text class="media-t2">智媒破界，赋能新生</text>
+        <text class="media-t3">去查看</text>
       </view>
     </view>
   </view>
@@ -78,7 +99,7 @@ export default {
 <style lang="scss" scoped>
 page {
   background: #f5f8ff;
-	padding-bottom: 100rpx;
+  padding-bottom: 100rpx;
 }
 .pages {
   width: 100%;
@@ -164,12 +185,90 @@ page {
     margin: 24rpx 24rpx 0 24rpx;
     padding: 34rpx 24rpx;
   }
-	.invest {
-		height: 320rpx;
+  .invest {
     border-radius: 28rpx;
     background: #ffffff;
     margin: 24rpx 24rpx 0 24rpx;
     padding: 34rpx 24rpx;
-	}
+    .invest-list {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 32rpx;
+      .invest-item {
+        .invest-icon {
+          width: 88rpx;
+          height: 88rpx;
+          margin: 0 auto;
+          display: block;
+        }
+        .invest-t {
+          margin-top: 14rpx;
+          display: block;
+          text-align: center;
+          color: #404040;
+          font-size: 24rpx;
+          font-weight: 400;
+        }
+        .invest-d {
+          margin-top: 8rpx;
+          display: block;
+          opacity: 0.4;
+          text-align: center;
+          color: #de252b;
+          font-size: 22rpx;
+          font-weight: 400;
+        }
+      }
+    }
+  }
+  .media {
+    margin: 24rpx 24rpx 0 24rpx;
+    position: relative;
+    height: 100rpx;
+    display: flex;
+    align-items: center;
+    .media-bd {
+      width: 100%;
+      height: 100%;
+      border-radius: 28rpx;
+      position: absolute;
+      left: 0;
+      z-index: 1;
+    }
+    .media-t {
+      padding: 0rpx 24rpx;
+      position: relative;
+      z-index: 2;
+			flex: 1;
+      display: flex;
+      align-items: center;
+      .media-t1 {
+        color: #ffffff;
+        font-size: 28rpx;
+        font-weight: 500;
+      }
+      .media-t2 {
+        color: #ffffff;
+        font-size: 28rpx;
+        font-weight: 300;
+        margin-left: 14rpx;
+      }
+      .media-t3 {
+        width: 122rpx;
+        height: 56rpx;
+        border-radius: 290rpx;
+        opacity: 1;
+        background: #fc780c;
+        color: #ffffff;
+        text-align: center;
+        line-height: 56rpx;
+        margin-left: auto;
+        font-size: 24rpx;
+        font-weight: 400;
+        display: inline-block;
+      }
+    }
+  }
 }
 </style>
