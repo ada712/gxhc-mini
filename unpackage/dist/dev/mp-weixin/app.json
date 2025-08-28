@@ -1,55 +1,119 @@
 {
   "pages": [
-    "pages/index/index",
-    "pages/user/index",
-    "pages/goods_details/index"
+    "pages/home/index/index",
+    "pages/domain/index/index",
+    "pages/mine/index/index",
+    "pages/web/index",
+    "pages/videos/index/index",
+    "pages/director/list/index",
+    "pages/director/detail/index",
+    "pages/director/contract/index",
+    "pages/points/ranking/index",
+    "pages/points/detail/index",
+    "pages/mine/customer/adress/index",
+    "pages/mine/customer/realName/index",
+    "pages/mine/customer/personInfo/index",
+    "pages/mine/customer/index/index",
+    "pages/mine/login/index",
+    "pages/mine/message/index",
+    "pages/project/detail/index",
+    "pages/project/evolve/index",
+    "pages/project/apply/index",
+    "pages/home/serviceDetail/index",
+    "pages/home/vipServiceList/index",
+    "pages/home/serviceList/index"
   ],
   "subPackages": [
     {
-      "root": "pages/goods",
+      "root": "explainPages",
       "pages": [
-        "order_list/index",
-        "order_details/index",
-        "order_apply/index"
+        "project/apply/index",
+        "protocol/index",
+        "protocol/serve/index",
+        "protocol/privacy/index",
+        "campus/intro/index",
+        "points/ruleState/index",
+        "points/obtain/index",
+        "news/mohe/index",
+        "news/opencsg/index"
       ],
-      "name": "goods"
+      "name": "explain"
     },
     {
-      "root": "pages/users",
+      "root": "campusPages",
       "pages": [
-        "wechat_login/index",
-        "login/index",
-        "user_spread_code/index",
-        "user_info/index",
-        "binding_phone/index",
-        "privacy/index"
+        "parter/apply/index",
+        "parter/list/index",
+        "activity/apply/index",
+        "activity/list/index",
+        "activity/detail/index",
+        "activity/launch/index",
+        "experience/rankingList/index",
+        "experience/apply/index",
+        "experience/detail/index"
       ],
-      "name": "users"
+      "name": "campus"
+    },
+    {
+      "root": "managePages",
+      "pages": [
+        "index/index",
+        "director/addDirector/index",
+        "point/enter/index",
+        "users/index/index",
+        "banner/add/index",
+        "banner/delete/index",
+        "users/contract/index"
+      ],
+      "name": "manage"
+    },
+    {
+      "root": "projectPages",
+      "pages": [
+        "memberInfo/index",
+        "workExperience/index",
+        "eduExperience/index",
+        "practiceExperience/index",
+        "hatchList/index",
+        "directorJoined/index",
+        "directorTBC/index",
+        "directorFeedback/index",
+        "list/index",
+        "updateBP/index",
+        "updateIndex/index",
+        "updateFinance/index"
+      ],
+      "name": "project"
     }
   ],
   "window": {
+    "backgroundColor": "#F6F6F6",
+    "backgroundTextStyle": "light",
+    "navigationBarTitleText": "国信合创理事会",
     "navigationBarTextStyle": "black",
-    "navigationBarTitleText": "加载中",
-    "navigationBarBackgroundColor": "#fff",
-    "backgroundColor": "#F8F8F8",
-    "titleNView": false
+    "navigationBarBackgroundColor": "#ffffff"
   },
   "tabBar": {
-    "color": "#282828",
-    "selectedColor": "#ff3366",
-    "borderStyle": "white",
+    "color": "#D8D8D8",
+    "selectedColor": "#218DFF",
     "backgroundColor": "#ffffff",
     "list": [
       {
-        "pagePath": "pages/index/index",
-        "iconPath": "static/images/1-001.png",
-        "selectedIconPath": "static/images/1-002.png",
-        "text": "游戏"
+        "pagePath": "pages/home/index/index",
+        "iconPath": "static/images/tabbar/icon_home_default.png",
+        "selectedIconPath": "static/images/tabbar/icon_home_active.png",
+        "text": "首页"
       },
       {
-        "pagePath": "pages/user/index",
-        "iconPath": "static/images/4-001.png",
-        "selectedIconPath": "static/images/4-002.png",
+        "pagePath": "pages/domain/index/index",
+        "iconPath": "static/images/tabbar/icon_gn_default.png",
+        "selectedIconPath": "static/images/tabbar/icon_gn_active.png",
+        "text": "功能"
+      },
+      {
+        "pagePath": "pages/mine/index/index",
+        "iconPath": "static/images/tabbar/icon_mine_default.png",
+        "selectedIconPath": "static/images/tabbar/icon_mine_acitve.png",
         "text": "我的"
       }
     ]

@@ -2574,15 +2574,6 @@ function inject(key, defaultValue, treatDefaultAsFactory = false) {
     warn$1(`inject() can only be used inside setup() or functional components.`);
   }
 }
-/*! #__NO_SIDE_EFFECTS__ */
-// @__NO_SIDE_EFFECTS__
-function defineComponent(options, extraOptions) {
-  return isFunction(options) ? (
-    // #8326: extend call and options.name access are considered side-effects
-    // by Rollup, so we have to wrap it in a pure-annotated IIFE.
-    /* @__PURE__ */ (() => extend({ name: options.name }, extraOptions, { setup: options }))()
-  ) : options;
-}
 const isKeepAlive = (vnode) => vnode.type.__isKeepAlive;
 function onActivated(hook, target) {
   registerKeepAliveHook(hook, "a", target);
@@ -5227,10 +5218,6 @@ function vFor(source, renderItem) {
   }
   return ret;
 }
-function setRef(ref2, id, opts = {}) {
-  const { $templateRefs } = getCurrentInstance();
-  $templateRefs.push({ i: id, r: ref2, k: opts.k, f: opts.f });
-}
 const o = (value, key) => vOn(value, key);
 const f = (source, renderItem) => vFor(source, renderItem);
 const s = (value) => stringifyStyle(value);
@@ -5238,7 +5225,6 @@ const e = (target, ...sources) => extend(target, ...sources);
 const n = (value) => normalizeClass(value);
 const t = (val) => toDisplayString(val);
 const p = (props) => renderProps(props);
-const sr = (ref2, id, opts) => setRef(ref2, id, opts);
 function createApp$1(rootComponent, rootProps = null) {
   rootComponent && (rootComponent.mpType = "app");
   return createVueApp(rootComponent, rootProps).use(plugin);
@@ -6160,8 +6146,8 @@ function populateParameters(fromRes, toRes) {
   let _SDKVersion = SDKVersion;
   const hostLanguage = (language || "").replace(/_/g, "-");
   const parameters = {
-    appId: "__UNI__60775C1",
-    appName: "lianlianlink",
+    appId: "__UNI__116F595",
+    appName: "国信合创理事会",
     appVersion: "1.0.0",
     appVersionCode: "100",
     appLanguage: getAppLanguage(hostLanguage),
@@ -6309,8 +6295,8 @@ const getAppBaseInfo = {
       hostName: _hostName,
       hostSDKVersion: SDKVersion,
       hostTheme: theme,
-      appId: "__UNI__60775C1",
-      appName: "lianlianlink",
+      appId: "__UNI__116F595",
+      appName: "国信合创理事会",
       appVersion: "1.0.0",
       appVersionCode: "100",
       appLanguage: getAppLanguage(hostLanguage),
@@ -7058,9 +7044,9 @@ function isConsoleWritable() {
   return isWritable;
 }
 function initRuntimeSocketService() {
-  const hosts = "127.0.0.1,192.168.3.161";
+  const hosts = "127.0.0.1,192.168.10.120";
   const port = "8090";
-  const id = "mp-weixin_o5imoS";
+  const id = "mp-weixin_Q7aziK";
   const lazy = typeof swan !== "undefined";
   let restoreError = lazy ? () => {
   } : initOnError();
@@ -8678,76 +8664,16 @@ Store.prototype._withCommit = function _withCommit(fn) {
   this._committing = committing;
 };
 Object.defineProperties(Store.prototype, prototypeAccessors);
-var mapGetters = normalizeNamespace(function(namespace, getters) {
-  var res = {};
-  if (!isValidMap(getters)) {
-    console.error("[vuex] mapGetters: mapper parameter must be either an Array or an Object");
-  }
-  normalizeMap(getters).forEach(function(ref2) {
-    var key = ref2.key;
-    var val = ref2.val;
-    val = namespace + val;
-    res[key] = function mappedGetter() {
-      if (namespace && !getModuleByNamespace(this.$store, "mapGetters", namespace)) {
-        return;
-      }
-      if (!(val in this.$store.getters)) {
-        console.error("[vuex] unknown getter: " + val);
-        return;
-      }
-      return this.$store.getters[val];
-    };
-    res[key].vuex = true;
-  });
-  return res;
-});
-function normalizeMap(map) {
-  if (!isValidMap(map)) {
-    return [];
-  }
-  return Array.isArray(map) ? map.map(function(key) {
-    return { key, val: key };
-  }) : Object.keys(map).map(function(key) {
-    return { key, val: map[key] };
-  });
-}
-function isValidMap(map) {
-  return Array.isArray(map) || isObject(map);
-}
-function normalizeNamespace(fn) {
-  return function(namespace, map) {
-    if (typeof namespace !== "string") {
-      map = namespace;
-      namespace = "";
-    } else if (namespace.charAt(namespace.length - 1) !== "/") {
-      namespace += "/";
-    }
-    return fn(namespace, map);
-  };
-}
-function getModuleByNamespace(store, helper, namespace) {
-  var module2 = store._modulesNamespaceMap[namespace];
-  if (!module2) {
-    console.error("[vuex] module namespace not found in " + helper + "(): " + namespace);
-  }
-  return module2;
-}
 exports._export_sfc = _export_sfc;
-exports.computed = computed;
 exports.createSSRApp = createSSRApp;
 exports.createStore = createStore;
-exports.defineComponent = defineComponent;
 exports.e = e;
 exports.f = f;
 exports.index = index;
-exports.mapGetters = mapGetters;
 exports.n = n;
 exports.o = o;
 exports.p = p;
-exports.ref = ref;
 exports.resolveComponent = resolveComponent;
 exports.s = s;
-exports.sr = sr;
 exports.t = t;
-exports.wx$1 = wx$1;
 //# sourceMappingURL=../../.sourcemap/mp-weixin/common/vendor.js.map

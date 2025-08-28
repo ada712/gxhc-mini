@@ -1,8 +1,0 @@
-{
-  "navigationBarTitleText": "",
-  "navigationStyle": "custom",
-  "usingComponents": {
-    "edit-user-modal": "../../../components/eidtUserModal/index",
-    "x-navbar": "../../../components/x-navbar/x-navbar"
-  }
-}

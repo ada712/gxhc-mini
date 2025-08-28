@@ -18,9 +18,9 @@
         }
     },
     "compileType": "miniprogram",
-    "libVersion": "3.9.1",
-    "appid": "wx649f5bf203ef8a2e",
-    "projectname": "lianlianlink",
+    "libVersion": "3.9.2",
+    "appid": "touristappid",
+    "projectname": "国信合创理事会",
     "condition": {
         "search": {
             "current": -1,

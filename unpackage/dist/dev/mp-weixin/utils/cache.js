@@ -191,6 +191,14 @@ class Cache {
     });
   }
 }
+const clearProjectStorage = () => {
+  common_vendor.index.removeStorageSync("teamList");
+  common_vendor.index.removeStorageSync("tempTeamParamData");
+  common_vendor.index.removeStorageSync("workExpList");
+  common_vendor.index.removeStorageSync("enterprises");
+  common_vendor.index.removeStorageSync("colleges");
+};
 const Cache$1 = new Cache();
 exports.Cache = Cache$1;
+exports.clearProjectStorage = clearProjectStorage;
 //# sourceMappingURL=../../.sourcemap/mp-weixin/utils/cache.js.map

@@ -2209,4 +2209,55 @@ to {
 .pd10 {
 	padding: 10rpx;
 }
+	/**app.wxss**/
+page{
+  background: #F4F4F4;
+}
+button {
+  background: initial;
+}
+button:focus{
+  outline: 0;
+}
+button::after{
+  border: none;
+}
+.placeholder-style {
+  width: 100%;
+  font-weight: normal; 
+  font-size: 22rpx;
+  color: rgba(47,48,49,0.5);
+  line-height: 36rpx
+}
+.empty-box{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  padding-top: 120rpx;
+}
+.empty-box .img-no-data{
+  width: 200rpx;
+  height: 200rpx;
+  margin-bottom: 40rpx;
+}
+.empty-box .subtitle{
+  font-size: 28rpx;
+  color: rgba(47,48,49,0.7);
+  line-height: 32rpx;
+}
+.sheng-lines{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.truncate-3-lines{
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 page{--status-bar-height:25px;--top-window-height:0px;--window-top:0px;--window-bottom:0px;--window-left:0px;--window-right:0px;--window-magin:0px}[data-c-h="true"]{display: none !important;}

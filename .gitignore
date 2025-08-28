@@ -4,6 +4,6 @@
 .vite/*
 /unpackage/cache
 /unpackage/resources
-/unpackage/dist
+/unpackage/dist/*
 /unpackage/debug
 /cloud/

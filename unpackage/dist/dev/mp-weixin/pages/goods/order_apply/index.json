@@ -1,6 +1,0 @@
-{
-  "navigationBarTitleText": "游戏申请",
-  "usingComponents": {
-    "x-empty-page": "../../../components/x-empty-page/x-empty-page"
-  }
-}
