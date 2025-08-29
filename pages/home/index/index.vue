@@ -250,7 +250,7 @@ page {
       }
       .media-t2 {
         color: #ffffff;
-        font-size: 28rpx;
+        font-size: 27rpx;
         font-weight: 300;
         margin-left: 14rpx;
       }
