@@ -8,6 +8,20 @@
         "miniprogram": {
             "list": [
                 {
+                    "name": "pages/mine/customer/personInfo/index",
+                    "pathName": "pages/mine/customer/personInfo/index",
+                    "query": "",
+                    "launchMode": "default",
+                    "scene": null
+                },
+                {
+                    "name": "pages/mine/login/index",
+                    "pathName": "pages/mine/login/index",
+                    "query": "",
+                    "launchMode": "default",
+                    "scene": null
+                },
+                {
                     "name": "pages/user/index",
                     "pathName": "pages/user/index",
                     "query": "",

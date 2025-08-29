@@ -1,7 +1,6 @@
 "use strict";
-const imgUrls = "https://7072-prod-cloud-env-9gqq29j68db5f470-1326719267.tcb.qcloud.la/miniprogram/images";
-const imgUrls2 = "/cloud/miniprogram/images";
-const directorUrl = "https://7072-prod-cloud-env-9gqq29j68db5f470-1326719267.tcb.qcloud.la/miniprogram/";
+const imgUrls = "https://mini.cnbfmy.cn/statics/miniprogram/images";
+const directorUrl = "https://mini.cnbfmy.cn/statics/miniprogram/";
 const HTTP_REQUEST_URL = `https://mini.cnbfmy.cn`;
 const HEADER = {
   "content-type": "application/json",
@@ -17,5 +16,3 @@ exports.TIMEOUT = TIMEOUT;
 exports.TOKENNAME = TOKENNAME;
 exports.directorUrl = directorUrl;
 exports.imgUrls = imgUrls;
-exports.imgUrls2 = imgUrls2;
-//# sourceMappingURL=../../.sourcemap/mp-weixin/config/app.js.map

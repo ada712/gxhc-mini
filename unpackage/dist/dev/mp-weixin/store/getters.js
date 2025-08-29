@@ -11,4 +11,3 @@ const getters = {
   activityTab: (state) => state.app.activityTab
 };
 exports.getters = getters;
-//# sourceMappingURL=../../.sourcemap/mp-weixin/store/getters.js.map

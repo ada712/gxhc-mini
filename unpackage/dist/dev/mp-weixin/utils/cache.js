@@ -201,4 +201,3 @@ const clearProjectStorage = () => {
 const Cache$1 = new Cache();
 exports.Cache = Cache$1;
 exports.clearProjectStorage = clearProjectStorage;
-//# sourceMappingURL=../../.sourcemap/mp-weixin/utils/cache.js.map

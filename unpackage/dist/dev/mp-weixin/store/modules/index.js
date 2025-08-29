@@ -8,4 +8,3 @@ const modules = {
   indexData: store_modules_indexData.indexData
 };
 exports.modules = modules;
-//# sourceMappingURL=../../../.sourcemap/mp-weixin/store/modules/index.js.map

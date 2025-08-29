@@ -7,4 +7,3 @@ const store = common_vendor.createStore({
   getters: store_getters.getters
 });
 exports.store = store;
-//# sourceMappingURL=../../.sourcemap/mp-weixin/store/index.js.map

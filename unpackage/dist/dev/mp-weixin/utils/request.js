@@ -55,4 +55,3 @@ const request = {};
   request[method] = (api, data, opt) => baseRequest(api, method, data, opt || {});
 });
 exports.request = request;
-//# sourceMappingURL=../../.sourcemap/mp-weixin/utils/request.js.map

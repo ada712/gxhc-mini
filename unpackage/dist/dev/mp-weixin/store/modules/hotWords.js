@@ -13,4 +13,3 @@ const hotWords = {
   }
 };
 exports.hotWords = hotWords;
-//# sourceMappingURL=../../../.sourcemap/mp-weixin/store/modules/hotWords.js.map

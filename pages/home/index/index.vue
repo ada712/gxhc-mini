@@ -97,11 +97,11 @@
 </template>
 
 <script>
-import { imgUrls2 } from "@/config/app";
+import { imgUrls } from "@/config/app";
 export default {
   data: function () {
     return {
-      imgUrl: imgUrls2,
+      imgUrl: imgUrls,
     };
   },
   methods: {},

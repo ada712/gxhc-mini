@@ -17,4 +17,3 @@ const indexData = {
   }
 };
 exports.indexData = indexData;
-//# sourceMappingURL=../../../.sourcemap/mp-weixin/store/modules/indexData.js.map

@@ -7,9 +7,9 @@
           <view class="row-left" @click="goPersonInfoPage">
             <view class="head">
               <image
-                :src="userInfo.avatarUrl"
+                :src="userInfo.avatar"
                 class="img-head"
-                v-if="userInfo.avatarUrl"
+                v-if="userInfo.avatar"
               />
               <image
                 :src="imgPath + '/mine/default-head.png'"
@@ -184,8 +184,9 @@
 </template>
 
 <script>
-const imgUrls =
-  "https://7072-prod-cloud-env-9gqq29j68db5f470-1326719267.tcb.qcloud.la/miniprogram/images";
+import { getUserInfo } from "@/api/user.js";
+import { mapGetters } from "vuex";
+import { imgUrls } from "@/config/app";
 export default {
   data: function () {
     return {
@@ -230,41 +231,60 @@ export default {
         },
       ],
       userInfo: {
-        _id: "b01319476806fa6501a03e9868433b56",
-        identityBack: "",
-        owner: "1803248890808373250",
-        unionid: "",
-        gender: "",
-        receiveAddress: "",
-        avatarUrl: "",
-        openid: "ou-4N7eHgl61t-hhrTO1gRNdDpAY",
-        mobile: "15574214151",
-        pointUpdateTime: "",
-        identityFront: "",
-        createdAt: 1745287781868,
-        createBy: "1803248890808373250",
-        userTag: "admin",
-        updateBy: "1803248890808373250",
-        identityId: "",
-        reallyName: "",
-        _openid: "1803248890808373250",
-        totalPoints: 0,
-        recipient: "",
-        nickname: "国信合创用户778040",
-        email: "",
-        receiveMobile: "",
-        updatedAt: 1756279334415,
+        userTag: ''
       },
-      isLogin: true,
-      showCampusModule: false,
-      isCampusManage: false,
-      isAdmin: true,
-      identityLabel: "",
       experienceValue: 0,
       messageTips: "",
+      tagList: {
+        admin: "超级管理员",
+        investor: "投资部成员",
+        director: "理事会理事",
+        ambassador: "校园大使",
+        partner: "校园合伙人",
+        campusManage: "校园合伙人管理员",
+      },
     };
   },
+  computed: {
+    ...mapGetters({
+      isLogin: "isLogin",
+    }),
+    identityLabel() {
+      return this.tagList[this.userInfo.userTag];
+    },
+    showCampusModule() {
+      return ["ambassador", "partner", "campusManage"].includes(
+        this.userInfo.userTag
+      );
+    },
+    isCampusManage() {
+      return this.userInfo.userTag === 'campusManage'
+    },
+    isAdmin() {
+      return this.userInfo.userTag === 'admin'
+    },
+  },
+  onShow() {
+    if (this.isLogin) {
+      this.getUserInfo();
+    }
+  },
   methods: {
+    /**
+     * 获取个人用户信息
+     */
+    getUserInfo: function () {
+      let that = this;
+      getUserInfo().then((res) => {
+        that.userInfo = res.data;
+        if (res.data.shop_id) {
+          this.$Cache.set("shopId", res.data.shop_id);
+        }
+        that.$store.commit("UPDATE_USERINFO", res.data);
+        that.$store.commit("SETUID", res.data.uid);
+        uni.stopPullDownRefresh();
+      });
+    },
     navigateToPage(route, isWeb = false) {
       if (!route) return; // 如果 route 为空，则直接返回
       let url = isWeb

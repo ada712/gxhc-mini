@@ -877,7 +877,7 @@ const util = {
         // 此为生活缴费首页路径
         envVersion: "release",
         success: (res) => {
-          common_vendor.index.__f__("log", "at utils/util.js:974", "打开成功", res);
+          console.log("打开成功", res);
         },
         fail: (err) => {
         }
@@ -907,4 +907,3 @@ const util = {
   }
 };
 exports.util = util;
-//# sourceMappingURL=../../.sourcemap/mp-weixin/utils/util.js.map

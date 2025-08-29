@@ -81,4 +81,3 @@ const app = {
   actions
 };
 exports.app = app;
-//# sourceMappingURL=../../../.sourcemap/mp-weixin/store/modules/app.js.map

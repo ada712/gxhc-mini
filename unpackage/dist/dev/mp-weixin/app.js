@@ -68,16 +68,16 @@ if (!Math) {
 }
 const _sfc_main = {
   onLaunch: function() {
-    common_vendor.index.__f__("log", "at App.vue:5", "App Launch");
+    console.log("App Launch");
     api_public.basicConfig().then((res) => {
       common_vendor.index.setStorageSync("BASIC_CONFIG", res.data);
     });
   },
   onShow: function() {
-    common_vendor.index.__f__("log", "at App.vue:11", "App Show");
+    console.log("App Show");
   },
   onHide: function() {
-    common_vendor.index.__f__("log", "at App.vue:14", "App Hide");
+    console.log("App Hide");
   }
 };
 function createApp() {
@@ -91,4 +91,3 @@ function createApp() {
 }
 createApp().app.mount("#app");
 exports.createApp = createApp;
-//# sourceMappingURL=../.sourcemap/mp-weixin/app.js.map
