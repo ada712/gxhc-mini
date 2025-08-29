@@ -1,0 +1,78 @@
+
+$bgmUrl: 'https://mini.cnbfmy.cn/statics/miniprogram';
+$theme-bgc:#EEEFF3;
+
+/**
+ * 页面初始化 css
+ */
+@mixin pageInit() {
+	width: 100%;
+	min-height: 100vh;
+	height: auto;
+	overflow: hidden;
+	background-color: $theme-bgc;
+}
+
+/**
+ * FLexBox 布局
+ * 
+ * @include flexBox(center, center, wrap);
+ */
+@mixin flexBox($justify-content: center, $align-items: center, $flex-wrap: nowrap) {
+  display: flex;
+  flex-wrap: $flex-wrap;
+  justify-content: $justify-content;
+  align-items: $align-items;
+}
+
+/**
+ * 省略 超出 文本
+ * 
+ * @lineNumber 文字的行数
+ @include ellipsis(2); // 将文本限制为2行，超出部分显示为省略号
+ */
+@mixin ellipsis($lineNumber) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: $lineNumber;
+  line-clamp: $lineNumber;
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+}
+
+
+/**
+ * 设置 字体
+ * 
+ * @size 字体大小
+ * @color 字体颜色
+ * @weight 字体粗细
+ @include fontSet(20px, #ff0000, 700); // 特定的颜色和粗细
+ */
+@mixin fontSet($size: 24px, $color: '#000', $weight: 400) {
+  font-size: $size;
+  font-weight: $weight;
+  color: $color;
+}
+
+/**
+ * 背景图
+ *
+ * @params img 图片名称
+ */
+@mixin bmg($img) {
+  background-image: url("@/static/images#{$img}");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+/**
+ * 背景图
+ *
+ * @params img 图片名称
+ */
+@mixin bmgOss($img) {
+  background-image: url("#{$bgmUrl}/images#{$img}");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
