@@ -1,27 +1,18 @@
 <template>
   <view class="wripper">
-    <scroll-view
-      wx:if="{{list.length > 0}}"
-      class="list"
-      scroll-x="false"
-      scroll-y="true"
-      :style="'height: ' + scollHeight + 'px;'"
-    >
+    <view class="list" v-if="list.length">
       <view
         class="item"
-        v-for="(item, key) in list"
+        v-for="(item, index) in list"
         :key="index"
-        data-id="{{item._id}}"
-        data-idx="{{index}}"
-        @click="changeReadStatus"
+        @click="changeReadStatus(item)"
       >
-        <view class="time">{{ item.createTime }}</view>
+        <view class="time">{{ item.add_time }}</view>
         <view class="message">{{ item.content }}</view>
-        <view class="circle" v-if="item.readStatus == false"></view>
+        <view class="circle" v-if="!item.look"></view>
       </view>
-    </scroll-view>
-
-    <view class="empty-box" v-if="list.length == 0">
+    </view>
+    <view class="empty-box" v-if="!list.length && !loading">
       <image :src="imgPath + '/index/img-no-data.png'" class="img-no-data" />
       <view class="subtitle">暂无任何信息</view>
     </view>
@@ -29,16 +20,75 @@
 </template>
 
 <script>
+import { messageSystem, getMsgDetails } from "@/api/user.js";
 import { imgUrls } from "@/config/app";
 export default {
   data: function () {
     return {
       imgPath: imgUrls,
-      scollHeight: 0,
       list: [],
+      page: 1,
+      limit: 20,
+      loading: false,
+      finished: false,
     };
   },
-  methods: {},
+  onShow() {
+    this.page = 1;
+    this.list = [];
+    this.messageSystem();
+  },
+  onReachBottom() {
+    this.messageSystem();
+  },
+  onPullDownRefresh() {
+    this.page = 1;
+    this.finished = false;
+    this.list = [];
+    this.messageSystem();
+  },
+  methods: {
+    changeReadStatus(item) {
+      getMsgDetails(item.id)
+        .then((res) => {
+          item.look = 1;
+        })
+        .catch((err) => {
+          return this.$util.Tips({
+            title: err,
+          });
+        });
+    },
+    // 站内信
+    messageSystem() {
+      // if (this.loading || this.finished) {
+      //   return;
+      // }
+      this.loading = true;
+      uni.showLoading({
+        title: `加载中`,
+      });
+      messageSystem({
+        page: this.page,
+        limit: this.limit,
+      })
+        .then((res) => {
+          let data = res.data;
+          uni.hideLoading();
+          this.loading = false;
+          this.list = this.list.concat(data.list);
+          this.finished = data.list.length < this.limit;
+          this.page += 1;
+          uni.stopPullDownRefresh();
+        })
+        .catch((err) => {
+          uni.showToast({
+            title: err.msg,
+            icon: "none",
+          });
+        });
+    },
+  },
 };
 </script>
 

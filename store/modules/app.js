@@ -65,7 +65,6 @@ const mutations = {
 };
 
 const actions = {
-
 	USERINFO({
 		state,
 		commit

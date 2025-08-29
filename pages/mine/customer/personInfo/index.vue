@@ -4,19 +4,17 @@
       <button
         class="head-box"
         open-type="chooseAvatar"
-        bindchooseavatar="onChooseAvatar"
+        @chooseavatar="onChooseAvatar"
       >
-        <image
-          :src="userInfo.avatarUrl"
-          v-if="userInfo.avatarUrl"
-          class="img-head"
-        />
+        <image :src="userInfo.avatar" v-if="userInfo.avatar" class="img-head" />
         <image
           :src="imgPath + '/mine/default-head.png'"
-          wx:else
+          v-else
           class="img-head"
         />
-        <view class="head-desc" chooseAvatar>点击更换头像</view>
+        <view class="head-desc" @chooseavatar="onChooseAvatar"
+          >点击更换头像</view
+        >
       </button>
 
       <view class="row">
@@ -27,10 +25,9 @@
             placeholder="请输入昵称"
             class="same-input"
             placeholder-style="color: rgba(47,48,49,0.3);"
-            :value="userInfo.nickname"
-            bind:input="bandInputNickname"
             data-type="nickname"
-            bindblur="bindBlurInput"
+            v-model="userInfo.nickname"
+            @blur="bindBlurInput"
           />
           <image
             :src="imgPath + '/icons/icon-right-arrow.png'"
@@ -45,10 +42,9 @@
           <picker
             mode="selector"
             :value="index"
-            :data-value="genderList[index].value"
             range-key="name"
             :range="genderList"
-            bindchange="bindGenderChange"
+            @change="bindGenderChange"
             class="picker-row"
           >
             <view class="picker-value" v-if="!userInfo.gender">
@@ -76,11 +72,10 @@
           <input
             type="text"
             placeholder="请输入常用邮箱"
-            :value="userInfo.email"
+            v-model="userInfo.email"
             class="same-input"
             placeholder-style="color: rgba(47,48,49,0.3);"
-            bind:input="bandInputEmail"
-            bindblur="bindBlurInput"
+            @blur="bindBlurInput"
             data-type="email"
           />
         </view>
@@ -111,14 +106,13 @@
 
 <script>
 import { imgUrls } from "@/config/app";
+import Cache from "@/utils/cache";
 export default {
   data: function () {
     return {
+      userInfo: {},
       imgPath: imgUrls,
-      userInfo: {
-        gender: "",
-      },
-      bindMobile: "",
+      index: 0,
       genderList: [
         {
           value: "male",
@@ -131,13 +125,57 @@ export default {
       ],
     };
   },
+  computed: {
+    bindMobile() {
+      return this.userInfo.phone
+        ? `${this.userInfo.phone.substring(
+            0,
+            3
+          )}****${this.userInfo.phone.substring(7)}`
+        : "";
+    },
+  },
+  onShow() {
+    this.userInfo = JSON.parse(Cache.get("USER_INFO"));
+    console.log(this.userInfo);
+  },
   methods: {
+    bindGenderChange(e) {
+      const idx = e.detail.value;
+      const { value } = this.genderList[idx];
+      this.userInfo.gender = value;
+    },
+    bindBlurInput(e) {
+      const that = this;
+      const type = e.currentTarget.dataset.type;
+      if (type === "email") {
+        that.validateAndHandleEmail(e.detail.value);
+      } else if (type === "nickname") {
+        that.handleNicknameInput(e.detail.value);
+      }
+    },
+    validateAndHandleEmail(email) {
+      const regex = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
+      if (!regex.test(email)) {
+        this.$util.Tips({
+          title: "请输入有效的邮箱地址",
+          icon: "none",
+        });
+      }
+    },
+    handleNicknameInput(nickname) {
+      if (nickname.length <= 2) {
+        this.$util.Tips({
+          title: "昵称至少需要3个字符",
+          icon: "none",
+        });
+      }
+    },
     goCreateAddress() {
       uni.navigateTo({
         url: "/pages/mine/customer/adress/index",
       });
     },
-
     handleLogout() {
       uni.clearStorage();
       uni.switchTab({

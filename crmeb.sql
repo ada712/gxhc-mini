@@ -12150,31 +12150,6 @@ INSERT INTO `eb_banners` (`imagePath`, `linkPath`, `isWeb`, `position`, `add_tim
 COMMIT;
 
 -- ----------------------------
--- Table structure for eb_messages
--- ----------------------------
-DROP TABLE IF EXISTS `eb_messages`;
-CREATE TABLE `eb_messages` (
-  `id` int NOT NULL AUTO_INCREMENT COMMENT '自增ID',
-  `type` varchar(64) NOT NULL DEFAULT '' COMMENT '消息类型;（如：项⽬通知：projectInfo, 营销通知：marketing；校园合伙⼈通知：campusInfo）',
-  `projectId` int unsigned NOT NULL DEFAULT '0' COMMENT '关联的项目ID;如果消息与某个项⽬相关',
-  `receiverId` int unsigned NOT NULL DEFAULT '0' COMMENT '接收者Id;（如果是发送给特定项⽬，则可能为项⽬ID；如果是发送给所有⽤⼾，则此字段可以为空或使⽤特殊值表⽰全体',
-  `senderId` int unsigned NOT NULL DEFAULT '0' COMMENT '发送者ID',
-  `content` text NOT NULL DEFAULT '' COMMENT '消息内容',
-  `readStatus` tinyint(1) NOT NULL DEFAULT '0' COMMENT '消息阅读状态;如：已读true、未读false',
-  `add_time` int NOT NULL DEFAULT '0' COMMENT '添加时间',
-  `update_time` int NOT NULL DEFAULT '0' COMMENT '更新时间',
-  `created_at` int NOT NULL COMMENT '创建人',
-  `updated_bt` int NOT NULL COMMENT '更新人',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='站内消息表';
-
--- ----------------------------
--- Records of eb_messages
--- ----------------------------
-BEGIN;
-COMMIT;
-
--- ----------------------------
 -- Table structure for eb_user_dau
 -- ----------------------------
 DROP TABLE IF EXISTS `eb_user_dau`;
