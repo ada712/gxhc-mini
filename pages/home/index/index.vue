@@ -49,8 +49,20 @@
     <view class="report">
       <text class="title">AI创诊报告</text>
       <view class="report-list">
-        <view class="report-item"></view>
-        <view class="report-item"></view>
+        <view class="report-item">
+          <text class="report-t">投资分析Agent</text>
+          <view class="report-ts">
+            <text class="report-t1">金融从业者专属</text>
+            <text class="report-t1"> 全维度市场分析</text>
+          </view>
+        </view>
+        <view class="report-item">
+          <text class="report-t">BP一键诊断</text>
+          <view class="report-ts">
+            <text class="report-t1">创业者专属！</text>
+            <text class="report-t1"> 精准拆解短板</text>
+          </view>
+        </view>
       </view>
     </view>
     <view class="invest">
@@ -179,11 +191,46 @@ page {
     }
   }
   .report {
-    height: 320rpx;
     border-radius: 28rpx;
     background: #ffffff;
     margin: 24rpx 24rpx 0 24rpx;
     padding: 34rpx 24rpx;
+    .report-list {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 24rpx;
+    }
+    .report-item {
+      width: 316rpx;
+      height: 182rpx;
+      border-radius: 20rpx;
+			padding: 0 18rpx;
+			overflow: hidden;
+			box-sizing: border-box;
+      @include bmgOss("/index/ai_bj1.png");
+      &:last-child {
+        @include bmgOss("/index/ai_bj2.png");
+      }
+      .report-t {
+        color: #ffffff;
+				display: inline-block;
+        text-align: center;
+        font-size: 28rpx;
+        font-weight: 500;
+				margin-top: 22rpx;
+      }
+      .report-ts {
+				margin-top: 30rpx;
+        .report-t1 {
+					display: block;
+          color: #ffffff;
+          text-align: left;
+          font-size: 24rpx;
+          font-weight: 300;
+        }
+      }
+    }
   }
   .invest {
     border-radius: 28rpx;
@@ -240,7 +287,7 @@ page {
       padding: 0rpx 24rpx;
       position: relative;
       z-index: 2;
-			flex: 1;
+      flex: 1;
       display: flex;
       align-items: center;
       .media-t1 {
