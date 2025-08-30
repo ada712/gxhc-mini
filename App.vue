@@ -1,23 +1,156 @@
 <script>
-	import { basicConfig } from '@/api/public';
-	export default {
-		onLaunch: function() {
-			console.log('App Launch')
-			basicConfig().then((res) => {
-				uni.setStorageSync('BASIC_CONFIG', res.data);
-			});
-		},
-		onShow: function() {
-			console.log('App Show')
-		},
-		onHide: function() {
-			console.log('App Hide')
-		}
-	}
+import { basicConfig } from "@/api/public";
+export default {
+  onLaunch: function () {
+    console.log("App Launch");
+    basicConfig().then((res) => {
+      uni.setStorageSync("BASIC_CONFIG", res.data);
+    });
+  },
+  onShow: function () {
+		//#ifdef H5
+    const data = {
+      uid: 3,
+      userTag: "admin",
+      gender: "",
+      email: "",
+      real_name: "",
+      birthday: 0,
+      card_id: "",
+      mark: "",
+      partner_id: 0,
+      group_id: 0,
+      nickname: "155****4151",
+      avatar: "",
+      phone: "15574214151",
+      add_time: 1756457511,
+      last_time: 1756491561,
+      now_money: "0.00",
+      brokerage_price: "0.00",
+      integral: 32,
+      exp: "0.00",
+      sign_num: 0,
+      sign_remind: 0,
+      status: 1,
+      level: 0,
+      agent_level: 0,
+      spread_open: 1,
+      spread_uid: 0,
+      spread_time: 0,
+      user_type: "routine",
+      is_promoter: 0,
+      pay_count: 0,
+      spread_count: 0,
+      addres: "",
+      adminid: 1,
+      login_type: "",
+      record_phone: "0",
+      is_money_level: 0,
+      is_ever_level: 0,
+      overdue_time: 0,
+      uniqid: "",
+      division_type: 0,
+      division_status: 0,
+      is_division: 0,
+      is_agent: 0,
+      is_staff: 0,
+      division_id: 0,
+      agent_id: 0,
+      staff_id: 0,
+      division_percent: 0,
+      division_change_time: 0,
+      division_end_time: 0,
+      division_invite: 0,
+      is_del: 0,
+      vip: false,
+      recharge_switch: 0,
+      switchUserInfo: [
+        {
+          uid: 3,
+          userTag: "admin",
+          gender: "",
+          email: "",
+          real_name: "",
+          birthday: 0,
+          card_id: "",
+          mark: "",
+          partner_id: 0,
+          group_id: 0,
+          nickname: "155****4151",
+          avatar: "",
+          phone: "15574214151",
+          add_time: 1756457511,
+          last_time: 1756491561,
+          now_money: "0.00",
+          brokerage_price: "0.00",
+          integral: 32,
+          exp: "0.00",
+          sign_num: 0,
+          sign_remind: 0,
+          status: 1,
+          level: 0,
+          agent_level: 0,
+          spread_open: 1,
+          spread_uid: 0,
+          spread_time: 0,
+          user_type: "routine",
+          is_promoter: 0,
+          pay_count: 0,
+          spread_count: 0,
+          addres: "",
+          adminid: 0,
+          login_type: "",
+          record_phone: "0",
+          is_money_level: 0,
+          is_ever_level: 0,
+          overdue_time: 0,
+          uniqid: "",
+          division_type: 0,
+          division_status: 0,
+          is_division: 0,
+          is_agent: 0,
+          is_staff: 0,
+          division_id: 0,
+          agent_id: 0,
+          staff_id: 0,
+          division_percent: 0,
+          division_change_time: 0,
+          division_end_time: 0,
+          division_invite: 0,
+          is_del: 0,
+        },
+      ],
+      broken_day: 0,
+      balance_func_status: 1,
+      invioce_func: true,
+      special_invoice: true,
+      collectCount: 0,
+      spread_status: false,
+      pay_vip_status: false,
+      member_style: "",
+      vip_status: 2,
+      svip_open: true,
+      extract_type: "",
+      is_agent_level: 0,
+      division_open: 0,
+      agent_apply_open: 0,
+      is_default_avatar: 0,
+    };
+    this.$store.commit("LOGIN", {
+      token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwd2QiOiJkNDFkOGNkOThmMDBiMjA0ZTk4MDA5OThlY2Y4NDI3ZSIsImlzcyI6Im1pbmkuY25iZm15LmNuIiwiYXVkIjoibWluaS5jbmJmbXkuY24iLCJpYXQiOjE3NTY0OTA4OTksIm5iZiI6MTc1NjQ5MDg5OSwiZXhwIjoxNzU5MDgyODk5LCJqdGkiOnsiaWQiOjMsInR5cGUiOiJhcGkifX0.ODolmKstQypMnFuP5mkZDc4bKw4V0iFEuqgZLBemy04',
+      time: "234234234",
+    });
+    this.$store.commit("UPDATE_USERINFO", data);
+		//#endif
+  },
+  onHide: function () {
+    console.log("App Hide");
+  },
+};
 </script>
 
 <style lang="scss">
-	/*每个页面公共css */
-	@import 'static/iconfont/iconfont.css';
-	@import 'static/css/base.css';
+/*每个页面公共css */
+@import "static/iconfont/iconfont.css";
+@import "static/css/base.css";
 </style>

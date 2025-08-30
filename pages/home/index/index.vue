@@ -3,8 +3,7 @@
     <swiper
       indicator-dots
       class="banner-box"
-      interval="3000"
-      duration="2500"
+      interval="5000"
       autoplay
       indicator-color="rgba(255,255,255,0.4)"
       layout-type="stackLeft"

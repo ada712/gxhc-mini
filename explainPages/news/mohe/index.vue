@@ -70,18 +70,16 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style>
 page {
-  box-sizing: border-box;
-  padding: 24rpx;
-  width: 100%;
+  padding-bottom: 40rpx;
 }
+</style>
+<style lang="scss" scoped>
 .container {
-  width: 100%;
   box-sizing: border-box;
-  padding: 32rpx 24rpx;
+  margin: 32rpx 24rpx;
   padding: 24rpx;
-
   background-color: #ffffff;
   border-radius: 24rpx;
   .header-image {

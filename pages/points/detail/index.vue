@@ -91,10 +91,11 @@ export default {
       if (this.loadend) return;
       this.loading = true;
       this.loadTitle = "";
-      getIntegralList({
+      return getIntegralList({
         page: this.page,
         limit: this.limit,
-      }).then((res)  => {
+      }).then(
+        (res) => {
           let list = res.data,
             loadend = list.length < this.limit;
           this.pointDetails = this.$util.SplitArray(list, this.pointDetails);

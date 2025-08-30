@@ -1974,7 +1974,8 @@ button::after {
   font-weight: normal;
   font-size: 22rpx;
   color: rgba(47, 48, 49, 0.5);
-  line-height: 36rpx
+  line-height: 36rpx;
+  text-align: left;
 }
 .empty-box {
   width: 100%;

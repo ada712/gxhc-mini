@@ -74,7 +74,6 @@ const _sfc_main = {
     });
   },
   onShow: function() {
-    console.log("App Show");
   },
   onHide: function() {
     console.log("App Hide");

@@ -1,6 +1,6 @@
 <template>
   <view class="apply-wripper">
-    <view class="step-box">
+    <view class="step-box" v-if="false">
       <view class="step-point-box">
         <image
           :src="
@@ -47,6 +47,7 @@
       </view>
     </view>
     <view class="content-box">
+      <!-- 第一步 -->
       <view class="base-box" v-if="firstModule">
         <view class="same-box">
           <view class="subtitle">基本信息</view>
@@ -60,9 +61,8 @@
                   type="text"
                   placeholder="如公司未注册可填项目名称"
                   class="single-input"
-                  :value="applyParams.companyName"
+                  v-model="applyParams.companyName"
                   maxlength="60"
-                  bindinput="handleInputCompanyName"
                   placeholder-class="placeholder-style"
                 />
               </view>
@@ -76,9 +76,8 @@
                   type="text"
                   placeholder="如公司未注册可填项目简称"
                   class="single-input"
-                  :value="applyParams.companyBrief"
+                  v-model="applyParams.companyBrief"
                   maxlength="20"
-                  bindinput="handleInputCompanyBrief"
                   placeholder-class="placeholder-style"
                 />
               </view>
@@ -93,7 +92,7 @@
                 start="2004-01-01"
                 end="2045-12-31"
                 fields="month"
-                bindchange="bindSetupDateChange"
+                @change="bindSetupDateChange"
                 class="same-input-box picker-box"
               >
                 <view class="default-data" v-if="applyParams.setupDate === ''"
@@ -113,8 +112,8 @@
                   class="same-textarea"
                   placeholder="一句话描述您是做什么？"
                   maxlength="200"
-                  :value="applyParams.projectBrief"
-                  bindinput="handleInputBrief"
+                  placeholder-class="placeholder-style"
+                  v-model="applyParams.projectBrief"
                 />
               </view>
             </view>
@@ -125,7 +124,7 @@
               <view
                 class="select-row"
                 v-if="!applyParams.industry"
-                bind:tap="onOpenIndustryList"
+                @click="onOpenIndustryList"
               >
                 <view class="single-select">请选择项目所属行业</view>
                 <image
@@ -136,7 +135,7 @@
               <view
                 class="select-row"
                 v-if="applyParams.industry"
-                bind:tap="onOpenIndustryList"
+                @click="onOpenIndustryList"
               >
                 <view class="select-active">{{ applyParams.industry }}</view>
                 <image
@@ -159,8 +158,8 @@
                   class="same-textarea"
                   placeholder="介绍公司/项目的具体商业模式，明确商业化路径（To-B/C）,盈利模式/收费方式等"
                   maxlength="-1"
-                  :value="applyParams.businessModel"
-                  bindinput="handleInputBusinessModel"
+                  placeholder-class="placeholder-style"
+                  v-model="applyParams.businessModel"
                 />
               </view>
             </view>
@@ -170,18 +169,14 @@
               </view>
               <view class="same-input-box multiple-row">
                 <textarea
-                  :value="applyParams.marketPain"
+                  v-model="applyParams.marketPain"
                   class="same-textarea"
-                  bindfocus="onFocusMarketPoint"
-                  bindblur="onBlurMarketPoint"
-                  bindinput="handleInputMarketPoints"
+                  ref="tipMarketPoint"
+                  placeholder-class="placeholder-style"
+                  placeholder-style="white-space: pre-line;text-align: justify;"
+                  :placeholder="`1.您的产品/服务,解决了什么问题……\n2.……\n……`"
                   maxlength="-1"
                 ></textarea>
-                <view class="input-demo-module" v-if="tipMarketPoint">
-                  <view> 1.您的产品/服务,解决了什么问题…… </view>
-                  <view class="mt24"> 2.…… </view>
-                  <view class="ml20 mt24"> …… </view>
-                </view>
               </view>
             </view>
             <view class="input-moudle">
@@ -193,10 +188,9 @@
                   type="number"
                   placeholder="请填写具体的数字，例如：100"
                   class="single-input w90"
-                  placeholder-style="  color: rgba(47,48,49,0.5);"
+                  placeholder-style="color: rgba(47,48,49,0.5);"
                   maxlength="8"
-                  :value="applyParams.marketSize"
-                  bindinput="handleInputMarketSize"
+                  v-model="applyParams.marketSize"
                 />
                 <text class="unit">亿</text>
               </view>
@@ -207,11 +201,10 @@
               </view>
               <view class="same-input-box multiple-row">
                 <textarea
-                  :value="applyParams.sizeMeasurement"
+                  v-model="applyParams.sizeMeasurement"
                   class="same-textarea"
                   placeholder="解释市场规模测定的过程与依据"
-                  placeholder-style="  color: rgba(47,48,49,0.5);"
-                  bindinput="handleInputMeasureBasis"
+                  placeholder-style="color: rgba(47,48,49,0.5);"
                   maxlength="-1"
                 ></textarea>
               </view>
@@ -223,8 +216,8 @@
                   class="same-textarea"
                   placeholder="产品方案介绍及产品亮点"
                   maxlength="800"
-                  :value="applyParams.productIntro"
-                  bindinput="handleInputProductIntroduc"
+                  v-model="applyParams.productIntro"
+                  placeholder-class="placeholder-style"
                 />
               </view>
             </view>
@@ -239,8 +232,7 @@
                   placeholder="请列举主要竞争对手、对标公司/产品（如有），并简要分析企业/产品的竞争情况及核心竞争力/竞争优势"
                   placeholder-style="color: rgba(47,48,49,0.5);"
                   maxlength="-1"
-                  :value="applyParams.coreCompete"
-                  bindinput="handleInputcoreCompete"
+                  v-model="applyParams.coreCompete"
                 ></textarea>
               </view>
             </view>
@@ -250,19 +242,13 @@
               </view>
               <view class="same-input-box multiple-row">
                 <textarea
-                  :value="applyParams.businessPlan"
+                  v-model="applyParams.businessPlan"
                   class="same-textarea"
-                  bindfocus="onFocusBusinessPlan"
-                  bindblur="onBlurBusinessPlan"
-                  bindinput="handleInputBusinessPlan"
+                  placeholder-class="placeholder-style"
+                  placeholder-style="white-space: pre-line;text-align: justify;"
+                  :placeholder="`1.……\n2.……\n……\n注：计划需要包含时间节点`"
                   maxlength="-1"
                 ></textarea>
-                <view class="input-demo-module" v-if="tipBusinessPlan">
-                  <view> 1.…… </view>
-                  <view class="mt24"> 2.…… </view>
-                  <view class="ml20 mt24"> …… </view>
-                  <view class="mt24"> 注：计划需要包含时间节点 </view>
-                </view>
               </view>
             </view>
             <view class="input-moudle">
@@ -271,18 +257,15 @@
               </view>
               <view class="same-input-box multiple-row">
                 <textarea
-                  :value="applyParams.productPlan"
+                  v-model="applyParams.productPlan"
                   class="same-textarea"
-                  bindfocus="onFocusProductPlan"
-                  bindblur="onBlurProductPlan"
-                  bindinput="handleInputProductPlan"
+                  @focus="onFocusProductPlan"
+                  @blur="onBlurProductPlan"
+                  placeholder-class="placeholder-style"
+                  placeholder-style="white-space: pre-line;text-align: justify;"
+                  :placeholder="`1.aaa产品上线，预计x月上线。\n2.bbb产品上线，预计x月上线。\n注：计划需要包含时间节点`"
                   maxlength="-1"
                 ></textarea>
-                <view class="input-demo-module" v-if="tipProductPlan">
-                  <view> 1.aaa产品上线，预计x月上线。 </view>
-                  <view class="mt24"> 2.bbb产品上线，预计x月上线。 </view>
-                  <view class="mt24"> 注：计划需要包含时间节点 </view>
-                </view>
               </view>
             </view>
             <view class="input-moudle">
@@ -291,18 +274,15 @@
               </view>
               <view class="same-input-box multiple-row">
                 <textarea
-                  :value="applyParams.financePlan"
+                  v-model="applyParams.financePlan"
                   class="same-textarea"
-                  bindfocus="onFocusMoneyPlan"
-                  bindblur="onBlurMoneyPlan"
-                  bindinput="handleInputFinanalPlan"
+                  @focus="onFocusMoneyPlan"
+                  @blur="onBlurMoneyPlan"
+                  placeholder-class="placeholder-style"
+                  placeholder-style="white-space: pre-line;text-align: justify;"
+                  :placeholder="`1.种子轮，？个月内，xxx万级别融资。\n2.A轮，？个月，xxxx万级别融资。\n注：计划需要包含时间节点`"
                   maxlength="-1"
                 ></textarea>
-                <view class="input-demo-module" v-if="tipMoneyPlan">
-                  <view> 1.种子轮，？个月内，xxx万级别融资。 </view>
-                  <view class="mt24"> 2.A轮，？个月，xxxx万级别融资。 </view>
-                  <view class="mt24"> 注：计划需要包含时间节点 </view>
-                </view>
               </view>
             </view>
             <view class="input-moudle">
@@ -311,10 +291,10 @@
               </view>
               <view class="same-input-box multiple-row">
                 <textarea
-                  :value="applyParams.teamDevPlan"
+                  v-model="applyParams.teamDevPlan"
                   class="same-textarea"
                   placeholder="请输入团队发展计划，注：计划需要包含时间节点"
-                  bindinput="handleInputTeamPlan"
+                  placeholder-class="placeholder-style"
                   maxlength="-1"
                 ></textarea>
               </view>
@@ -323,7 +303,6 @@
         </view>
         <view class="same-box">
           <view class="subtitle">项目/公司过往融资情况</view>
-
           <view class="subcontent">
             <view class="input-moudle">
               <view class="same-label second-title"
@@ -332,14 +311,15 @@
               <radio-group
                 class="radio-group"
                 name="activityType"
-                bindchange="isInvestedRadioChange"
+                @change="isInvestedRadioChange"
               >
                 <label
                   class="radio-label"
-                  v-for="(item, key) in investRadios"
+                  v-for="(item, unique) in investRadios"
                   :key="unique"
                 >
                   <radio
+                    style="transform: scale(0.7)"
                     :value="item.value"
                     color="#2969FF"
                     :checked="item.value === applyParams.isExternalInvest"
@@ -359,10 +339,10 @@
               </view>
               <view class="same-input-box multiple-row">
                 <textarea
-                  :value="applyParams.egInvestBrief"
+                  v-model="applyParams.egInvestBrief"
                   class="same-textarea"
                   placeholder="请简要列举每个轮次的投资方、投资轮次、投资规模、投前估值"
-                  bindinput="handleInputInvestBrief"
+                  placeholder-class="placeholder-style"
                   maxlength="-1"
                 ></textarea>
               </view>
@@ -383,9 +363,8 @@
                   maxlength="6"
                   placeholder="请填写数字，如：100"
                   class="input-value pr32"
-                  placeholder-style=" color: rgba(47,48,49,0.5);"
-                  :value="applyParams.valuation"
-                  bindinput="handleInputValuation"
+                  placeholder-style="color: rgba(47,48,49,0.5);"
+                  v-model="applyParams.valuation"
                 />
                 <text class="input-unit">万</text>
               </view>
@@ -397,24 +376,24 @@
                 ></view
               >
               <view class="radio-right">
-                <view
-                  class="radio-item"
-                  data-value="Y"
-                  bind:tap="onChangeIsFounderControl"
-                >
+                <view class="radio-item" @click="onChangeIsFounderControl('Y')">
                   <image
-                    :src="isFounderCtrl =='Y' ? '/static/images/icons/icon-checkout-blue.png' :'/static/images/icons/icon-checkout-gray.png'"
+                    :src="
+                      isFounderCtrl == 'Y'
+                        ? '/static/images/icons/icon-checkout-blue.png'
+                        : '/static/images/icons/icon-checkout-gray.png'
+                    "
                     class="icon-checkbox"
                   />
                   <text class="radio-txt">是</text>
                 </view>
-                <view
-                  class="radio-item"
-                  data-value="N"
-                  bind:tap="onChangeIsFounderControl"
-                >
+                <view class="radio-item" @click="onChangeIsFounderControl('N')">
                   <image
-                    :src="isFounderCtrl =='N' ? '/static/images/icons/icon-checkout-blue.png' :'/static/images/icons/icon-checkout-gray.png'"
+                    :src="
+                      isFounderCtrl == 'N'
+                        ? '/static/images/icons/icon-checkout-blue.png'
+                        : '/static/images/icons/icon-checkout-gray.png'
+                    "
                     class="icon-checkbox"
                   />
                   <text class="radio-txt">否</text>
@@ -428,22 +407,28 @@
               <view class="radio-right">
                 <view
                   class="radio-item"
-                  data-value="Y"
-                  bind:tap="onChangeIsTechnicalCoreTeam"
+                  @click="onChangeIsTechnicalCoreTeam('Y')"
                 >
                   <image
-                    :src="isTechCoreTeam =='Y' ? '/static/images/icons/icon-checkout-blue.png' :'/static/images/icons/icon-checkout-gray.png'"
+                    :src="
+                      isTechCoreTeam == 'Y'
+                        ? '/static/images/icons/icon-checkout-blue.png'
+                        : '/static/images/icons/icon-checkout-gray.png'
+                    "
                     class="icon-checkbox"
                   />
                   <text class="radio-txt">是</text>
                 </view>
                 <view
                   class="radio-item"
-                  data-value="N"
-                  bind:tap="onChangeIsTechnicalCoreTeam"
+                  @click="onChangeIsTechnicalCoreTeam('N')"
                 >
                   <image
-                    :src="isTechCoreTeam =='N' ? '/static/images/icons/icon-checkout-blue.png' :'/static/images/icons/icon-checkout-gray.png'"
+                    :src="
+                      isTechCoreTeam == 'N'
+                        ? '/static/images/icons/icon-checkout-blue.png'
+                        : '/static/images/icons/icon-checkout-gray.png'
+                    "
                     class="icon-checkbox"
                   />
                   <text class="radio-txt">否</text>
@@ -457,24 +442,24 @@
                 ></view
               >
               <view class="radio-right">
-                <view
-                  class="radio-item"
-                  data-value="Y"
-                  bind:tap="onChangeIsTeamInvest"
-                >
+                <view class="radio-item" @click="onChangeIsTeamInvest('Y')">
                   <image
-                    :src="isTeamInvested =='Y' ? '/static/images/icons/icon-checkout-blue.png' :'/static/images/icons/icon-checkout-gray.png'"
+                    :src="
+                      isTeamInvested == 'Y'
+                        ? '/static/images/icons/icon-checkout-blue.png'
+                        : '/static/images/icons/icon-checkout-gray.png'
+                    "
                     class="icon-checkbox"
                   />
                   <text class="radio-txt">是</text>
                 </view>
-                <view
-                  class="radio-item"
-                  data-value="N"
-                  bind:tap="onChangeIsTeamInvest"
-                >
+                <view class="radio-item" @click="onChangeIsTeamInvest('N')">
                   <image
-                    :src="isTeamInvested =='N' ? '/static/images/icons/icon-checkout-blue.png' :'/static/images/icons/icon-checkout-gray.png'"
+                    :src="
+                      isTeamInvested == 'N'
+                        ? '/static/images/icons/icon-checkout-blue.png'
+                        : '/static/images/icons/icon-checkout-gray.png'
+                    "
                     class="icon-checkbox"
                   />
                   <text class="radio-txt">否</text>
@@ -491,9 +476,8 @@
                   maxlength="2"
                   placeholder="请填写数字，如：80"
                   class="input-value pr32"
-                  placeholder-style=" color: rgba(47,48,49,0.5);"
-                  :value="applyParams.founderStockRat"
-                  bindinput="handleInputControlStockRatio"
+                  placeholder-style="color: rgba(47,48,49,0.5);"
+                  v-model="applyParams.founderStockRat"
                 />
                 <text class="input-unit">%</text>
               </view>
@@ -504,10 +488,10 @@
               </view>
               <view class="same-input-box multiple-row">
                 <textarea
-                  :value="applyParams.equityStruct"
+                  v-model="applyParams.equityStruct"
                   class="same-textarea"
                   placeholder="请请描述公司当前的股权结构详情，如果公司未注册，可填写拟定的股权结构"
-                  bindinput="handleInputequityStruct"
+                  placeholder-class="placeholder-style"
                   maxlength="-1"
                 ></textarea>
               </view>
@@ -515,7 +499,7 @@
           </view>
         </view>
       </view>
-
+      <!-- 第二步 -->
       <view class="person-box" v-if="secondModule">
         <view class="team-list">
           <view
@@ -542,23 +526,22 @@
             <view class="team-menu">
               <view
                 class="menu-item"
-                bind:tap="handleDelTeamMemberById"
+                @click="handleDelTeamMemberById"
                 data-idx="{{index}}"
                 >删除</view
               >
               <view
                 class="menu-item"
-                bind:tap="hanldeEditTeamMemberById"
+                @click="hanldeEditTeamMemberById"
                 data-item="{{item}}"
                 >编辑</view
               >
             </view>
           </view>
         </view>
-
         <view
           class="add-member-box"
-          bind:tap="goAddMemberInfo"
+          @click="goAddMemberInfo"
           v-if="teamList.length < 6"
         >
           <image
@@ -569,7 +552,7 @@
           <view class="gray-font">（最多可添加6个）</view>
         </view>
       </view>
-
+      <!-- 第三步 -->
       <view class="other-box" v-if="thirdModule">
         <view class="same-box pt24">
           <view class="input-moudle">
@@ -692,50 +675,48 @@
     </view>
     <view class="empty-box"></view>
     <view class="foot-box">
-      <!-- <view class="next-btn" bind:tap="testScore" v-if="{{firstModule}}">下一步</view> -->
-      <view class="next-btn" bind:tap="goStepTwo" v-if="firstModule"
+      <!-- <view class="next-btn" @click="testScore" v-if="{{firstModule}}">下一步</view> -->
+      <view class="next-btn" @click="goStepTwo" v-if="firstModule">下一步</view>
+      <view class="next-btn" @click="goStepThree" v-if="secondModule"
         >下一步</view
       >
-      <view class="next-btn" bind:tap="goStepThree" v-if="secondModule"
-        >下一步</view
-      >
-      <view class="next-btn" bind:tap="submitApply" v-if="thirdModule"
-        >提交</view
-      >
+      <view class="next-btn" @click="submitApply" v-if="thirdModule">提交</view>
     </view>
-    <fixed-bg v-if="maskHidden" bindcloseFixedbg="handleCloseFixedbg" />
     <project-belong-industry
       v-if="maskHidden"
-      industryName="{{applyParams.industry}}"
-      bindcloseIndustry="handleCloseIndustry"
-      bindsureIndustry="handleSureIndustry"
+      :industryName="applyParams.industry"
+      @closeIndustry="maskHidden = false"
+      @sureIndustry="handleSureIndustry"
     />
   </view>
 </template>
 
 <script>
+import { checkStepOneInfoData, checkStepTwoInfoData } from "./checkData";
+import projectBelongIndustry from "@/components/projectBelongIndustry";
 import { imgUrls } from "@/config/app";
 export default {
+  components: { projectBelongIndustry },
   data: function () {
     return {
-      // windowHeight: app.globalData.windowHeight,
       imgUrl: imgUrls,
-      firstModule: true,
-      secondModule: false,
+      applyParams: {
+        setupDate: "",
+      },
+      // firstModule: true,
+      firstModule: false,
+      secondModule: true,
       thirdModule: false,
+      maskHidden: false,
+      isTeamInvested: null,
+      isTechCoreTeam: null,
+      isFounderCtrl: null,
+
+      // windowHeight: app.globalData.windowHeight,
       isFinishFirstModule: false,
       isFinishSecondModule: false,
-      maskHidden: false,
       footBtnLabel: "下一步",
-      applyParams: {},
       isCouncilMember: null,
-      isFounderCtrl: null,
-      isTechCoreTeam: null,
-      isTeamInvested: null,
-      tipMarketPoint: true,
-      tipBusinessPlan: true,
-      tipProductPlan: true,
-      tipMoneyPlan: true,
       bpFilePath: "",
       bpFileName: "",
       updateId: "", // 更新的id
@@ -763,14 +744,98 @@ export default {
       enterpriseList: [],
     };
   },
-  methods: {},
+  onLoad() {
+    const platform = uni.getDeviceInfo().osName;
+    if (platform === "android" || platform === "ios") {
+      // uni.showModal({
+      //   title: "温馨提示",
+      //   content:
+      //     "亲爱的用户，项目填写信息比较多，填写耗时约3分钟以上，优先推荐您在电脑端打开小程序进行项目的申请填写，感谢您的信任和支持",
+      //   showCancel: false,
+      //   confirmText: "我知道了",
+      // });
+    }
+  },
+  methods: {
+    goStepTwo() {
+      this.applyParams.isFounderCtrl = this.isFounderCtrl === "Y";
+      this.applyParams.isTechCoreTeam = this.isTechCoreTeam === "Y";
+      this.applyParams.isTeamInvested = this.isTeamInvested === "Y";
+      const checkStatus = checkStepOneInfoData(this.applyParams);
+      // 将估值从万转换为元
+      const valuationInYuan = parseFloat(this.applyParams.valuation) * 10000;
+      if (valuationInYuan > 100000000) {
+        // 超过1亿
+        uni.showToast({
+          title: "您的本轮项目估值超过1亿人民币，不符合该平台的申请条件",
+          icon: "none",
+        });
+        return;
+      }
+      if (parseFloat(this.applyParams.founderStockRat) < 40) {
+        // 超过1亿
+        uni.showToast({
+          title: "创始团队合计实际控制股比低于40%，不符合该平台的申请条件",
+          icon: "none",
+        });
+        return;
+      }
+      if (checkStatus.status) {
+        this.isFinishFirstModule = true;
+        this.firstModule = false;
+        this.secondModule = true;
+        this.thirdModule = false;
+        uni.pageScrollTo({
+          scrollTop: 0,
+        });
+      } else {
+        uni.showToast({
+          icon: "none",
+          title: checkStatus.message,
+          duration: 2000,
+        });
+      }
+    },
+    goAddMemberInfo() {
+      uni.removeStorageSync("tempTeamParamData");
+      uni.removeStorageSync("educationList");
+      uni.removeStorageSync("workExpList");
+      uni.removeStorageSync("practiceList");
+      uni.navigateTo({
+        url: "/projectPages/memberInfo/index?pageStatus=add"
+      });
+    },
+    onChangeIsTeamInvest(newValue) {
+      this.isTeamInvested = newValue;
+    },
+    onChangeIsTechnicalCoreTeam(newValue) {
+      this.isTechCoreTeam = newValue;
+    },
+    onChangeIsFounderControl(newValue) {
+      this.isFounderCtrl = newValue;
+    },
+    isInvestedRadioChange(e) {
+      this.applyParams.isExternalInvest = e.detail.value;
+    },
+    handleSureIndustry(e) {
+      this.applyParams.industry = e.industryName;
+    },
+    bindSetupDateChange(e) {
+      this.applyParams.setupDate = e.detail.value;
+    },
+    onOpenIndustryList() {
+      this.maskHidden = true;
+    },
+  },
 };
 </script>
 
-<style lang="scss" scoped>
+<style>
 page {
   background: #f5f5f5;
 }
+</style>
+<style lang="scss" scoped>
 .apply-wripper {
   width: 100%;
   position: relative;
@@ -783,7 +848,12 @@ page {
     background-color: #ffffff;
     position: fixed;
     left: 0;
+    //#ifdef MP
+    top: 0;
+    //#endif
+    //#ifdef H5
     top: 44px;
+    //#endif
     z-index: 12;
     .step-point-box {
       display: flex;
@@ -898,27 +968,6 @@ page {
           margin-top: 16rpx;
         }
 
-        /* 修改radio的默认样式 */
-        radio .wx-radio-input {
-          border-radius: 50%; /* 圆角 */
-          width: 15px; /* 宽度 */
-          height: 15px; /* 高度 */
-        }
-
-        radio .wx-radio-input.wx-radio-input-checked {
-          background-color: #2969ff; /* 选中后的背景色 */
-          border-color: #2969ff; /* 选中后的边框色 */
-        }
-
-        radio .wx-radio-input.wx-radio-input-checked::before {
-          width: 14px; /* 选中后对勾的大小 */
-          height: 22px; /* 选中后对勾的大小 */
-          line-height: 20px; /* 选中后对勾的行高 */
-          text-align: center; /* 选中后对勾的对齐方式 */
-          font-size: 14px; /* 选中后对勾的字体大小 */
-          color: #ffffff; /* 选中后对勾的颜色 */
-        }
-
         /* radio标签样式 */
         .radio-label {
           display: flex;
@@ -977,32 +1026,27 @@ page {
           border: 1rpx solid #e5e6e6;
           margin-top: 16rpx;
           position: relative;
-          .single-input {
-            width: 100%;
-            height: 100%;
-            font-size: 24rpx;
-            color: #2f3031;
-            line-height: 36rpx;
-            box-sizing: border-box;
-            padding-left: 16rpx;
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-          }
-
-          .same-textarea {
-            box-sizing: border-box;
-            padding: 16rpx;
-            font-size: 24rpx;
-            color: #2f3031;
-            line-height: 36rpx;
-            width: 100%;
-            height: 240rpx;
-          }
-
-          .value-input {
-            color: #333333;
-          }
+        }
+        .single-input {
+          width: 100%;
+          height: 100%;
+          font-size: 24rpx;
+          color: #2f3031;
+          line-height: 36rpx;
+          box-sizing: border-box;
+          padding: 0 16rpx;
+        }
+        .same-textarea {
+          box-sizing: border-box;
+          padding: 16rpx;
+          font-size: 24rpx;
+          color: #2f3031;
+          line-height: 36rpx;
+          width: 100%;
+          height: 240rpx;
+        }
+        .value-input {
+          color: #333333;
         }
         .picker-box {
           width: 100%;
@@ -1012,7 +1056,7 @@ page {
           box-sizing: border-box;
           padding-left: 16rpx;
           .active-date {
-            font-size: 28rpx;
+            font-size: 24rpx;
             color: #2f3031;
             line-height: 42rpx;
           }
