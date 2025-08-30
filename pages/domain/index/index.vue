@@ -2,22 +2,8 @@
 <template>
   <view class="wripper">
     <view class="content">
-      <view class="same-module" v-if="showInvestorModule">
-        <view class="title">投资专区</view>
-        <view class="list">
-          <view
-            class="item"
-            v-for="(item, key) in investMenus"
-            :key="key"
-            @click="navigateToPage(item)"
-          >
-            <image :src="item.icon" class="item-icon" />
-            <view class="item-text">{{ item.label }}</view>
-          </view>
-        </view>
-      </view>
       <view class="same-module">
-        <view class="title">孵化专区</view>
+        <view class="title">项目专区</view>
         <view class="list">
           <view
             class="item"
@@ -97,6 +83,7 @@ import { imgUrls } from "@/config/app";
 export default {
   data: function () {
     return {
+      userInfo: {},
       projectMenus: [
         {
           icon: `${imgUrls}/gn/icon_xm_fqxm.png`,
@@ -197,35 +184,34 @@ export default {
           route: "/projectPages/list/index",
         },
       ],
-      showPointModule: false,
-      showCampusModule: false,
-      showDirectorModule: false,
-      showInvestorModule: false,
     };
   },
+  onShow() {
+    const userInfo = this.$Cache.get("USER_INFO");
+    if (userInfo) this.userInfo = JSON.parse(userInfo)
+    console.log(this.userInfo);
+  },
+  computed: {
+    showPointModule() {
+      if (!this.userInfo?.userTag) return true;
+      return ["director", "admin"].includes(this.userInfo.userTag);
+    },
+    showCampusModule() {
+      if (!this.userInfo?.userTag) return true;
+      return ["ambassador", "partner", "campusManage", "admin"].includes(
+        this.userInfo.userTag
+      );
+    },
+    showDirectorModule() {
+      if (!this.userInfo?.userTag) return false;
+      return ["director", "admin"].includes(this.userInfo.userTag);
+    },
+    showInvestorModule() {
+      if (!this.userInfo?.userTag) return false;
+      return ["investor", "admin"].includes(this.userInfo.userTag);
+    },
+  },
   methods: {
-    judgePointBox(userTag) {
-      return [
-        USER_IDENTITY.DIRECTOR,
-        USER_IDENTITY.ADMIN,
-        USER_IDENTITY.NORMAL,
-      ].includes(userTag);
-    },
-    judgeInvestBox(userTag) {
-      return [USER_IDENTITY.INVESTOR, USER_IDENTITY.ADMIN].includes(userTag);
-    },
-    judgeDirectorBox(userTag) {
-      return [USER_IDENTITY.DIRECTOR, USER_IDENTITY.ADMIN].includes(userTag);
-    },
-    judgeCampusBox(userTag) {
-      return [
-        USER_IDENTITY.CAMPUS_AMB,
-        USER_IDENTITY.CAMPUS_PARTNER,
-        USER_IDENTITY.CAMPUS_MANAGE,
-        USER_IDENTITY.NORMAL,
-        USER_IDENTITY.ADMIN,
-      ].includes(userTag);
-    },
     navigateToPage(item) {
       const { route, isWeb } = item;
       if (!route) return; // 如果 route 为空，则直接返回

@@ -32,8 +32,7 @@
         <view class="item" v-for="(item, key) in pointDetails" :key="key">
           <view class="col w75">
             <view class="describe">{{ item.title }}</view>
-
-            <!-- <view class="desc">借口借口借口借口借口借口借口借口借口借口</view> -->
+            <view class="desc" v-if="false">{{ item.mark }}</view>
             <view class="time">发生时间：{{ item.add_time }}</view>
           </view>
           <view class="score {{item.isMinus?'minus':'plus'}}">
@@ -75,7 +74,6 @@ export default {
     this.getUserInfo();
     this.getIntegralList();
   },
-  onShow() {},
   onReachBottom: function () {
     this.getIntegralList();
   },
