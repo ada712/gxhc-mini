@@ -1,88 +1,17 @@
-@ -0,0 +1,272 @@
 <template>
   <view class="wripper">
     <view class="content">
-      <view class="same-module" v-if="showInvestorModule">
-        <view class="title">投资专区</view>
+      <view class="same-module" v-for="(item, key) in menuList" :key="key">
+        <view class="title">{{ item.title }}</view>
         <view class="list">
           <view
             class="item"
-            v-for="(item, key) in investMenus"
-            :key="key"
-            @click="navigateToPage(item)"
+            v-for="(child, index) in item.list"
+            :key="index"
+            @click="navigateToPage(child)"
           >
-            <image :src="item.icon" class="item-icon" />
-            <view class="item-text">{{ item.label }}</view>
-          </view>
-        </view>
-      </view>
-      <view class="same-module">
-        <view class="title">孵化专区</view>
-        <view class="list">
-          <view
-            class="item"
-            v-for="(item, key) in projectMenus"
-            :key="key"
-            @click="navigateToPage(item)"
-          >
-            <image :src="item.icon" class="item-icon" />
-            <view class="item-text">{{ item.label }}</view>
-          </view>
-        </view>
-      </view>
-      <view class="same-module">
-        <view class="title">积分专区</view>
-        <view class="list">
-          <view
-            class="item"
-            v-for="(item, key) in pointsMenus"
-            :key="key"
-            @click="navigateToPage(item)"
-          >
-            <image :src="item.icon" class="item-icon" />
-            <view class="item-text">{{ item.label }}</view>
-          </view>
-        </view>
-      </view>
-      <view class="same-module" v-if="showDirectorModule">
-        <view class="title">理事成员专区</view>
-        <view class="list">
-          <view
-            class="item"
-            v-for="(item, key) in directorMenus"
-            :key="key"
-            @click="navigateToPage(item)"
-          >
-            <image :src="item.icon" class="item-icon" />
-            <view class="item-text">{{ item.label }}</view>
-          </view>
-        </view>
-      </view>
-      <view class="same-module" v-if="showCampusModule">
-        <view class="title">校园合伙人专区</view>
-        <view class="list">
-          <view
-            class="item"
-            v-for="(item, key) in campusMenus"
-            :key="key"
-            @click="navigateToPage(item)"
-          >
-            <image :src="item.icon" class="item-icon" />
-            <view class="item-text">{{ item.label }}</view>
-          </view>
-        </view>
-      </view>
-      <view class="same-module" v-if="showInvestorModule">
-        <view class="title">社群专区</view>
-        <view class="list">
-          <view
-            class="item"
-            v-for="(item, key) in investMenus"
-            :key="key"
-            @click="navigateToPage(item)"
-          >
-            <image :src="item.icon" class="item-icon" />
-            <view class="item-text">{{ item.label }}</view>
+            <image :src="child.icon" class="item-icon" />
+            <view class="item-text">{{ child.label }}</view>
           </view>
         </view>
       </view>
@@ -91,9 +20,11 @@
 </template>
 
 <script>
+import list from "./menu";
 import { USER_IDENTITY } from "@/const/index";
 import { clearProjectStorage } from "@/utils/cache.js";
-import { imgUrls } from "@/config/app";
+const imgUrls =
+  "https://7072-prod-cloud-env-9gqq29j68db5f470-1326719267.tcb.qcloud.la/miniprogram/images";
 export default {
   data: function () {
     return {
@@ -197,11 +128,17 @@ export default {
           route: "/projectPages/list/index",
         },
       ],
-      showPointModule: false,
-      showCampusModule: false,
-      showDirectorModule: false,
-      showInvestorModule: false,
+      showPointModule: true,
+      showCampusModule: true,
+      showDirectorModule: true,
+      showInvestorModule: true,
+			permission: ['tzzq','fhzq','sqzq','lszq','jfzq','hbzq']
     };
+  },
+  computed: {
+    menuList() {
+      return list.filter(item => this.permission.includes(item.show));
+    },
   },
   methods: {
     judgePointBox(userTag) {
@@ -248,7 +185,7 @@ export default {
 
 <style lang="scss" scoped>
 page {
-  background: #f4f4f4;
+  background: #f6f8ff;
 }
 
 .wripper {
@@ -292,10 +229,10 @@ page {
           margin-bottom: 24rpx;
 
           .item-icon {
-            width: 88rpx;
-            height: 88rpx;
+            width: 110rpx;
+            height: 110rpx;
             border-radius: 34rpx;
-            margin-bottom: 16rpx;
+            margin-bottom: 14rpx;
           }
 
           .item-text {

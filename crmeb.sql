@@ -12123,37 +12123,10 @@ COMMIT;
 -- add sql ==============================
 
 -- ----------------------------
--- Table structure for eb_banners
+-- Table structure for eb_g_user_dau
 -- ----------------------------
-
-DROP TABLE IF EXISTS `eb_banners`;
-CREATE TABLE `eb_banners` (
-  `id` int NOT NULL AUTO_INCREMENT COMMENT '自增ID',
-  `imagePath` varchar(255) NOT NULL DEFAULT '' COMMENT 'bannert图⽚路径',
-  `linkPath` varchar(255) NOT NULL DEFAULT '' COMMENT '链接路径',
-  `isWeb` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否是微信公众号⽂章（是否外部访问）【true | false】',
-  `position` tinyint(1) NOT NULL DEFAULT '0' COMMENT '【位置默认⾸⻚，未来可能是其他位置的图⽚】',
-  `add_time` int NOT NULL DEFAULT '0' COMMENT '添加时间',
-  `update_time` int NOT NULL DEFAULT '0' COMMENT '更新时间',
-  `created_at` int NOT NULL COMMENT '创建人',
-  `updated_bt` int NOT NULL COMMENT '更新人',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='banner表';
-
--- ----------------------------
--- Records of eb_banners
--- ----------------------------
-
-BEGIN;
-INSERT INTO `eb_banners` (`imagePath`, `linkPath`, `isWeb`, `position`, `add_time`) VALUES ('/miniprogram/upload/banner/202503200937-indexbanner1742434628572.jpg', '/explainPages/news/mohe/index', 0, 0, 1756276678);
-INSERT INTO `eb_banners` (`imagePath`, `linkPath`, `isWeb`, `position`, `add_time`) VALUES ('/miniprogram/upload/banner/202503200937-indexbanner1742435031514.jpg', 'https://mp.weixin.qq.com/s/zVu4raklWoYQwRDCw_XOTg', 1, 0, 1756276678);
-COMMIT;
-
--- ----------------------------
--- Table structure for eb_user_dau
--- ----------------------------
-DROP TABLE IF EXISTS `eb_user_dau`;
-CREATE TABLE `eb_user_dau` (
+DROP TABLE IF EXISTS `eb_g_user_dau`;
+CREATE TABLE `eb_g_user_dau` (
   `id` int NOT NULL AUTO_INCREMENT COMMENT '自增ID',
   `agent` varchar(255) NOT NULL DEFAULT '' COMMENT '浏览器',
   `visit_time` int unsigned NOT NULL DEFAULT '0' COMMENT '访问时间',
@@ -12170,16 +12143,16 @@ CREATE TABLE `eb_user_dau` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='用户访问记录表';
 
 -- ----------------------------
--- Records of eb_user_dau
+-- Records of eb_g_user_dau
 -- ----------------------------
 BEGIN;
 COMMIT;
 
 -- ----------------------------
--- Table structure for eb_contracts
+-- Table structure for eb_g_contracts
 -- ----------------------------
-DROP TABLE IF EXISTS `eb_contracts`;
-CREATE TABLE `eb_contracts` (
+DROP TABLE IF EXISTS `eb_g_contracts`;
+CREATE TABLE `eb_g_contracts` (
   `id` int NOT NULL AUTO_INCREMENT COMMENT '自增ID',
   `fileURL` varchar(255) NOT NULL DEFAULT '' COMMENT '文件路径',
   `signDate` int NOT NULL DEFAULT '0' COMMENT '签署日期',
@@ -12200,17 +12173,17 @@ CREATE TABLE `eb_contracts` (
 
 
 -- ----------------------------
--- Records of eb_contracts
+-- Records of eb_g_contracts
 -- ----------------------------
 BEGIN;
--- INSERT INTO `eb_contracts` (`fileURL`, `signDate`, `status`, `endDate`, `startDate`, `contractType`, `description`, `title`, `userId`, `contractNumber`, `add_time`) VALUES ('/miniprogram/upload/contract/002-理事会积分协议-20241220-赵书君海南鹿鹏投资合伙企业（有限合伙）&国信合创.pdf', '1734624000', 'already', '', '2024-12-20', 2, '理事会积分协议-20241220-赵书君海南鹿鹏投资合伙企业（有限合伙）&国信合创', '理事会积分协议-赵书君海南鹿鹏投资合伙企业（有限合伙）&国信合创', 0, 'GXHC1742447980274', 1742448162);
+-- INSERT INTO `eb_g_contracts` (`fileURL`, `signDate`, `status`, `endDate`, `startDate`, `contractType`, `description`, `title`, `userId`, `contractNumber`, `add_time`) VALUES ('/miniprogram/upload/contract/002-理事会积分协议-20241220-赵书君海南鹿鹏投资合伙企业（有限合伙）&国信合创.pdf', '1734624000', 'already', '', '2024-12-20', 2, '理事会积分协议-20241220-赵书君海南鹿鹏投资合伙企业（有限合伙）&国信合创', '理事会积分协议-赵书君海南鹿鹏投资合伙企业（有限合伙）&国信合创', 0, 'GXHC1742447980274', 1742448162);
 COMMIT;
 
 -- ----------------------------
--- Table structure for eb_point_details
+-- Table structure for eb_g_point_details
 -- ----------------------------
-DROP TABLE IF EXISTS `eb_point_details`;
-CREATE TABLE `eb_point_details` (
+DROP TABLE IF EXISTS `eb_g_point_details`;
+CREATE TABLE `eb_g_point_details` (
   `id` int NOT NULL AUTO_INCREMENT COMMENT '自增ID',
   `userName` varchar(255) NOT NULL DEFAULT '' COMMENT '用户昵称',
   `description` varchar(255) NOT NULL DEFAULT '' COMMENT '积分变动说明',
@@ -12225,16 +12198,16 @@ CREATE TABLE `eb_point_details` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='积分明细表';
 
 -- ----------------------------
--- Records of eb_point_details
+-- Records of eb_g_point_details
 -- ----------------------------
 BEGIN;
 COMMIT;
 
 -- ----------------------------
--- Table structure for eb_project_team_info
+-- Table structure for eb_g_project_team_info
 -- ----------------------------
-DROP TABLE IF EXISTS `eb_project_team_info`;
-CREATE TABLE `eb_project_team_info` (
+DROP TABLE IF EXISTS `eb_g_project_team_info`;
+CREATE TABLE `eb_g_project_team_info` (
   `id` int NOT NULL AUTO_INCREMENT COMMENT '自增ID',
   `isWorkExperience` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否有过职场经历;是/否',
   `hasPastStartupExp` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否有过创业经历;是/否',
@@ -12264,16 +12237,16 @@ CREATE TABLE `eb_project_team_info` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='项目团队成员信息表';
 
 -- ----------------------------
--- Records of eb_project_team_info
+-- Records of eb_g_project_team_info
 -- ----------------------------
 BEGIN;
 COMMIT;
 
 -- ----------------------------
--- Table structure for eb_init_projects
+-- Table structure for eb_g_init_projects
 -- ----------------------------
-DROP TABLE IF EXISTS `eb_init_projects`;
-CREATE TABLE `eb_init_projects` (
+DROP TABLE IF EXISTS `eb_g_init_projects`;
+CREATE TABLE `eb_g_init_projects` (
   `id` int NOT NULL AUTO_INCREMENT COMMENT '自增ID',
   `companyName` varchar(255) NOT NULL DEFAULT '' COMMENT '项目/公司名称',
   `setupTime` int NOT NULL DEFAULT '0' COMMENT '成立时间',
@@ -12320,16 +12293,16 @@ CREATE TABLE `eb_init_projects` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='原始项目库表';
 
 -- ----------------------------
--- Records of eb_init_projects
+-- Records of eb_g_init_projects
 -- ----------------------------
 BEGIN;
 COMMIT;
 
 -- ----------------------------
--- Table structure for eb_experience_details
+-- Table structure for eb_g_experience_details
 -- ----------------------------
-DROP TABLE IF EXISTS `eb_experience_details`;
-CREATE TABLE `eb_experience_details` (
+DROP TABLE IF EXISTS `eb_g_experience_details`;
+CREATE TABLE `eb_g_experience_details` (
   `id` int NOT NULL AUTO_INCREMENT COMMENT '自增ID',
   `experience` decimal(12,2) NOT NULL DEFAULT '0.00' COMMENT '经验值',
   `openid` varchar(255) NOT NULL DEFAULT '' COMMENT '用户ID',
@@ -12344,16 +12317,16 @@ CREATE TABLE `eb_experience_details` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='校园合伙人经验值明细表';
 
 -- ----------------------------
--- Records of eb_experience_details
+-- Records of eb_g_experience_details
 -- ----------------------------
 BEGIN;
 COMMIT;
 
 -- ----------------------------
--- Table structure for eb_experience_apply
+-- Table structure for eb_g_experience_apply
 -- ----------------------------
-DROP TABLE IF EXISTS `eb_experience_apply`;
-CREATE TABLE `eb_experience_apply` (
+DROP TABLE IF EXISTS `eb_g_experience_apply`;
+CREATE TABLE `eb_g_experience_apply` (
   `id` int NOT NULL AUTO_INCREMENT COMMENT '自增ID',
   `approvals` text NOT NULL COMMENT '审核人员的同意情况',
   `openid` varchar(255) NOT NULL DEFAULT '' COMMENT '同学的id',
@@ -12370,17 +12343,17 @@ CREATE TABLE `eb_experience_apply` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='校园合伙人经验值申报表';
 
 -- ----------------------------
--- Records of eb_experience_apply
+-- Records of eb_g_experience_apply
 -- ----------------------------
 BEGIN;
 COMMIT;
 
 
 -- ----------------------------
--- Table structure for eb_exp_ranking_list
+-- Table structure for eb_g_exp_ranking_list
 -- ----------------------------
-DROP TABLE IF EXISTS `eb_exp_ranking_list`;
-CREATE TABLE `eb_exp_ranking_list` (
+DROP TABLE IF EXISTS `eb_g_exp_ranking_list`;
+CREATE TABLE `eb_g_exp_ranking_list` (
   `id` int NOT NULL AUTO_INCREMENT COMMENT '自增ID',
   `name` varchar(255) NOT NULL DEFAULT '' COMMENT '姓名',
   `totalExperience` decimal(12,2) NOT NULL DEFAULT '0.00' COMMENT '总的经验值',
@@ -12395,16 +12368,16 @@ CREATE TABLE `eb_exp_ranking_list` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='校园合伙人经验值排行榜';
 
 -- ----------------------------
--- Records of eb_exp_ranking_list
+-- Records of eb_g_exp_ranking_list
 -- ----------------------------
 BEGIN;
 COMMIT;
 
 -- ----------------------------
--- Table structure for eb_project_feedback
+-- Table structure for eb_g_project_feedback
 -- ----------------------------
-DROP TABLE IF EXISTS `eb_project_feedback`;
-CREATE TABLE `eb_project_feedback` (
+DROP TABLE IF EXISTS `eb_g_project_feedback`;
+CREATE TABLE `eb_g_project_feedback` (
   `id` int NOT NULL AUTO_INCREMENT COMMENT '自增ID',
   `projectName` varchar(255) NOT NULL DEFAULT '' COMMENT '项目名称',
   `memberID` int unsigned NOT NULL DEFAULT '0' COMMENT '提供反馈的理事会成员ID',
@@ -12422,16 +12395,16 @@ CREATE TABLE `eb_project_feedback` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='项目反馈表';
 
 -- ----------------------------
--- Records of eb_project_feedback
+-- Records of eb_g_project_feedback
 -- ----------------------------
 BEGIN;
 COMMIT;
 
 -- ----------------------------
--- Table structure for eb_campus_activity
+-- Table structure for eb_g_campus_activity
 -- ----------------------------
-DROP TABLE IF EXISTS `eb_campus_activity`;
-CREATE TABLE `eb_campus_activity` (
+DROP TABLE IF EXISTS `eb_g_campus_activity`;
+CREATE TABLE `eb_g_campus_activity` (
   `id` int NOT NULL AUTO_INCREMENT COMMENT '自增ID',
   `title` varchar(255) NOT NULL DEFAULT '' COMMENT '活动名称',
   `banner` varchar(255) NOT NULL DEFAULT '' COMMENT '活动广告图片',
@@ -12448,16 +12421,16 @@ CREATE TABLE `eb_campus_activity` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='校园活动信息表';
 
 -- ----------------------------
--- Records of eb_campus_activity
+-- Records of eb_g_campus_activity
 -- ----------------------------
 BEGIN;
 COMMIT;
 
 -- ----------------------------
--- Table structure for eb_campus_partners
+-- Table structure for eb_g_campus_partners
 -- ----------------------------
-DROP TABLE IF EXISTS `eb_campus_partners`;
-CREATE TABLE `eb_campus_partners` (
+DROP TABLE IF EXISTS `eb_g_campus_partners`;
+CREATE TABLE `eb_g_campus_partners` (
   `id` int NOT NULL AUTO_INCREMENT COMMENT '自增ID',
   `reallyName` varchar(255) NOT NULL DEFAULT '' COMMENT '真实姓名',
   `approvals` int NOT NULL DEFAULT '0' COMMENT '审批人数;3个管理⼈员，最少2个同意',
@@ -12492,17 +12465,17 @@ CREATE TABLE `eb_campus_partners` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='校园合伙人信息表';
 
 -- ----------------------------
--- Records of eb_campus_partners
+-- Records of eb_g_campus_partners
 -- ----------------------------
 BEGIN;
 COMMIT;
 
 
 -- ----------------------------
--- Table structure for eb_invest_projects
+-- Table structure for eb_g_invest_projects
 -- ----------------------------
-DROP TABLE IF EXISTS `eb_invest_projects`;
-CREATE TABLE `eb_invest_projects` (
+DROP TABLE IF EXISTS `eb_g_invest_projects`;
+CREATE TABLE `eb_g_invest_projects` (
   `id` int NOT NULL AUTO_INCREMENT COMMENT '自增ID',
   `uid` int unsigned NOT NULL DEFAULT '0' COMMENT '微信用户id',
   `companyBrief` varchar(64) NOT NULL DEFAULT '' COMMENT '项目/公司简称',
@@ -12563,16 +12536,16 @@ CREATE TABLE `eb_invest_projects` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='投资项目表';
 
 -- ----------------------------
--- Records of eb_invest_projects
+-- Records of eb_g_invest_projects
 -- ----------------------------
 BEGIN;
 COMMIT;
 
 -- ----------------------------
--- Table structure for eb_director_member
+-- Table structure for eb_g_director_member
 -- ----------------------------
-DROP TABLE IF EXISTS `eb_director_member`;
-CREATE TABLE `eb_director_member` (
+DROP TABLE IF EXISTS `eb_g_director_member`;
+CREATE TABLE `eb_g_director_member` (
   `id` int NOT NULL AUTO_INCREMENT COMMENT '自增ID',
   `userId` int unsigned NOT NULL DEFAULT '0' COMMENT '用户id',
   `directorType` varchar(64) NOT NULL DEFAULT '' COMMENT '理事类型;【名誉理事⻓=reputation，常务理事⻓=executive，理事会顾问=consultant，理事成员=member】',
@@ -12597,7 +12570,7 @@ CREATE TABLE `eb_director_member` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='理事会成员信息';
 
 -- ----------------------------
--- Records of eb_director_member
+-- Records of eb_g_director_member
 -- ----------------------------
 BEGIN;
 COMMIT;

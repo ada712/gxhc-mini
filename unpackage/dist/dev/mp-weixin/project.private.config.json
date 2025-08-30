@@ -8,6 +8,13 @@
         "miniprogram": {
             "list": [
                 {
+                    "name": "pages/domain/index/index",
+                    "pathName": "pages/domain/index/index",
+                    "query": "",
+                    "launchMode": "default",
+                    "scene": null
+                },
+                {
                     "name": "pages/mine/customer/personInfo/index",
                     "pathName": "pages/mine/customer/personInfo/index",
                     "query": "",

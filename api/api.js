@@ -10,6 +10,15 @@
 
 import request from "@/utils/request.js";
 /**
+ * 首页
+ * 
+ */
+export function getIndex(data) {
+	return request.get('index/index', data, {
+		noAuth: true
+	});
+}
+/**
  * 公共接口 ，优惠券接口 , 行业此讯 , 手机号码注册
  *
  */

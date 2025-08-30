@@ -31,14 +31,14 @@
       <view class="list">
         <view class="item" v-for="(item, key) in pointDetails" :key="key">
           <view class="col w75">
-            <view class="describe">{{ item.pointType }}</view>
+            <view class="describe">{{ item.title }}</view>
 
             <!-- <view class="desc">借口借口借口借口借口借口借口借口借口借口</view> -->
-            <view class="time">发生时间：{{ item.createTime }}</view>
+            <view class="time">发生时间：{{ item.add_time }}</view>
           </view>
           <view class="score {{item.isMinus?'minus':'plus'}}">
-            <block v-if="!item.isMinus">+</block>
-            {{ item.points }}
+            <block v-if="item.pm">+</block>
+            {{ item.number }}
           </view>
         </view>
       </view>
@@ -56,16 +56,61 @@
 </template>
 
 <script>
+import { getUserInfo, getIntegralList } from "@/api/user.js";
 import { imgUrls } from "@/config/app";
 export default {
   data: function () {
     return {
       imgPath: imgUrls,
       totalPoint: 0,
+      page: 1,
+      limit: 10,
+      loadend: false,
+      loading: false,
+      loadTitle: `加载更多`,
       pointDetails: [],
     };
   },
+  onLoad() {
+    this.getUserInfo();
+    this.getIntegralList();
+  },
+  onShow() {},
+  onReachBottom: function () {
+    this.getIntegralList();
+  },
   methods: {
+    getUserInfo() {
+      getUserInfo().then((res) => {
+        this.totalPoint = res.data.integral;
+      });
+    },
+    /**
+     * 获取积分明细
+     */
+    getIntegralList() {
+      if (this.loading) return;
+      if (this.loadend) return;
+      this.loading = true;
+      this.loadTitle = "";
+      getIntegralList({
+        page: this.page,
+        limit: this.limit,
+      }).then((res)  => {
+          let list = res.data,
+            loadend = list.length < this.limit;
+          this.pointDetails = this.$util.SplitArray(list, this.pointDetails);
+          this.page = this.page + 1;
+          this.loading = false;
+          this.loadend = loadend;
+          this.loadTitle = loadend ? `我也是有底线的` : `加载更多`;
+        },
+        (res) => {
+          this.loading = false;
+          this.loadTitle = `加载更多`;
+        }
+      );
+    },
     handleNavigation(url) {
       uni.navigateTo({
         url: `${url}`,

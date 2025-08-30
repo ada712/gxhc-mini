@@ -76,11 +76,12 @@ page {
   padding: 24rpx;
   width: 100%;
 }
-
 .container {
   width: 100%;
   box-sizing: border-box;
   padding: 32rpx 24rpx;
+  padding: 24rpx;
+
   background-color: #ffffff;
   border-radius: 24rpx;
   .header-image {

@@ -33,15 +33,26 @@
 
 <script>
 import { imgUrls } from "@/config/app";
+import { getDirectorDetails } from "@/api/gxhc";
 export default {
   data: function () {
     return {
       imgUrl: imgUrls,
-      directorId: "",
       directorItem: {},
     };
   },
-  methods: {},
+  onLoad(options) {
+    if (options.id) {
+      this.getData(options.id);
+    }
+  },
+  methods: {
+    getData(id) {
+      getDirectorDetails({ id }).then((res) => {
+        this.directorItem = res.data;
+      });
+    },
+  },
 };
 </script>
 
