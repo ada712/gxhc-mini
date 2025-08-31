@@ -169,7 +169,7 @@
               :src="imgPath + '/mine/icon_zxkf.png'"
               class="icon_brief_menu"
             />
-            <text class="ft32">客服钟智飞</text>
+            <text class="ft32">智能客服</text>
           </view>
           <view class="right">
             <image

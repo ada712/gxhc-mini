@@ -29,6 +29,7 @@
 </template>
 
 <script>
+import { investProjectsByUser } from "@/api/gxhc";
 import { imgUrls } from "@/config/app";
 export default {
   data: function () {
@@ -37,19 +38,48 @@ export default {
       imgUrl: imgUrls,
     };
   },
+  onLoad(options) {
+    this.fetchCurrentUserProject();
+  },
   methods: {
+    fetchCurrentUserProject() {
+      uni.showLoading();
+      investProjectsByUser()
+        .then((res) => {
+          uni.hideLoading();
+          console.log("res==>", res);
+          if (res.status == 200 && Object.keys(res.data).length > 0) {
+            this.item = res.data;
+          } else {
+            uni.showModal({
+              content:
+                "您未在国信合(CHA)创理事会发起过项目，无需进行资料的补充，如果需要发起项目，可在功能页面项目专区的发起项目模块，进行项目申请",
+              showCancel: false,
+              confirmText: "我知道了",
+              success(res) {
+                if (res.confirm) {
+                  uni.navigateBack();
+                }
+              },
+            });
+          }
+        })
+        .catch((error) => {
+          uni.hideLoading();
+          this.item = {};
+        });
+    },
     goUpdateBp() {
       const item = this.item;
       uni.navigateTo({
-        url: `/projectPages/updateBP/index?id=${item._id}&companyName=${item.companyName}`,
+        url: `/projectPages/updateBP/index?id=${item.id}&companyName=${item.companyName}`,
       });
     },
-
     handleGoFollow() {
       const item = this.item;
-      if (item._id) {
+      if (item.id) {
         uni.navigateTo({
-          url: `/projectPages/updateFinance/index?id=${item._id}&companyName=${item.companyName}`,
+          url: `/projectPages/updateFinance/index?id=${item.id}&companyName=${item.companyName}`,
         });
       } else {
         uni.showModal({

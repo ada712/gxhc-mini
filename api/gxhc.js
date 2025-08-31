@@ -35,3 +35,15 @@ export function investProjectsRevoke(data) {
     noAuth: false
   });
 }
+
+export function investProjectsUpdateBP(data) {
+  return request.post('invest_projects/update_bp', data, {
+    noAuth: false
+  });
+}
+
+export function investProjectsUpdateSupply(data) {
+  return request.post('invest_projects/update_supply', data, {
+    noAuth: false
+  });
+}

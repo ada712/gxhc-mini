@@ -1229,9 +1229,9 @@ export default {
     uploadBPFile(tempFiles) {
       uni.showLoading({
         title: `文件上传中`,
-      });
+      });      
       uni.uploadFile({
-        url: HTTP_REQUEST_URL + "/api/upload/file",
+        url: HTTP_REQUEST_URL + "/api/upload/pdf",
         filePath: tempFiles.path,
         fileType: "pdf",
         name: "file",
