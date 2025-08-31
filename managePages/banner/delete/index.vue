@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import { directorUrl } from "@/config/app";
+import { miniprogramUrl } from "@/config/app";
 export default {
   data: function () {
     return {
@@ -22,7 +22,7 @@ export default {
         {
           _id: "3c0d6fb667db737b003474ff4302af50",
           imagePath:
-            directorUrl + "/upload/banner/202503200943-indexbanner1742435031514.jpg",
+            miniprogramUrl + "/upload/banner/202503200943-indexbanner1742435031514.jpg",
           linkPath: "https://mp.weixin.qq.com/s/zVu4raklWoYQwRDCw_XOTg",
           isWeb: true,
           position: "首页",
@@ -32,7 +32,7 @@ export default {
         {
           _id: "41e75df467db714a0033862f016a8a6a",
           imagePath:
-            directorUrl + "/upload/banner/202503200937-indexbanner1742434628572.jpg",
+            miniprogramUrl + "/upload/banner/202503200937-indexbanner1742434628572.jpg",
           linkPath: "/explainPages/news/mohe/index",
           isWeb: false,
           position: "首页",

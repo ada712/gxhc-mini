@@ -12,27 +12,26 @@
               v-model="schoolName"
               maxlength="40"
               placeholder-style="font-size: 24rpx;color: rgba(47,48,49,0.5);font-weight:normal;"
-              bindinput="handleInputSchoolName"
-              bindfocus="handleFocusSchoolName"
+              @input="handleInputSchoolName"
+              @focus="handleFocusSchoolName"
             />
             <view
               class="search-btn"
               v-if="showSearchModule"
-              bind:tap="handleSureSchoolName"
+              @click="handleSureSchoolName"
               >{{ schoolName ? "确认" : "取消" }}</view
             >
           </view>
-
           <view class="search-module" v-if="showSearchModule">
-            <scroll-view scroll-x="false" scroll-y="true" class="list">
-              <block v-for="(item, index) in richScools" :key="index">
+            <scroll-view scroll-y class="list">
+              <view v-for="(item, index) in richScoolsList" :key="index">
                 <rich-text
                   class="item"
                   :nodes="item.html"
-                  catch:tap="changeSchoolName"
-                  data-item="{{item}}"
+                  :key="index"
+                  @click="changeSchoolName(item)"
                 ></rich-text>
-              </block>
+              </view>
             </scroll-view>
           </view>
         </view>
@@ -47,7 +46,6 @@
               v-model="major"
               maxlength="30"
               placeholder-style="font-size: 24rpx;color: rgba(47,48,49,0.5);font-weight:normal;"
-              bindinput="handleInputMajor"
             />
           </view>
         </view>
@@ -59,14 +57,14 @@
               :value="date"
               start="1980-09-01"
               end="2045-12-31"
-              bindchange="bindStartDateChange"
+              @change="bindStartDateChange"
               class="picker-half"
               fields="month"
             >
               <view class="picker-value" v-if="!startDate">
                 <text class="default-value">请选择</text>
                 <image
-                  :src="imgUrl+'/icons/icon-gray-right2.png'"
+                  :src="imgUrl + '/icons/icon-gray-right2.png'"
                   class="icon-right mr24"
                 />
               </view>
@@ -80,14 +78,14 @@
               :value="date"
               start="1980-01-01"
               end="2045-09-01"
-              bindchange="bindEndDateChange"
+              @change="bindEndDateChange"
               class="picker-half"
               fields="month"
             >
               <view class="picker-value" v-if="!endDate">
                 <text class="default-value">请选择</text>
                 <image
-                  :src="imgUrl+'/icons/icon-gray-right2.png'"
+                  :src="imgUrl + '/icons/icon-gray-right2.png'"
                   class="icon-right mr24"
                 />
               </view>
@@ -100,13 +98,14 @@
       </view>
     </view>
     <view class="foot">
-      <view class="sumit" bind:tap="checkData">{{ footLabel }}</view>
+      <view class="sumit" @click="checkData">{{ footLabel }}</view>
     </view>
   </view>
 </template>
 
 <script>
-import { imgUrls } from "@/config/app";
+import { imgUrls, miniprogramUrl } from "@/config/app";
+import { getColleges } from "@/api/public";
 export default {
   data: function () {
     return {
@@ -115,7 +114,7 @@ export default {
       major: "",
       startDate: "",
       endDate: "",
-      pageStaus: 'add',
+      pageStaus: "add",
       footLabel: "保存",
       educationList: [],
       updateId: "",
@@ -124,7 +123,137 @@ export default {
       searchBtnLabel: "取消",
     };
   },
-  methods: {},
+  onLoad() {
+    this.fetchSchoolList();
+  },
+  computed: {
+    richScoolsList() {
+      if (!this.schoolName) return this.richScools;
+      return this.collegesList
+        .map((item) => {
+          if (
+            typeof item.name === "string" &&
+            item.name.includes(this.schoolName)
+          ) {
+            // 使用正则表达式替换匹配的文本
+            const highlighted = item.name.replace(
+              new RegExp(this.schoolName, "gi"),
+              (match) => `<span class="highlight">${this.schoolName}</span>`
+            );
+            return { ...item, html: highlighted };
+          }
+          return { ...item, html: item.name };
+        })
+        .filter((item) => {
+          // 只保留包含搜索文本的项目
+          return this.schoolName ? item.name.includes(this.schoolName) : true;
+        });
+    },
+  },
+  methods: {
+    bindStartDateChange(e) {
+      this.startDate = e.detail.value;
+    },
+    bindEndDateChange(e) {
+      const endDate = e.detail.value;
+      if (endDate < this.startDate) {
+        uni.showToast({
+          title: "结束时间小于开始时间，请重新选择",
+          icon: "none",
+        });
+        return;
+      }
+      this.endDate = endDate;
+    },
+    handleInputSchoolName() {
+      this.showSearchModule = this.richScoolsList.length > 0;
+    },
+    changeSchoolName(item) {
+      this.showSearchModule = false;
+      this.schoolName = item.name;
+    },
+    handleSureSchoolName() {
+      if (this.schoolName && this.schoolName.length < 2) {
+        uni.showToast({
+          title: "请输入完整的学校名称",
+          icon: "none",
+        });
+        return;
+      }
+      this.showSearchModule = false;
+    },
+    handleFocusSchoolName() {
+      this.showSearchModule = true;
+    },
+    handleCollegesData(data) {
+      const list = data.map((item) => ({ ...item, html: item.name }));
+      this.collegesList = data;
+      this.richScools = list;
+    },
+    fetchSchoolList() {
+      try {
+        const collegesData = uni.getStorageSync("colleges");
+        console.log("缓存中的学校数据=》", collegesData.length);
+        if (collegesData) {
+          this.handleCollegesData(collegesData);
+        } else {
+          console.log("我走请求缓存数据");
+          getColleges().then((res) => {
+            uni.setStorageSync("colleges", res.data);
+            this.handleCollegesData(res.data);
+          });
+        }
+      } catch (e) {
+        console.error("读取缓存失败", e);
+      }
+    },
+    checkData() {
+      const { schoolName, major, startDate, endDate, educationList, updateId } =
+        this;
+
+      if (!schoolName) {
+        uni.showToast({
+          title: "请输入学校名称",
+          icon: "none",
+        });
+        return;
+      }
+      if (!major) {
+        uni.showToast({
+          title: "请输入就读专业",
+          icon: "none",
+        });
+        return;
+      }
+      if (!startDate || !endDate) {
+        uni.showToast({
+          title: "请输入就读时间",
+          icon: "none",
+        });
+        return;
+      }
+
+      const newItem = {
+        id: updateId || new Date().getTime(),
+        schoolName,
+        major,
+        startDate,
+        endDate,
+      };
+
+      if (this.pageStatus === "add") {
+        educationList.push(newItem);
+      } else {
+        const index = educationList.findIndex((item) => item.id === updateId);
+        if (index !== -1) {
+          Object.assign(educationList[index], newItem);
+        }
+      }
+
+      uni.setStorageSync("educationList", educationList);
+      uni.navigateBack();
+    },
+  },
 };
 </script>
 

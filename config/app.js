@@ -5,7 +5,7 @@
 
 export const imgUrls = "https://mini.cnbfmy.cn/statics/miniprogram/images";
 export const imgUrls2 = "/cloud/miniprogram/images";
-export const directorUrl = "https://mini.cnbfmy.cn/statics/miniprogram/";
+export const miniprogramUrl = "https://mini.cnbfmy.cn/statics/miniprogram/";
 
 
 // 小程序 / APP请求配置

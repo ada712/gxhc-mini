@@ -15,6 +15,12 @@ function basicConfig(name) {
     noAuth: true
   });
 }
+function getColleges() {
+  return utils_request.request.get("get_colleges", {}, {
+    noAuth: true
+  });
+}
 exports.basicConfig = basicConfig;
+exports.getColleges = getColleges;
 exports.routineBindingPhone = routineBindingPhone;
 exports.routineLogin = routineLogin;

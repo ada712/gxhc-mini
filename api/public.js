@@ -290,3 +290,9 @@ export function remoteRegister(data) {
 		noAuth: true
 	});
 }
+
+export function getColleges() {
+	return request.get("get_colleges", {}, {
+		noAuth: true
+	});
+}

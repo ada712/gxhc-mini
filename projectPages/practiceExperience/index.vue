@@ -39,7 +39,7 @@
               :value="date"
               start="1980-01-01"
               end="2045-09-01"
-              bindchange="bindStartDateChange"
+              @change="bindStartDateChange"
               class="picker-half"
               fields="month"
             >
@@ -60,7 +60,7 @@
               :value="date"
               start="1980-01-01"
               end="2045-09-01"
-              bindchange="bindEndDateChange"
+              @change="bindEndDateChange"
               class="picker-half"
               fields="month"
             >
@@ -87,7 +87,6 @@
               placeholder-style="font-size: 24rpx;color: rgba(47,48,49,0.5);font-weight:normal;"
               v-model="content"
               maxlength="-1"
-              bindinput="handleInputContent"
             ></textarea>
           </view>
         </view>
@@ -115,7 +114,66 @@ export default {
       pageStaus: "add",
     };
   },
-  methods: {},
+  methods: {
+    bindStartDateChange(e) {
+      this.startDate = e.detail.value;
+    },
+    bindEndDateChange(e) {
+      const endDate = e.detail.value;
+      if (endDate < this.startDate) {
+        uni.showToast({
+          title: "结束时间小于开始时间，请重新选择",
+          icon: "none",
+        });
+        return;
+      }
+      this.endDate = endDate;
+    },
+    checkData() {
+      let {
+        unitName,
+        position,
+        startDate,
+        endDate,
+        content,
+        updateId,
+        practiceList,
+      } = this;
+      if (!unitName && !position && !startDate && !endDate && !content) {
+        uni.navigateBack();
+        return;
+      }
+
+      if (this.pageStaus === PAGESTATUS.ADD) {
+        const applyParam = {
+          id: new Date().getTime(),
+          unitName,
+          position,
+          startDate,
+          endDate,
+          content,
+        };
+        practiceList.push(applyParam);
+      } else {
+        // 使用findIndex找到对应id的对象的索引
+        const index = practiceList.findIndex((item) => item.id === updateId);
+
+        // 如果找到了对应的索引，就修改该对象
+        if (index !== -1) {
+          practiceList[index].unitName = unitName;
+          practiceList[index].position = position;
+          practiceList[index].startDate = startDate;
+          practiceList[index].endDate = endDate;
+          practiceList[index].content = content;
+        }
+
+        // 打印修改后的数组，查看结果
+        console.log(practiceList);
+      }
+      uni.setStorageSync("practiceList", practiceList);
+      uni.navigateBack();
+    },
+  },
 };
 </script>
 

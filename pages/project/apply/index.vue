@@ -1,6 +1,6 @@
 <template>
   <view class="apply-wripper">
-    <view class="step-box" v-if="false">
+    <view class="step-box">
       <view class="step-point-box">
         <image
           :src="
@@ -757,6 +757,21 @@ export default {
     }
   },
   methods: {
+    goStepThree() {
+      if (this.teamList.length > 0) {
+        this.isFinishFirstModule = true
+        this.isFinishSecondModule = true
+        this.firstModule = false
+        this.secondModule = false
+        this.thirdModule = true
+        this.footBtnLabel = "提交"
+      } else {
+        uni.showToast({
+          title: "请添加至少一位团队成员信息",
+          icon: "none",
+        });
+      }
+    },
     goStepTwo() {
       this.applyParams.isFounderCtrl = this.isFounderCtrl === "Y";
       this.applyParams.isTechCoreTeam = this.isTechCoreTeam === "Y";
@@ -802,7 +817,7 @@ export default {
       uni.removeStorageSync("workExpList");
       uni.removeStorageSync("practiceList");
       uni.navigateTo({
-        url: "/projectPages/memberInfo/index?pageStatus=add"
+        url: "/projectPages/memberInfo/index?pageStatus=add",
       });
     },
     onChangeIsTeamInvest(newValue) {

@@ -1,6 +1,6 @@
 "use strict";
 const imgUrls = "https://mini.cnbfmy.cn/statics/miniprogram/images";
-const directorUrl = "https://mini.cnbfmy.cn/statics/miniprogram/";
+const miniprogramUrl = "https://mini.cnbfmy.cn/statics/miniprogram/";
 const HTTP_REQUEST_URL = `https://mini.cnbfmy.cn`;
 const HEADER = {
   "content-type": "application/json",
@@ -14,5 +14,5 @@ exports.HEADER = HEADER;
 exports.HTTP_REQUEST_URL = HTTP_REQUEST_URL;
 exports.TIMEOUT = TIMEOUT;
 exports.TOKENNAME = TOKENNAME;
-exports.directorUrl = directorUrl;
 exports.imgUrls = imgUrls;
+exports.miniprogramUrl = miniprogramUrl;

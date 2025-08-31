@@ -49,7 +49,7 @@
             mode="selector"
             :value="index"
             :range="mainPositions"
-            bindchange="bindPositionChange"
+            @change="bindPositionChange"
           >
             <view class="picker-row">
               <view class="picker-value" v-if="!teamParams.position">
@@ -74,7 +74,7 @@
             mode="selector"
             :value="index"
             :range="otherPositions"
-            bindchange="bindPartPositionChange"
+            @change="bindPartPositionChange"
           >
             <view class="picker-row">
               <view class="picker-value" v-if="!teamParams.partPosition">
@@ -100,10 +100,9 @@
           <picker
             mode="selector"
             :value="index"
-            data-value="{{careerOptions[index].value}}"
             range-key="name"
             :range="careerOptions"
-            bindchange="bindCareerChange"
+            @change="bindCareerChange"
           >
             <view class="picker-row">
               <view class="picker-value" v-if="!teamParams.careerStatus">
@@ -226,8 +225,7 @@
             class="education-item"
             v-for="(item, id) in educationList"
             :key="id"
-            @click="handleUpdateEducation"
-            data-item="{{item}}"
+            @click="handleUpdateEducation(item)"
           >
             <view class="education-item_left">
               <image
@@ -257,8 +255,7 @@
             <image
               :src="imgUrl + '/icons/icon-del-blue.png'"
               class="icon-del"
-              @click="handleDelEduItem"
-              data-idx="{{index}}"
+              @click="handleDelEduItem(index)"
             />
           </view>
         </view>
@@ -274,7 +271,6 @@
                 placeholder-style="font-size: 24rpx;color: rgba(47,48,49,0.5);font-weight:normal;"
                 v-model="teamParams.schoolHonor"
                 maxlength="-1"
-                bindinput="handleInputSchoolHoror"
               ></textarea>
             </view>
           </view>
@@ -345,7 +341,6 @@
                 v-model="teamParams.companyName"
                 maxlength="20"
                 placeholder-style="font-size: 24rpx;color: rgba(47,48,49,0.5);font-weight:normal;"
-                bindinput="handleInputCompanyName"
               />
             </view>
           </view>
@@ -358,7 +353,6 @@
                 placeholder-style="font-size: 24rpx;color: rgba(47,48,49,0.5);font-weight:normal;"
                 v-model="teamParams.achievement"
                 maxlength="-1"
-                bindinput="handleInputAchievement"
               ></textarea>
             </view>
           </view>
@@ -416,15 +410,10 @@
           >
           <view
             class="work-list"
-            v-for="(item, index) in workExpList"
+            v-for="(w, index) in workExpList"
             :key="index"
-            wx:for-item="w"
           >
-            <view
-              class="work-item"
-              @click="handleUpdateWorkExp"
-              data-item="{{w}}"
-            >
+            <view class="work-item" @click="handleUpdateWorkExp(w)">
               <view class="work-row mb4">
                 <view class="work-row-left"
                   >{{ w.workUnit }}
@@ -447,8 +436,7 @@
               <image
                 :src="imgUrl + '/icons/icon-del-blue.png'"
                 class="icon-del"
-                @click="handleDelWorkItem"
-                data-idx="{{index}}"
+                @click="handleDelWorkItem(index)"
               />
             </view>
           </view>
@@ -464,15 +452,10 @@
           <!--实习经历列表  -->
           <view
             class="work-list"
-            v-for="(item, index) in practiceList"
+            v-for="(p, index) in practiceList"
             :key="index"
-            wx:for-item="p"
           >
-            <view
-              class="work-item"
-              @click="handleUpdatePracticeExp"
-              data-item="{{p}}"
-            >
+            <view class="work-item" @click="handleUpdatePracticeExp(p)">
               <view class="work-row mb4">
                 <view class="work-row-left">{{ p.unitName }}</view>
                 <view class="work-row-right">
@@ -493,8 +476,7 @@
               }}</view>
               <view
                 class="work-row gray75-ft22 sheng"
-                @click="handleDelPracticeItem"
-                data-idx="{{index}}"
+                @click="handleDelPracticeItem(index)"
                 >{{ p.content }}</view
               >
             </view>
@@ -566,7 +548,6 @@
                 v-model="teamParams.keyUnitName"
                 maxlength="20"
                 placeholder-style="font-size: 24rpx;color: rgba(47,48,49,0.5);font-weight:normal;"
-                bindinput="handleInputKeyUnitName"
               />
             </view>
           </view>
@@ -580,7 +561,7 @@
                 :value="date"
                 start="1980-01-01"
                 end="2045-09-01"
-                bindchange="bindImportUnitStartDateChange"
+                @change="bindImportUnitStartDateChange"
                 class="picker-half"
                 fields="month"
               >
@@ -604,7 +585,7 @@
                 :value="date"
                 start="1980-01-01"
                 end="2045-09-01"
-                bindchange="bindImportUnitEndDateChange"
+                @change="bindImportUnitEndDateChange"
                 class="picker-half"
                 fields="month"
               >
@@ -636,7 +617,6 @@
                 placeholder-style="font-size: 24rpx;color: rgba(47,48,49,0.5);font-weight:normal;"
                 v-model="teamParams.keyUnitContent"
                 maxlength="-1"
-                bindinput="handleInputNationContent"
               ></textarea>
             </view>
           </view>
@@ -717,8 +697,6 @@
                 v-model="item.content"
                 maxlength="60"
                 placeholder-style="font-size: 24rpx;color: rgba(47,48,49,0.5);font-weight:normal;"
-                bindinput="handleInputNationUnitName"
-                data-idx="{{index}}"
               />
             </view>
           </view>
@@ -778,6 +756,86 @@ export default {
     };
   },
   methods: {
+    bindChangeBirthday(e) {
+      this.teamParams.birthday = e.detail.value;
+    },
+    bindPositionChange(e) {
+      const position = this.mainPositions[e.detail.value];
+      this.teamParams.position = position;
+    },
+    bindPartPositionChange(e) {
+      const position = this.otherPositions[e.detail.value];
+      this.teamParams.partPosition = position;
+    },
+    bindCareerChange(e) {
+      const idx = e.detail.value;
+      const { value, name } = this.careerOptions[idx];
+      this.teamParams.careerStatus = value;
+      this.teamParams.careerStatusName = name;
+    },
+    handleUpdateEducation(item) {
+      this.handleNavigation(
+        item,
+        "/projectPages/eduExperience/index",
+        "update"
+      );
+    },
+    handleUpdateWorkExp(item) {
+      this.handleNavigation(
+        item,
+        "/projectPages/workExperience/index",
+        "update"
+      );
+    },
+    handleUpdatePracticeExp(item) {
+      this.handleNavigation(
+        item,
+        "/projectPages/workExperience/index",
+        "update"
+      );
+    },
+    bindImportUnitStartDateChange(e) {
+      const startDate = e.detail.value;
+      if (startDate > this.teamParams.unitEndDate) {
+        uni.showToast({
+          title: "开始时间不能大于结束时间",
+          icon: "none",
+        });
+        return;
+      }
+      this.teamParams.unitStartDate = startDate;
+    },
+    bindImportUnitEndDateChange(e) {
+      const endDate = e.detail.value;
+      if (endDate < this.teamParams.unitStartDate) {
+        uni.showToast({
+          title: "结束时间不能小于开始时间",
+          icon: "none",
+        });
+        return;
+      }
+      this.teamParams.unitEndDate = endDate;
+    },
+    handleAddHornorTitle() {
+      const name = "";
+      if (this.honorList.length < 7) {
+        this.honorList.push(name);
+      } else {
+        uni.showToast({
+          title: "最多只能添加6个",
+          icon: "none",
+        });
+      }
+    },
+    handleDelPracticeItem(index) {
+      this.handleDeleteItem("practiceList", index);
+    },
+    handleDelWorkItem(index) {
+      this.handleDeleteItem("workExpList", index);
+    },
+    handleDelEduItem(index) {
+      this.handleDeleteItem("educationList", index);
+    },
     handleAddHornorTitle() {
       const name = "";
       if (this.honorList.length < 7) {
@@ -819,6 +877,191 @@ export default {
           ? "/projectPages/workExperience/index"
           : "/projectPages/practiceExperience/index";
       this.handleNavigation("", url, "add");
+    },
+    checkData() {
+      let {
+        teamParams,
+        educationList,
+        pageStatus,
+        teamList,
+        honorList,
+        workExpList,
+      } = this;
+
+      const {
+        name,
+        birthday,
+        position,
+        careerStatus,
+        projInvolvement,
+        isTechFounder,
+        hasPastStartupExp,
+        companyName,
+        isWorkKeyUnit,
+        unitStartDate,
+        unitEndDate,
+        keyUnitName,
+        isNationTitle,
+        isWorkExperience,
+      } = teamParams;
+
+      console.log("必填项:", teamParams);
+      console.log("必填项:", teamList);
+      const filteredHonorList = honorList.filter((item) => item !== "");
+
+      if (!name) {
+        uni.showToast({
+          title: "请输入当前成员的真实姓名",
+          icon: "none",
+        });
+        return;
+      }
+      if (!birthday) {
+        uni.showToast({
+          title: "请选择当前成员的出生日期",
+          icon: "none",
+        });
+        return;
+      }
+      if (!position) {
+        uni.showToast({
+          title: "请选择当前成员担任的职位",
+          icon: "none",
+        });
+        return;
+      }
+      if (!careerStatus) {
+        uni.showToast({
+          title: "请选择当前成员当前的职业状态",
+          icon: "none",
+        });
+        return;
+      }
+      if (!projInvolvement) {
+        uni.showToast({
+          title: "请选择当前成员对该项目的参与程度",
+          icon: "none",
+        });
+        return;
+      }
+      if (!isTechFounder) {
+        uni.showToast({
+          title: "请选择当前成员是否为技术型创始人",
+          icon: "none",
+        });
+        return;
+      }
+
+      if (educationList.length === 0) {
+        uni.showToast({
+          title: "请填写成员的教育背景信息",
+          icon: "none",
+        });
+        return;
+      }
+
+      if (hasPastStartupExp === null) {
+        uni.showToast({
+          title: "请选择成员是否有过创业经历",
+          icon: "none",
+        });
+        return;
+      }
+
+      if (hasPastStartupExp === "true" && !companyName) {
+        uni.showToast({
+          title: "请填写创立的公司的名称",
+          icon: "none",
+        });
+        return;
+      }
+
+      if (isWorkExperience == null) {
+        uni.showToast({
+          title: "请选择当前成员是否有过职业经历",
+          icon: "none",
+        });
+        return;
+      }
+      if (isWorkExperience === "true" && workExpList.length == 0) {
+        uni.showToast({
+          title: "点击右上角加号，请至少填写一段职业经历",
+          icon: "none",
+        });
+        return;
+      }
+
+      if (isWorkKeyUnit === null) {
+        uni.showToast({
+          title: "请选择成员是否在国家级重点实验室或机构工作过",
+          icon: "none",
+        });
+        return;
+      }
+
+      if (isWorkKeyUnit === "true" && !keyUnitName) {
+        uni.showToast({
+          title: "请填写国家级重点实验室或国家级研究机构全称",
+          icon: "none",
+        });
+        return;
+      }
+      if (isWorkKeyUnit === "true" && !unitStartDate) {
+        uni.showToast({
+          title: "请填写您在国家重点实验室工作时间",
+          icon: "none",
+        });
+        return;
+      }
+      if (isWorkKeyUnit === "true" && !unitEndDate) {
+        uni.showToast({
+          title: "请填写您在国家重点实验室工作时间",
+          icon: "none",
+        });
+        return;
+      }
+
+      if (isNationTitle === null) {
+        uni.showToast({
+          title: "请选择成员是否获得过国家级学术/技术/人才荣誉称号",
+          icon: "none",
+        });
+        return;
+      }
+
+      if (isNationTitle === "true" && filteredHonorList.length == 0) {
+        uni.showToast({
+          title: "请填写您获取的国家级荣誉或称号名称",
+          icon: "none",
+        });
+        return;
+      }
+
+      if (hasPastStartupExp === "false") {
+        teamParams.companyName = "";
+        teamParams.achievement = "";
+      }
+
+      teamParams.educationBg = educationList;
+      teamParams.workExperiences = this.workExpList;
+      teamParams.practiceExperiences = this.practiceList;
+      teamParams.honorTitles = filteredHonorList;
+
+      console.log("提交成员信息参数:", JSON.stringify(teamParams));
+
+      if (pageStatus === PAGESTATUS.UPDATE) {
+        const index = teamList.findIndex((item) => item.id === teamParams.id);
+        if (index !== -1) {
+          Object.assign(teamList[index], teamParams);
+        }
+      } else {
+        const newParam = { id: new Date().getTime(), ...teamParams };
+        teamList.push(newParam);
+        uni.setStorageSync("teamList", teamList);
+      }
+
+      uni.removeStorageSync("tempTeamParamData");
+      uni.navigateBack();
     },
   },
 };
