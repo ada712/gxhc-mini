@@ -296,3 +296,9 @@ export function getColleges() {
 		noAuth: true
 	});
 }
+
+export function getEnterprise() {
+	return request.get("get_enterprise", {}, {
+		noAuth: true
+	});
+}

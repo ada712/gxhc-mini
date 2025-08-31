@@ -112,7 +112,30 @@ export default {
       updateId: "",
       footLabel: "保存",
       pageStaus: "add",
+      practiceList: [],
     };
+  },
+  onLoad(options) {
+    if (options && options.pageStaus) {
+      const { pageStaus } = options;
+      const footLabel = pageStaus === "add" ? "保存" : "修改";
+      this.pageStaus = pageStaus;
+      this.footLabel = footLabel;
+    }
+    if (options && options.item) {
+      const tempItem = JSON.parse(options.item);
+      console.log("实习页面tempItem=>", tempItem);
+      this.unitName = tempItem.unitName;
+      this.position = tempItem.position;
+      this.startDate = tempItem.startDate;
+      this.endDate = tempItem.endDate;
+      this.content = tempItem.content;
+      this.updateId = tempItem.id;
+    }
+  },
+  onShow() {
+    let list = uni.getStorageSync("practiceList");
+    this.practiceList = list.length > 0 ? list : [];
   },
   methods: {
     bindStartDateChange(e) {
@@ -144,7 +167,7 @@ export default {
         return;
       }
 
-      if (this.pageStaus === PAGESTATUS.ADD) {
+      if (this.pageStaus === "add") {
         const applyParam = {
           id: new Date().getTime(),
           unitName,
@@ -153,24 +176,23 @@ export default {
           endDate,
           content,
         };
-        practiceList.push(applyParam);
+        console.log(applyParam);
+        this.practiceList.push(applyParam);
       } else {
         // 使用findIndex找到对应id的对象的索引
         const index = practiceList.findIndex((item) => item.id === updateId);
-
         // 如果找到了对应的索引，就修改该对象
         if (index !== -1) {
-          practiceList[index].unitName = unitName;
-          practiceList[index].position = position;
-          practiceList[index].startDate = startDate;
-          practiceList[index].endDate = endDate;
-          practiceList[index].content = content;
+          this.practiceList[index].unitName = unitName;
+          this.practiceList[index].position = position;
+          this.practiceList[index].startDate = startDate;
+          this.practiceList[index].endDate = endDate;
+          this.practiceList[index].content = content;
         }
-
         // 打印修改后的数组，查看结果
-        console.log(practiceList);
+        console.log(this.practiceList);
       }
-      uni.setStorageSync("practiceList", practiceList);
+      uni.setStorageSync("practiceList", this.practiceList);
       uni.navigateBack();
     },
   },

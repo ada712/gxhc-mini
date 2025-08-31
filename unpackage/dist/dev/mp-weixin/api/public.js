@@ -20,7 +20,13 @@ function getColleges() {
     noAuth: true
   });
 }
+function getEnterprise() {
+  return utils_request.request.get("get_enterprise", {}, {
+    noAuth: true
+  });
+}
 exports.basicConfig = basicConfig;
 exports.getColleges = getColleges;
+exports.getEnterprise = getEnterprise;
 exports.routineBindingPhone = routineBindingPhone;
 exports.routineLogin = routineLogin;

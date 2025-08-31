@@ -524,16 +524,10 @@
               </view>
             </view>
             <view class="team-menu">
-              <view
-                class="menu-item"
-                @click="handleDelTeamMemberById"
-                data-idx="{{index}}"
+              <view class="menu-item" @click="handleDelTeamMemberById(index)"
                 >删除</view
               >
-              <view
-                class="menu-item"
-                @click="hanldeEditTeamMemberById"
-                data-item="{{item}}"
+              <view class="menu-item" @click="hanldeEditTeamMemberById(item)"
                 >编辑</view
               >
             </view>
@@ -561,10 +555,10 @@
             </view>
             <view class="same-input-box multiple-row">
               <textarea
-                :value="applyParams.councilSupport"
+                v-model="applyParams.councilSupport"
                 class="same-textarea"
                 placeholder="包含资金、资源、咨询各方面具体方向，理事"
-                bindinput="handleInputSupport"
+                placeholder-class="placeholder-style"
                 maxlength="-1"
               />
               <!-- <view class="input-count">0/1000</view> -->
@@ -577,8 +571,8 @@
                 type="text"
                 placeholder="请输入您的姓名"
                 class="single-input"
-                :value="applyParams.name"
-                bindinput="handleInputUseName"
+                v-model="applyParams.name"
+                placeholder-class="placeholder-style"
               />
             </view>
           </view>
@@ -592,8 +586,8 @@
                 maxlength="11"
                 placeholder="请输入您的手机号"
                 class="single-input"
-                :value="applyParams.mobile"
-                bindinput="handleInputUseMoblie"
+                v-model="applyParams.mobile"
+                placeholder-class="placeholder-style"
               />
             </view>
           </view>
@@ -606,9 +600,9 @@
                 type="text"
                 placeholder="请输入您的邮箱，接收项目反馈信息"
                 class="single-input"
-                :value="applyParams.email"
-                bindinput="handleInputUseEmail"
+                v-model="applyParams.email"
                 maxlength="40"
+                placeholder-class="placeholder-style"
               />
             </view>
           </view>
@@ -620,8 +614,8 @@
                 type="text"
                 placeholder="您通过谁认识了我们？"
                 class="single-input"
-                :value="applyParams.referrer"
-                bindinput="handleInputReferrer"
+                v-model="applyParams.referrer"
+                placeholder-class="placeholder-style"
               />
             </view>
           </view>
@@ -632,8 +626,8 @@
                 type="text"
                 placeholder="请输入推荐人手机号"
                 class="single-input"
-                :value="applyParams.referrerMobile"
-                bindinput="handleInputReferrerMobile"
+                v-model="applyParams.referrerMobile"
+                placeholder-class="placeholder-style"
                 maxlength="11"
               />
             </view>
@@ -650,7 +644,7 @@
               <view
                 class="upload-btn"
                 v-if="!bpFilePath"
-                bindtap="uploadChooseFile"
+                @click="uploadChooseFile"
               >
                 +添加PDF文件
               </view>
@@ -694,7 +688,10 @@
 <script>
 import { checkStepOneInfoData, checkStepTwoInfoData } from "./checkData";
 import projectBelongIndustry from "@/components/projectBelongIndustry";
-import { imgUrls } from "@/config/app";
+import { imgUrls, HTTP_REQUEST_URL, TOKENNAME } from "@/config/app";
+import { PROJECT_BASE_DATA } from "@/const/project";
+import { investProjectsSave, investProjectsUpdateScore } from "@/api/gxhc";
+import store from "@/store";
 export default {
   components: { projectBelongIndustry },
   data: function () {
@@ -704,8 +701,8 @@ export default {
         setupDate: "",
       },
       // firstModule: true,
-      firstModule: false,
-      secondModule: true,
+      firstModule: true,
+      secondModule: false,
       thirdModule: false,
       maskHidden: false,
       isTeamInvested: null,
@@ -744,7 +741,18 @@ export default {
       enterpriseList: [],
     };
   },
-  onLoad() {
+  onLoad(options) {
+    console.log("项目申请页面=》", options);
+    if (options && options.id) {
+      // 判断是否修改
+      const id = options.id;
+      this.updateId = id;
+      // uni.showLoading();
+      // this.fetchProjectById(id);
+    } else {
+      this.applyParams = JSON.parse(JSON.stringify(PROJECT_BASE_DATA));
+      this.isUpdate = false;
+    }
     const platform = uni.getDeviceInfo().osName;
     if (platform === "android" || platform === "ios") {
       // uni.showModal({
@@ -756,15 +764,53 @@ export default {
       // });
     }
   },
+  onShow() {
+    // 获取团队信息
+    if (!this.isUpdate) {
+      let list = uni.getStorageSync("teamList");
+      console.log("获取的团队信息有", list);
+      this.teamList = list.length > 0 ? list : [];
+    }
+  },
   methods: {
+    submitApply() {
+      const { applyParams, teamList } = this;
+      const checkStatus2 = checkStepTwoInfoData(applyParams);
+      console.log(applyParams);
+      if (!checkStatus2.status) {
+        uni.showToast({
+          title: checkStatus2.message,
+          icon: "none",
+        });
+        return;
+      }
+      const newObj = {
+        ...applyParams,
+        teamList,
+      };
+      console.log("所有资料都填写了，耶耶耶耶", JSON.stringify(newObj));
+      console.log("恭喜你，成功了~~~");
+      if (this.isUpdate) {
+        uni.showLoading();
+        this.fetchUpdateProject(newObj);
+      } else {
+        uni.showLoading({
+          title: "提交中...",
+        });
+        this.fetchAddProject(newObj);
+      }
+      // let testString = {"companyName":"鹦鹉人APP","projectBrief":"鹦鹉人APP项目简介","industry":"大模型","teamIntro":"鹦鹉人APP团队介绍","businessModel":"鹦鹉人APP商业模式","productIntro":"鹦鹉人APP产品介绍","benchmarks":"鹦鹉人APP对标公司、产品","coreCompete":"鹦鹉人APP核心竞争力","marketPain":"鹦鹉人APP市场痛点","marketSize":"500","sizeMeasurement":"鹦鹉人APP测定依据","businessPlan":"鹦鹉人APP业务发展计划","productPlan":"鹦鹉人APP产品计划","financePlan":"鹦鹉人APP财务及融资计划","teamDevPlan":"鹦鹉人APP团队发展计划","valuation":"600","isFounderCtrl":true,"isTechCoreTeam":true,"founderStockRat":"鹦鹉人APP控制股比","isTeamInvested":true,"equityStruct":"鹦鹉人APP公司股权结构","other":"鹦鹉人APP其他","isCouncilMember":true,"councilSupport":"鹦鹉人APP提供支持","name":"马明涛22","mobile":"15222222222","email":"zhangyuxue@gxhc-cha.com","referrer":"推荐人","referrerMobile":"18888888888","uploadBPPath":"cloud://cloud1-1gy9whla01ef426e.636c-cloud1-1gy9whla01ef426e-1326719267/miniprogram/bp/202406260930-鹦鹉人APP的BP","projectStatus":"investViewing"}
+      // console.log('所有资料都填写了，耶耶耶耶', testString)
+      // that.fetchAddProject(testString)
+    },
     goStepThree() {
       if (this.teamList.length > 0) {
-        this.isFinishFirstModule = true
-        this.isFinishSecondModule = true
-        this.firstModule = false
-        this.secondModule = false
-        this.thirdModule = true
-        this.footBtnLabel = "提交"
+        this.isFinishFirstModule = true;
+        this.isFinishSecondModule = true;
+        this.firstModule = false;
+        this.secondModule = false;
+        this.thirdModule = true;
+        this.footBtnLabel = "提交";
       } else {
         uni.showToast({
           title: "请添加至少一位团队成员信息",
@@ -810,6 +856,441 @@ export default {
           duration: 2000,
         });
       }
+    },
+    calculateScores(data) {
+      const { founderStockRat, marketSize, teamList } = data;
+      const { collegesList, enterpriseList } = this;
+      let totalScore = 0;
+      let scoreState = "";
+      // 创始团队实际控制股比大于等于80%，记为15分；65%-80%，记为10分；50%-65%，记为5分；低于50%，记为0分
+      const stockRatio = parseFloat(founderStockRat);
+      if (stockRatio >= 80) {
+        totalScore += 15;
+        scoreState = "创始团队实际控制股比大于等于80%，记为15分；";
+      } else if (stockRatio >= 65) {
+        totalScore += 10;
+        scoreState = "创始团队实际控制股比在65%-80%，记为10分；";
+      } else if (stockRatio >= 50) {
+        totalScore += 5;
+        scoreState = "创始团队实际控制股比在50%-65%，记为5分；";
+      }
+
+      // 目标市场规模: 大于等于500亿人民币，记为15分；300-500亿，记为10分；100-300亿，记为5分；否则记为0分
+      const marketData = parseFloat(marketSize);
+      if (marketData >= 500) {
+        totalScore += 15;
+        scoreState += "目标市场规模,大于等于500亿人民币，记为15分；";
+      } else if (marketData >= 300) {
+        totalScore += 10;
+        scoreState += "目标市场规模,300-500亿，记为10分；";
+      } else if (marketData >= 100) {
+        totalScore += 5;
+        scoreState += "目标市场规模,100-300亿，记为5分；";
+      }
+
+      // 教育背景得分：教育背景25=（CEO的分数*50%）+(团队其他成员总分的平均分*50%)
+      const educationScores = data.teamList.reduce(
+        (acc, member) => {
+          // 本硕博中任一项教育背景记录
+          const randomEdu =
+            member.educationBg[
+              Math.floor(Math.random() * member.educationBg.length)
+            ];
+          const schoolName = randomEdu.schoolName;
+
+          const college = collegesList.find(
+            (college) => college.name === schoolName
+          );
+
+          let score = 0;
+          if (college) {
+            score = college.type === "top" ? 25 : 10;
+          }
+
+          // 如果是 CEO，则按50%计算；否则按总得分计算
+          if (member.position === "CEO") {
+            acc.ceoScore = score * 0.5;
+          } else {
+            acc.nonCeoScores.push(score);
+          }
+          return acc;
+        },
+        { ceoScore: 0, nonCeoScores: [] }
+      );
+
+      // 计算非 CEO 成员的平均得分
+      const averageNonCeoScore =
+        educationScores.nonCeoScores.length > 0
+          ? educationScores.nonCeoScores.reduce((acc, cur) => acc + cur, 0) /
+            educationScores.nonCeoScores.length
+          : 0;
+
+      // 最终教育背景得分
+      const finalEducationScore =
+        educationScores.ceoScore + averageNonCeoScore * 0.5;
+      totalScore += finalEducationScore;
+      scoreState += `团队教育背景得分：${finalEducationScore}；`;
+
+      // 商业背景得分：商业背景最高得分25=（CEO的企业分数*50%）+(团队其他成员总企业得分的平均分*50%)
+      const businessBackgroundScores = data.teamList.reduce(
+        (acc, member) => {
+          // 只取第一条工作经历
+          const firstWorkExperience = member.workExperiences[0];
+          if (firstWorkExperience) {
+            const workUnit = firstWorkExperience.workUnit;
+            const enterprise = enterpriseList.find(
+              (ent) =>
+                simplifyCompanyName(ent.name) === simplifyCompanyName(workUnit)
+            );
+
+            let score = 0;
+            if (enterprise) {
+              score = enterprise.type === "top" ? 25 : 10;
+            }
+
+            // 如果是 CEO，则按50%计算；否则按总得分计算
+            if (member.position === "CEO") {
+              acc.ceoScore = score * 0.5;
+            } else {
+              acc.nonCeoScores.push(score);
+            }
+          }
+          return acc;
+        },
+        { ceoScore: 0, nonCeoScores: [] }
+      );
+
+      // 计算非 CEO 成员的平均得分
+      const averageNonCeoScore2 =
+        businessBackgroundScores.nonCeoScores.length > 0
+          ? businessBackgroundScores.nonCeoScores.reduce(
+              (acc, cur) => acc + cur,
+              0
+            ) / businessBackgroundScores.nonCeoScores.length
+          : 0;
+      // debugger;
+      // 最终商业背景得分
+      const finalBusinessScore =
+        businessBackgroundScores.ceoScore + averageNonCeoScore2 * 0.5;
+      totalScore += finalBusinessScore;
+      scoreState += `团队商业背景得分：${finalBusinessScore}；`;
+
+      // 计算团队成员年龄，若团队成员平均年龄小于35岁，记为15分；平均35-45岁，记为8分，平均年龄为45岁以上，记为0分
+      const currentYear = new Date().getFullYear();
+      const ages = teamList.map((member) => {
+        const birthYear = parseInt(member.birthday.split("-")[0]);
+        return currentYear - birthYear;
+      });
+      const avgAge = ages.reduce((acc, cur) => acc + cur, 0) / ages.length;
+      if (avgAge < 35) {
+        totalScore += 15;
+        scoreState += "团队成员平均年龄小于35岁，记为15分；";
+      } else if (avgAge <= 45) {
+        totalScore += 8;
+        scoreState += "团队成员平均35-45岁，记为8分；";
+      }
+
+      // 检查是否有创业经历并计算得分
+      const hasEntrepreneurship = teamList.some(
+        (member) =>
+          member.companyName &&
+          (member.companyName.includes("有限公司") ||
+            member.companyName.includes("有限责任公司") ||
+            member.companyName.includes("股份公司"))
+      );
+      if (hasEntrepreneurship) {
+        totalScore += 10;
+        scoreState += "有创业经历，记10分；";
+      }
+
+      // 计算科研成果转化得分
+      const researchContribution = teamList.some(
+        (member) =>
+          member.keyUnitName &&
+          (member.keyUnitName.includes("研究院") ||
+            member.keyUnitName.includes("实验室")) &&
+          (new Date(member.unitEndDate) - new Date(member.unitStartDate)) /
+            (1000 * 60 * 60 * 24 * 365) >=
+            3
+      );
+      if (researchContribution) {
+        totalScore += 5;
+        scoreState += "在国家重点实验室工作过，记5分；";
+      }
+
+      // 计算国家级学术荣誉或称号,每个得3分
+      const honorTitlesCount = data.teamList.reduce((acc, member) => {
+        return acc + member.honorTitles.length;
+      }, 0);
+      if (honorTitlesCount) {
+        totalScore += honorTitlesCount * 3;
+        scoreState += `获得国家级学术荣誉和称号共${honorTitlesCount}个，每个得3分，共计${
+          honorTitlesCount * 3
+        }分。`;
+      }
+
+      console.log("得分=》", totalScore);
+      console.log("得分说明=》", scoreState);
+
+      return {
+        totalScore,
+        scoreState,
+      };
+    },
+    fetchUpdateProjectScore(projectId, params) {
+      investProjectsUpdateScore({ ...params, id: projectId })
+        .then((res) => {
+          console.log("cloundFunProjectScoreInfo=>", res);
+          if (res.status === 200) {
+            console.log("打分成功");
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
+    fetchAddProject(params) {
+      investProjectsSave(params)
+        .then((res) => {
+          console.log("cloundFunAddProjectInfo=>", res);
+          uni.hideLoading();
+          if (res.status === 200) {
+            //  根据返回的id,更新项目的得分情况
+            const investProjectId = res.data.id;
+            const scoreParam = this.calculateScores(params);
+            console.log("计算得分反馈=>", scoreParam);
+            this.fetchUpdateProjectScore(investProjectId, scoreParam);
+            this.clearProjectStorage();
+            uni.showModal({
+              content:
+                "项目提交成功！项目将进入审核阶段，约1-3天后可在功能-->项目进展查看具体情况，或关注手机短信或邮件通知",
+              showCancel: false,
+              confirmText: "我知道了",
+              success(res) {
+                if (res.confirm) {
+                  uni.switchTab({
+                    url: "/pages/domain/index/index",
+                  });
+                }
+              },
+            });
+            return;
+          }
+          uni.showToast({
+            title: "申请失败，请稍后再试",
+            icon: "none",
+          });
+        })
+        .catch((error) => {
+          uni.hideLoading();
+          uni.showToast({
+            title: "申请失败，请稍后再试",
+            icon: "none",
+          });
+          console.error(error);
+        });
+    },
+    fetchUpdateProject(params) {
+      const that = this;
+      wx.cloud.callFunction({
+        name: "getProjectInfo",
+        data: {
+          action: "cloundFunUpdateProject",
+          id: that.data.updateId,
+          data: params,
+        },
+        success: (res) => {
+          console.log("cloundFunAddProjectInfo=>", res);
+          uni.hideLoading();
+          this.clearProjectStorage();
+          if (res.result.success) {
+            uni.showModal({
+              content: "项目更新成功",
+              showCancel: false,
+              confirmText: "我知道了",
+              success(res) {
+                if (res.confirm) {
+                  uni.navigateTo({
+                    url: "/pages/project/evolve/index",
+                  });
+                }
+              },
+            });
+          } else {
+            showToastFunc("更新失败，请稍后再试");
+          }
+        },
+        fail: (error) => {
+          wx.hideLoading();
+          showToastFunc("更新失败，请稍后再试");
+          console.error(error);
+        },
+      });
+    },
+    /**
+     * 清除项目信息的相关缓存
+     */
+    clearProjectStorage() {
+      uni.removeStorageSync("teamList");
+      uni.removeStorageSync("tempTeamParamData");
+      uni.removeStorageSync("workExpList");
+      uni.removeStorageSync("enterprises");
+      uni.removeStorageSync("colleges");
+    },
+
+    fetchProjectById(id) {
+      const that = this;
+      wx.cloud.callFunction({
+        name: "getProjectInfo",
+        data: {
+          action: "cloundFunProjectsById",
+          id: id,
+        },
+        success: (res) => {
+          wx.hideLoading();
+          console.log("res==>", res);
+          if (res.result.data) {
+            const result = res.result.data[0];
+            this.setData({
+              isUpdate: true,
+              applyParams: result,
+              teamList: result.teamList,
+              isFounderCtrl: result.isFounderCtrl ? "Y" : "N",
+              isTechCoreTeam: result.isTechCoreTeam ? "Y" : "N",
+              isTeamInvested: result.isTeamInvested ? "Y" : "N",
+              isCouncilMember: result.isCouncilMember ? "Y" : "N",
+              tipMarketPoint: false,
+              tipBusinessPlan: false,
+              tipProductPlan: false,
+              tipMoneyPlan: false,
+              bpFilePath: result.uploadBPPath,
+              bpFileName: result.uploadBPPath,
+            });
+          } else {
+            this.setData({
+              applyParams: JSON.parse(JSON.stringify(PROJECT_BASE_DATA)),
+              isUpdate: false,
+            });
+          }
+        },
+        fail: (error) => {
+          wx.hideLoading();
+        },
+      });
+    },
+    uploadChooseFile() {
+      //#ifdef MP-WEIXIN
+      wx.chooseMessageFile({
+        count: 1,
+        type: "file",
+        extension: ["pdf"],
+        success: (res) => {
+          if (res.tempFiles[0].size <= 10485760) {
+            this.uploadBPFile(res.tempFiles[0]);
+          } else {
+            uni.showToast({
+              title: "文件大小不能超过10M",
+              icon: "none",
+            });
+          }
+        },
+        fail() {
+          uni.showToast({
+            title: "文件选择失败",
+            icon: "none",
+          });
+        },
+      });
+      // #endif
+      //#ifndef MP-WEIXIN
+      uni.chooseFile({
+        count: 1,
+        type: "file",
+        extension: ["pdf"],
+        success: (res) => {
+          if (res.tempFiles[0].size <= 10485760) {
+            this.uploadBPFile(res.tempFiles[0]);
+          } else {
+            uni.showToast({
+              title: "文件大小不能超过10M",
+              icon: "none",
+            });
+          }
+        },
+        fail() {
+          uni.showToast({
+            title: "文件选择失败",
+            icon: "none",
+          });
+        },
+      });
+      // #endif
+    },
+    uploadBPFile(tempFiles) {
+      uni.showLoading({
+        title: `文件上传中`,
+      });
+      uni.uploadFile({
+        url: HTTP_REQUEST_URL + "/api/upload/file",
+        filePath: tempFiles.path,
+        fileType: "pdf",
+        name: "file",
+        formData: {
+          filename: "file",
+        },
+        header: {
+          // #ifdef MP
+          "Content-Type": "multipart/form-data",
+          // #endif
+          [TOKENNAME]: "Bearer " + store.state.app.token,
+        },
+        success: (res) => {
+          uni.hideLoading();
+          if (res.statusCode == 403) {
+            this.$util.Tips({
+              title: res.data,
+            });
+          } else {
+            let data = res.data ? JSON.parse(res.data) : {};
+            if (data.status == 200) {
+              this.bpFilePath = tempFiles.path;
+              this.bpFileName = tempFiles.name;
+              console.log("文件上传成功", data, res);
+              // 保存文件云存储路径
+              this.applyParams.uploadBPPath = data.data.url;
+            } else {
+              this.$util.Tips({
+                title: data.msg,
+              });
+            }
+          }
+        },
+        fail: (err) => {
+          uni.hideLoading();
+          this.$util.Tips({
+            title: `上传文件失败`,
+          });
+        },
+      });
+    },
+    handleDelTeamMemberById(idx) {
+      let arr = this.teamList;
+      if (idx >= 0 && idx < arr.length) {
+        arr.splice(idx, 1); // 删除索引为index处的一个元素
+        uni.setStorageSync("teamList", arr);
+        this.teamList = arr; // 更新页面数据
+      }
+    },
+    hanldeEditTeamMemberById(item) {
+      uni.removeStorageSync("educationList");
+      uni.removeStorageSync("workExpList");
+      uni.removeStorageSync("practiceList");
+      uni.removeStorageSync("tempTeamParamData");
+      uni.navigateTo({
+        url: `/projectPages/memberInfo/index?pageStatus=${"update"}&item=${JSON.stringify(
+          item
+        )}`,
+      });
     },
     goAddMemberInfo() {
       uni.removeStorageSync("tempTeamParamData");

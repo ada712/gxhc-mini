@@ -104,7 +104,7 @@
 </template>
 
 <script>
-import { imgUrls, miniprogramUrl } from "@/config/app";
+import { imgUrls } from "@/config/app";
 import { getColleges } from "@/api/public";
 export default {
   data: function () {
@@ -123,8 +123,40 @@ export default {
       searchBtnLabel: "取消",
     };
   },
-  onLoad() {
+  onLoad(options) {
+    console.log("教育页面=>", options);
+    const { pageStaus, item } = options;
+    if (pageStaus) {
+      this.pageStatus = pageStaus;
+      this.footLabel = pageStaus === "add" ? "保存" : "修改";
+    }
+    if (item) {
+      const tempItem = JSON.parse(item);
+      this.schoolName = tempItem.schoolName;
+      this.major = tempItem.major;
+      this.startDate = tempItem.startDate;
+      this.endDate = tempItem.endDate;
+      this.updateId = tempItem.id;
+    }
     this.fetchSchoolList();
+  },
+
+  onShow() {
+    // 获取缓存中的历史数据
+    const list = uni.getStorageSync("educationList");
+    this.educationList = list.length > 0 ? list : [];
+    let title = "";
+    if (this.pageStatus === "add") {
+      title =
+        list.length === 2
+          ? "硕士教育经历"
+          : list.length === 3
+          ? "博士教育经历"
+          : "本科教育经历";
+    } else {
+      title = "修改教育经历";
+    }
+    uni.setNavigationBarTitle({ title });
   },
   computed: {
     richScoolsList() {
@@ -242,15 +274,15 @@ export default {
       };
 
       if (this.pageStatus === "add") {
-        educationList.push(newItem);
+        this.educationList.push(newItem);
       } else {
         const index = educationList.findIndex((item) => item.id === updateId);
         if (index !== -1) {
-          Object.assign(educationList[index], newItem);
+          this.educationList[index] = newItem;
         }
       }
-
-      uni.setStorageSync("educationList", educationList);
+      console.log("educationList", this.educationList);
+      uni.setStorageSync("educationList", this.educationList);
       uni.navigateBack();
     },
   },

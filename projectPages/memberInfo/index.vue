@@ -223,8 +223,8 @@
         <view class="education-list">
           <view
             class="education-item"
-            v-for="(item, id) in educationList"
-            :key="id"
+            v-for="(item, index) in educationList"
+            :key="index"
             @click="handleUpdateEducation(item)"
           >
             <view class="education-item_left">
@@ -255,7 +255,7 @@
             <image
               :src="imgUrl + '/icons/icon-del-blue.png'"
               class="icon-del"
-              @click="handleDelEduItem(index)"
+              @click.stop="handleDelEduItem(index)"
             />
           </view>
         </view>
@@ -436,7 +436,7 @@
               <image
                 :src="imgUrl + '/icons/icon-del-blue.png'"
                 class="icon-del"
-                @click="handleDelWorkItem(index)"
+                @click.stop="handleDelWorkItem(index)"
               />
             </view>
           </view>
@@ -459,7 +459,10 @@
               <view class="work-row mb4">
                 <view class="work-row-left">{{ p.unitName }}</view>
                 <view class="work-row-right">
-                  <view class="work-date gray75-ft22">
+                  <view
+                    class="work-date gray75-ft22"
+                    v-if="p.startDate || p.endDate"
+                  >
                     <text v-if="p.startDate">
                       {{ p.startDate }}
                     </text>
@@ -471,14 +474,17 @@
                   />
                 </view>
               </view>
-              <view class="work-row gray75-ft22 mb16 one-row-show">{{
-                p.position
-              }}</view>
               <view
-                class="work-row gray75-ft22 sheng"
-                @click="handleDelPracticeItem(index)"
-                >{{ p.content }}</view
+                class="work-row gray75-ft22 mb16 one-row-show"
+                v-if="p.position"
+                >{{ p.position }}</view
               >
+              <view class="work-row gray75-ft22 sheng">{{ p.content }}</view>
+              <image
+                :src="imgUrl + '/icons/icon-del-blue.png'"
+                class="icon-del"
+                @click.stop="handleDelPracticeItem(index)"
+              />
             </view>
           </view>
         </block>
@@ -694,7 +700,7 @@
                 type="text"
                 class="same-input"
                 placeholder="请输入您获得的荣誉称号名称"
-                v-model="item.content"
+                v-model="honorList[index]"
                 maxlength="60"
                 placeholder-style="font-size: 24rpx;color: rgba(47,48,49,0.5);font-weight:normal;"
               />
@@ -755,7 +761,46 @@ export default {
       honorList: [],
     };
   },
+  onLoad(options) {
+    console.log("添加成员信息页面", options);
+    if (options?.pageStatus) {
+      this.pageStatus = options.pageStatus;
+    }
+    if (options?.item) {
+      this.handleConvertData(JSON.parse(options.item));
+    }
+  },
+  onShow() {
+    if (this.pageStatus !== "update") {
+      const lists = [
+        { key: "educationList", storageKey: "educationList" },
+        { key: "workExpList", storageKey: "workExpList" },
+        { key: "practiceList", storageKey: "practiceList" },
+        { key: "teamList", storageKey: "teamList" },
+      ];
+      lists.forEach((list) => {
+        // 获取存储的数据
+        const rawData = uni.getStorageSync(list.storageKey);
+        // 设置数据到组件状态中
+        this[list.key] = rawData.length > 0 ? rawData : [];
+        console.log(rawData, list.key);
+      });
+      const data = uni.getStorageSync("tempTeamParamData");
+      if (data) {
+        this.teamParams = JSON.parse(data);
+      }
+    }
+  },
   methods: {
+    handleConvertData(param) {
+      this.teamParams = param;
+      this.educationList = param.educationBg;
+      this.workExpList = param.workExperiences;
+      this.practiceList = param.practiceExperiences;
+      console.log("handleConvertData==>", param);
+      console.log("teamParams.isTechFounder==>", this.teamParams.isTechFounder);
+      console.log("handleConvertData==>222", this);
+    },
     bindChangeBirthday(e) {
       this.teamParams.birthday = e.detail.value;
     },
@@ -790,7 +835,7 @@ export default {
     handleUpdatePracticeExp(item) {
       this.handleNavigation(
         item,
-        "/projectPages/workExperience/index",
+        "/projectPages/practiceExperience/index",
         "update"
       );
     },
@@ -817,14 +862,22 @@ export default {
       this.teamParams.unitEndDate = endDate;
     },
     handleAddHornorTitle() {
-      const name = "";
-      if (this.honorList.length < 7) {
-        this.honorList.push(name);
-      } else {
+      console.log(this.honorList.length);
+      if (this.honorList.length > 5) {
         uni.showToast({
           title: "最多只能添加6个",
           icon: "none",
         });
+        return;
+      }
+      this.honorList.push("");
+    },
+    handleDeleteItem(listKey, idx) {
+      if (idx >= 0 && idx < this[listKey].length) {
+        const arr = this[listKey];
+        arr.splice(idx, 1);
+        uni.setStorageSync(listKey, arr);
+        this[listKey] = arr;
       }
     },
     handleDelPracticeItem(index) {
@@ -835,17 +888,6 @@ export default {
     },
     handleDelEduItem(index) {
       this.handleDeleteItem("educationList", index);
-    },
-    handleAddHornorTitle() {
-      const name = "";
-      if (this.honorList.length < 7) {
-        this.honorList.push(name);
-      } else {
-        uni.showToast({
-          title: "最多只能添加6个",
-          icon: "none",
-        });
-      }
     },
     radioChangeHandler(fieldName, value) {
       console.log("fieldName=>", fieldName);
@@ -1049,7 +1091,7 @@ export default {
 
       console.log("提交成员信息参数:", JSON.stringify(teamParams));
 
-      if (pageStatus === PAGESTATUS.UPDATE) {
+      if (pageStatus === "update") {
         const index = teamList.findIndex((item) => item.id === teamParams.id);
         if (index !== -1) {
           Object.assign(teamList[index], teamParams);
