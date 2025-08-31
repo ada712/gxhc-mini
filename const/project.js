@@ -70,7 +70,7 @@ export const PROJECT_BASE_DATA = {
     referrer:"",
     referrerMobile:"",
     uploadBPPath:"",
-    projectStatus: PROJECT_STATUS.EXAIME ,// 项目状态
+    projectStatus: 'examining',// 项目状态
     /**
      *  最新业务：
      */

@@ -17,7 +17,7 @@
       </view>
 
       <view class="detail-component">
-        <project-detail item="{{item}}" />
+        <project-detail :item="item" />
       </view>
     </view>
   </view>
@@ -25,14 +25,59 @@
 
 <script>
 import projectDetail from "@/components/project-detail";
+import { investProjectsByUser } from "@/api/gxhc";
+import { FormatDateTime } from "@/utils/formatDate";
+import { projectStatusName, getStatusClass } from '@/utils/project'
+
 export default {
   components: { projectDetail },
   data: function () {
     return {
-      item: "",
+      item: {},
     };
   },
-  methods: {},
+  onLoad(options) {
+    this.fetchCurrentUserProject();
+  },
+  methods: {
+    fetchCurrentUserProject() {
+      uni.showLoading();
+      investProjectsByUser()
+        .then((res) => {
+          uni.hideLoading();
+          console.log(
+            "res==>",
+            res,
+            res.status == 200 && Object.keys(res.data).length > 0
+          );
+          if (res.status == 200 && Object.keys(res.data).length > 0) {
+            const result = res.data;
+            result.createTime = FormatDateTime(
+              result.createdAt,
+              "yyyy年MM月dd日 hh:mm:ss"
+            );
+            result.statusName = projectStatusName(result.projectStatus);
+            result.statusClass = getStatusClass(result.projectStatus);
+            this.item = result;
+          } else {
+            uni.showModal({
+              content: "未找到您提交的项目，通过首页-->发起项目进行项目申请吧~",
+              showCancel: false,
+              confirmText: "我知道了",
+              success(res) {
+                if (res.confirm) {
+                  uni.navigateBack();
+                }
+              },
+            });
+          }
+        })
+        .catch((error) => {
+          uni.hideLoading();
+          this.item = {};
+        });
+    },
+  },
 };
 </script>
 

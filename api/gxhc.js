@@ -23,3 +23,15 @@ export function investProjectsUpdateScore(data) {
     noAuth: false
   });
 }
+
+export function investProjectsByUser() {
+  return request.post('invest_projects/details', {}, {
+    noAuth: false
+  });
+}
+
+export function investProjectsRevoke(data) {
+  return request.post('invest_projects/revoke', data, {
+    noAuth: false
+  });
+}

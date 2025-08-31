@@ -1,88 +1,176 @@
 <template>
-  <view class="project-list" v-if="item">
+  <view class="project-list" v-if="Object.keys(item).length">
     <view class="status-bg" v-if="item.remark">{{ item.remark }}</view>
     <view class="status-bg" v-else
       >国信合创（CHA）人工智能共创理事会的投资部正在对项目进行审核，请耐心等待</view
     >
-    <!-- <scroll-view
-      class="list"
-      scroll-y="true"
-      scroll-x="false"
-      style="height: {{scrollHeight}}px;"
-    > -->
-    <view class="item">
-      <view class="item-title">
-        <view class="item-title-left">
-          <image
-            src="/static/images/icons/icon_xiangmu.png"
-            class="icon-project"
-          />
-          <view class="project-title">{{ item.companyBrief }}</view>
-        </view>
+    <view class="list">
+      <view class="item">
+        <view class="item-title">
+          <view class="item-title-left">
+            <image
+              src="/static/images/icons/icon_xiangmu.png"
+              class="icon-project"
+            />
+            <view class="project-title">{{ item.companyBrief }}</view>
+          </view>
 
-        <view class="item-title-right">
-          <view :class="'project-status ' + item.statusClass">{{
-            item.statusName
-          }}</view>
+          <view class="item-title-right">
+            <view :class="'project-status ' + item.statusClass">{{
+              item.statusName
+            }}</view>
+          </view>
         </view>
-      </view>
-      <view class="item-middle">
-        <view class="middle-row">
-          <text class="item-label">所属行业</text>
-          <text class="item-value">{{ item.industry }}</text>
+        <view class="item-middle">
+          <view class="middle-row">
+            <text class="item-label">所属行业</text>
+            <text class="item-value">{{ item.industry }}</text>
+          </view>
+          <view class="middle-row">
+            <text class="item-label">申请人</text>
+            <text class="item-value">{{ item.name }}</text>
+          </view>
+          <view class="middle-row">
+            <view class="item-label mb16">项目简介</view>
+            <view class="item-value truncate-3-lines">{{
+              item.projectBrief
+            }}</view>
+          </view>
+          <view class="middle-row">
+            <text class="item-label">申请时间：</text>
+            <text class="item-value">{{ item.createTime }}</text>
+          </view>
         </view>
-        <view class="middle-row">
-          <text class="item-label">申请人</text>
-          <text class="item-value">{{ item.name }}</text>
+        <view class="item-bottom">
+          <view
+            class="search-more-btn"
+            @click="handleRevokeProject(item.id)"
+            v-if="item.projectStatus === 'examining'"
+            >撤销</view
+          >
+          <view
+            class="search-more-btn"
+            @click="goUpdateProject(item.id)"
+            v-if="item.projectStatus === 'examining'"
+            >修改</view
+          >
+          <view class="search-more-btn" @click="goMoreDetail(item.id)"
+            >查看更多</view
+          >
         </view>
-        <view class="middle-row">
-          <view class="item-label mb16">项目简介</view>
-          <view class="item-value truncate-3-lines">{{
-            item.projectBrief
-          }}</view>
-        </view>
-        <view class="middle-row">
-          <text class="item-label">申请时间：</text>
-          <text class="item-value">{{ item.createTime }}</text>
-        </view>
-      </view>
-      <view class="item-bottom">
-        <view
-          class="search-more-btn"
-          bind:tap="handleRevokeProject"
-          v-if="item.projectStatus === 'examining'"
-          data-id="{{item._id}}"
-          >撤销</view
-        >
-        <view
-          class="search-more-btn"
-          bind:tap="goUpdateProject"
-          v-if="item.projectStatus === 'examining'"
-          >修改</view
-        >
-        <view class="search-more-btn" bind:tap="goMoreDetail">查看更多</view>
       </view>
     </view>
-    <!-- </scroll-view> -->
   </view>
+   <view class="empty-box" v-else>
+        <image :src="imgPath + '/index/img-no-data.png'" class="img-no-data" />
+        <view class="subtitle">暂无项目</view>
+      </view>
 </template>
 
 <script>
+import { investProjectsByUser, investProjectsRevoke } from "@/api/gxhc";
+import { FormatDateTime } from "@/utils/formatDate";
+import { imgUrls } from "@/config/app";
+import { projectStatusName, getStatusClass } from "@/utils/project";
 export default {
   data: function () {
     return {
-      item: "",
+      imgPath: imgUrls,
+      item: {},
     };
   },
-  methods: {},
+  onLoad(options) {
+    this.fetchCurrentUserProject();
+  },
+  methods: {
+    goUpdateProject(id) {
+      uni.navigateTo({
+        url: "/pages/project/apply/index?id=" + id,
+      });
+    },
+    goMoreDetail(id) {
+      uni.navigateTo({
+        url: "/pages/project/detail/index?id=" + id,
+      });
+    },
+    handleRevokeProject(id) {
+      console.log(id);
+      uni.showModal({
+        title: "温馨提示",
+        content: `您确定要撤销「${this.item.companyName}」项目吗？一经撤销,将再不能查看和修改，请谨慎操作`,
+        showCancel: true,
+        cancelText: "确定",
+        confirmText: "我再想想",
+        success: (res) => {
+          if (res.cancel) {
+            uni.showLoading();
+            this.fetchDelProductByd(id);
+          }
+
+          if (res.confirm) {
+          }
+        },
+      });
+    },
+    fetchDelProductByd(id) {
+      investProjectsRevoke({ id })
+        .then((res) => {
+          console.log("删除项目1", res);
+          uni.showLoading();
+          this.fetchCurrentUserProject();
+        })
+        .catch((error) => {
+          uni.hideLoading();
+          console.error(error);
+        });
+    },
+    fetchCurrentUserProject() {
+      uni.showLoading();
+      investProjectsByUser()
+        .then((res) => {
+          uni.hideLoading();
+          console.log(
+            "res==>",
+            res,
+            res.status == 200 && Object.keys(res.data).length > 0
+          );
+          if (res.status == 200 && Object.keys(res.data).length > 0) {
+            const result = res.data;
+            result.createTime = FormatDateTime(
+              result.createdAt,
+              "yyyy年MM月dd日 hh:mm:ss"
+            );
+            result.statusName = projectStatusName(result.projectStatus);
+            result.statusClass = getStatusClass(result.projectStatus);
+            this.item = result;
+          } else {
+            uni.showModal({
+              content: "未找到您提交的项目，通过首页-->发起项目进行项目申请吧~",
+              showCancel: false,
+              confirmText: "我知道了",
+              success(res) {
+                if (res.confirm) {
+                  uni.navigateBack();
+                }
+              },
+            });
+          }
+        })
+        .catch((error) => {
+          uni.hideLoading();
+          this.item = {};
+        });
+    },
+  },
 };
 </script>
 
-<style lang="scss" scoped>
+<style>
 page {
   background-color: #f4f4f4;
 }
-
+</style>
+<style lang="scss" scoped>
 .project-list {
   width: 100%;
   box-sizing: border-box;

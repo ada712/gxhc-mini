@@ -105,9 +105,8 @@
         <view class="team-title">团队介绍</view>
         <view
           class="team-item"
-          v-for="(item, index) in item.teamList"
+          v-for="(t, index) in teamList"
           :key="index"
-          wx:for-item="t"
         >
           <view class="team-row">姓名：{{ t.name }}</view>
           <view class="team-row">职位：{{ t.position }}</view>
@@ -137,7 +136,7 @@
               t.isNationTitle ? "是" : "否"
             }}</view
           >
-          <block v-for="(edu, index) in t.educationBg" :key="index">
+          <view v-for="(edu, index) in t.educationBg" :key="index">
             <view class="team-row w100"
               >{{ edu.period }}学校：{{ edu.schoolName }}</view
             >
@@ -145,46 +144,43 @@
             <view class="team-row w100"
               >就读时间：{{ edu.startDate }}-{{ edu.endDate }}</view
             >
-          </block>
+          </view>
           <view class="team-row w100" v-if="item.schoolHonor"
             >在校获得荣誉：{{ item.schoolHonor }}</view
           >
-          <block
-            v-if="t.workExperiences.length > 0"
-            v-for="(work, index) in t.workExperiences"
-            wx:for-item="work"
-            :key="index"
-          >
-            <view class="team-row w100">曾经工作单位：{{ work.workUnit }}</view>
-            <view class="team-row w100">担任职位：{{ work.position }}</view>
-            <view class="team-row w100"
-              >工作时间：{{ work.startDate }}-{{ work.endDate }}</view
-            >
-            <view class="team-row w100" v-if="work.workContent"
-              >工作内容：{{ work.workContent }}</view
-            >
-          </block>
-          <block
-            v-if="t.practiceExperiences.length > 0"
-            v-for="(p, index) in t.practiceExperiences"
-            :key="index"
-          >
-            <view class="team-row w100">实习单位：{{ p.unit }}</view>
-            <view class="team-row w100">实习岗位：{{ p.position }}</view>
-            <view class="team-row w100"
-              >实习时间：{{ p.startDate }}-{{ p.endDate }}</view
-            >
-            <view class="team-row w100">实习内容：{{ p.content }}</view>
-          </block>
-          <block v-if="t.honorTitles.length > 0">
+          <template v-if="t.workExperiences && t.workExperiences.length > 0">
+            <view v-for="(work, index) in t.workExperiences" :key="index">
+              <view class="team-row w100"
+                >曾经工作单位：{{ work.workUnit }}</view
+              >
+              <view class="team-row w100">担任职位：{{ work.position }}</view>
+              <view class="team-row w100"
+                >工作时间：{{ work.startDate }}-{{ work.endDate }}</view
+              >
+              <view class="team-row w100" v-if="work.workContent"
+                >工作内容：{{ work.workContent }}</view
+              >
+            </view>
+          </template>
+          <template v-if="t.practiceExperiences && t.practiceExperiences.length > 0">
+            <view v-for="(p, index) in t.practiceExperiences" :key="index">
+              <view class="team-row w100">实习单位：{{ p.unit }}</view>
+              <view class="team-row w100">实习岗位：{{ p.position }}</view>
+              <view class="team-row w100"
+                >实习时间：{{ p.startDate }}-{{ p.endDate }}</view
+              >
+              <view class="team-row w100">实习内容：{{ p.content }}</view>
+            </view>
+          </template>
+          <view v-if="t.honorTitles && t.honorTitles.length > 0">
             <view class="team-row w100">荣誉或称号名称：</view>
             <view
               class="team-row w100"
               v-for="(title, index) in t.honorTitles"
-              wx:key="index"
+              :key="index"
               >{{ title }}</view
             >
-          </block>
+          </view>
         </view>
       </view>
 
@@ -210,10 +206,7 @@
           <text class="item-value">{{ item.createTime }}</text>
         </view>
 
-        <view
-          class="search-btn"
-          v-if="item.uploadBPPath"
-          bind:tap="handleSeeBp"
+        <view class="search-btn" v-if="item.uploadBPPath" @click="handleSeeBp"
           >查看BP</view
         >
       </view>
@@ -222,14 +215,34 @@
 </template>
 
 <script>
+import { previewPDF } from '@/utils/project'
 export default {
   props: {
     item: {
-      type: String,
-      default: "",
+      type: Object,
+      default: {},
     },
   },
-  methods: {},
+  computed: {
+    teamList() {
+      if(!Object.keys(this.item).length) return [];
+      return JSON.parse(this.item.teamList)
+    }
+  },
+  methods: {
+    async handleSeeBp() {
+      const filePath = this.item.uploadBPPath;
+      try {
+        await previewPDF(filePath);
+      } catch (err) {
+        console.error('预览PDF文件失败', err);
+        uni.showToast({
+          title: '预览失败',
+          icon: 'none'
+        });
+      }
+    }
+  },
 };
 </script>
 
