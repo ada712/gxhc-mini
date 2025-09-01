@@ -68,7 +68,7 @@
 </template>
 
 <script>
-import { investProjectsByUser, investProjectsRevoke } from "@/api/gxhc";
+import { investProjectsDetails, investProjectsRevoke } from "@/api/gxhc";
 import { FormatDateTime } from "@/utils/formatDate";
 import { imgUrls } from "@/config/app";
 import { projectStatusName, getStatusClass } from "@/utils/project";
@@ -126,7 +126,7 @@ export default {
     },
     fetchCurrentUserProject() {
       uni.showLoading();
-      investProjectsByUser()
+      investProjectsDetails()
         .then((res) => {
           uni.hideLoading();
           console.log(

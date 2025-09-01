@@ -63,6 +63,28 @@ export default {
   },
   methods: {
     uploadFinanceFile() {
+      //#ifdef MP-WEIXIN
+      wx.chooseMessageFile({
+        count: 1,
+        type: "file",
+        success: (res) => {
+          if (res.tempFiles[0].size <= 10485760) {
+            this.uploadFileToFile("finacial", res.tempFiles[0]);
+          } else {
+            uni.showToast({
+              title: "文件大小不能超过10M",
+              icon: "none",
+            });
+          }
+        },
+        fail() {
+          uni.showToast({
+            title: "文件选择失败",
+            icon: "none",
+          });
+        },
+      });
+      // #endif
       //#ifndef MP-WEIXIN
       uni.chooseFile({
         count: 1,

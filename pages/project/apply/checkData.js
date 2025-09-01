@@ -106,7 +106,7 @@ export const checkStepOneInfoData = (applyParams) =>{
       status: false
     }
   }
-  if (applyParams.isExternalInvest !== '0'  && !applyParams.egInvestBrief) {
+  if (applyParams.isExternalInvest !== 0  && !applyParams.egInvestBrief) {
     return {
       message: '请填写获得的投资情况',
       status: false

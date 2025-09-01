@@ -232,6 +232,10 @@ export default {
   methods: {
     async handleSeeBp() {
       const filePath = this.item.uploadBPPath;
+      //#ifdef H5
+      window.open(filePath,'_blank')
+      //#endif
+      //#ifdef MP
       try {
         await previewPDF(filePath);
       } catch (err) {
@@ -241,6 +245,7 @@ export default {
           icon: 'none'
         });
       }
+      //#endif
     }
   },
 };

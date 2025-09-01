@@ -280,6 +280,13 @@ export default {
       this.navigateToPage("/campusPages/parter/list/index");
     },
   },
+  onShareAppMessage() {
+    return {
+      title: "国信合创（CHA）人工智能共创理事会",
+      imageUrl: `${this.imgUrl}/index/img-share.png`,
+      path: "pages/home/index/index",
+    };
+  },
 };
 </script>
 

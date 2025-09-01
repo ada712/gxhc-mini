@@ -25,7 +25,7 @@
 
 <script>
 import projectDetail from "@/components/project-detail";
-import { investProjectsByUser } from "@/api/gxhc";
+import { investProjectsDetails } from "@/api/gxhc";
 import { FormatDateTime } from "@/utils/formatDate";
 import { projectStatusName, getStatusClass } from '@/utils/project'
 
@@ -42,7 +42,7 @@ export default {
   methods: {
     fetchCurrentUserProject() {
       uni.showLoading();
-      investProjectsByUser()
+      investProjectsDetails()
         .then((res) => {
           uni.hideLoading();
           console.log(

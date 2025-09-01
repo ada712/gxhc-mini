@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import { investProjectsByUser } from "@/api/gxhc";
+import { investProjectsDetails } from "@/api/gxhc";
 import { imgUrls } from "@/config/app";
 export default {
   data: function () {
@@ -44,7 +44,7 @@ export default {
   methods: {
     fetchCurrentUserProject() {
       uni.showLoading();
-      investProjectsByUser()
+      investProjectsDetails()
         .then((res) => {
           uni.hideLoading();
           console.log("res==>", res);

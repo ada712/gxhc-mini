@@ -311,6 +311,7 @@
               <radio-group
                 class="radio-group"
                 name="activityType"
+                :value="applyParams.isExternalInvest"
                 @change="isInvestedRadioChange"
               >
                 <label
@@ -330,7 +331,7 @@
             <view
               class="input-moudle"
               v-if="
-                applyParams.isExternalInvest !== '0' &&
+                applyParams.isExternalInvest !== 0 &&
                 applyParams.isExternalInvest !== null
               "
             >
@@ -690,7 +691,11 @@ import { checkStepOneInfoData, checkStepTwoInfoData } from "./checkData";
 import projectBelongIndustry from "@/components/projectBelongIndustry";
 import { imgUrls, HTTP_REQUEST_URL, TOKENNAME } from "@/config/app";
 import { PROJECT_BASE_DATA } from "@/const/project";
-import { investProjectsSave, investProjectsUpdateScore } from "@/api/gxhc";
+import {
+  investProjectsSave,
+  investProjectsUpdateScore,
+  investProjectsDetails,
+} from "@/api/gxhc";
 import store from "@/store";
 export default {
   components: { projectBelongIndustry },
@@ -721,19 +726,19 @@ export default {
       investRadios: [
         {
           name: "无",
-          value: "0",
+          value: 0,
         },
         {
           name: "有，项目最新一轮估值小于或等于3000万人民币",
-          value: "1",
+          value: 1,
         },
         {
           name: "有，项目最新一轮估值大于3000万人民币，且小于或等于5000万人民币",
-          value: "2",
+          value: 2,
         },
         {
           name: "有，项目最新一轮估值大于5000万人民币",
-          value: "3",
+          value: 3,
         },
       ],
       teamList: [],
@@ -747,21 +752,20 @@ export default {
       // 判断是否修改
       const id = options.id;
       this.updateId = id;
-      // uni.showLoading();
-      // this.fetchProjectById(id);
+      this.fetchProjectById(id);
     } else {
       this.applyParams = JSON.parse(JSON.stringify(PROJECT_BASE_DATA));
       this.isUpdate = false;
-    }
-    const platform = uni.getDeviceInfo().osName;
-    if (platform === "android" || platform === "ios") {
-      // uni.showModal({
-      //   title: "温馨提示",
-      //   content:
-      //     "亲爱的用户，项目填写信息比较多，填写耗时约3分钟以上，优先推荐您在电脑端打开小程序进行项目的申请填写，感谢您的信任和支持",
-      //   showCancel: false,
-      //   confirmText: "我知道了",
-      // });
+      const platform = uni.getDeviceInfo().osName;
+      if (platform === "android" || platform === "ios") {
+        uni.showModal({
+          title: "温馨提示",
+          content:
+            "亲爱的用户，项目填写信息比较多，填写耗时约3分钟以上，优先推荐您在电脑端打开小程序进行项目的申请填写，感谢您的信任和支持",
+          showCancel: false,
+          confirmText: "我知道了",
+        });
+      }
     }
   },
   onShow() {
@@ -1120,12 +1124,40 @@ export default {
             showToastFunc("更新失败，请稍后再试");
           }
         },
-        fail: (error) => {
-          wx.hideLoading();
-          showToastFunc("更新失败，请稍后再试");
-          console.error(error);
-        },
       });
+      investProjectsSave({ id: this.updateId, ...params })
+        .then((res) => {
+          console.log("cloundFunAddProjectInfo=>", res);
+          uni.hideLoading();
+          this.clearProjectStorage();
+          if (res.status == 200) {
+            uni.showModal({
+              content: "项目更新成功",
+              showCancel: false,
+              confirmText: "我知道了",
+              success(res) {
+                if (res.confirm) {
+                  uni.navigateTo({
+                    url: "/pages/project/evolve/index",
+                  });
+                }
+              },
+            });
+          } else {
+            uni.showToast({
+              title: "更新失败，请稍后再试",
+              icon: "none",
+            });
+          }
+        })
+        .catch((error) => {
+          uni.hideLoading();
+          uni.showToast({
+            title: "更新失败，请稍后再试",
+            icon: "none",
+          });
+          console.error(error);
+        });
     },
     /**
      * 清除项目信息的相关缓存
@@ -1137,46 +1169,35 @@ export default {
       uni.removeStorageSync("enterprises");
       uni.removeStorageSync("colleges");
     },
-
     fetchProjectById(id) {
-      const that = this;
-      wx.cloud.callFunction({
-        name: "getProjectInfo",
-        data: {
-          action: "cloundFunProjectsById",
-          id: id,
-        },
-        success: (res) => {
-          wx.hideLoading();
+      uni.showLoading();
+      investProjectsDetails({ id })
+        .then((res) => {
+          uni.hideLoading();
           console.log("res==>", res);
-          if (res.result.data) {
-            const result = res.result.data[0];
-            this.setData({
-              isUpdate: true,
-              applyParams: result,
-              teamList: result.teamList,
-              isFounderCtrl: result.isFounderCtrl ? "Y" : "N",
-              isTechCoreTeam: result.isTechCoreTeam ? "Y" : "N",
-              isTeamInvested: result.isTeamInvested ? "Y" : "N",
-              isCouncilMember: result.isCouncilMember ? "Y" : "N",
-              tipMarketPoint: false,
-              tipBusinessPlan: false,
-              tipProductPlan: false,
-              tipMoneyPlan: false,
-              bpFilePath: result.uploadBPPath,
-              bpFileName: result.uploadBPPath,
-            });
+          if (res.status == 200) {
+            const result = res.data;
+            this.isUpdate = true;
+            this.applyParams = result;
+            this.teamList = result.teamList ? JSON.parse(result.teamList) : [];
+            this.isFounderCtrl = result.isFounderCtrl ? "Y" : "N";
+            this.isTechCoreTeam = result.isTechCoreTeam ? "Y" : "N";
+            this.isTeamInvested = result.isTeamInvested ? "Y" : "N";
+            this.isCouncilMember = result.isCouncilMember ? "Y" : "N";
+            this.tipMarketPoint = false;
+            this.tipBusinessPlan = false;
+            this.tipProductPlan = false;
+            this.tipMoneyPlan = false;
+            this.bpFilePath = result.uploadBPPath;
+            this.bpFileName = result.uploadBPPath;
           } else {
-            this.setData({
-              applyParams: JSON.parse(JSON.stringify(PROJECT_BASE_DATA)),
-              isUpdate: false,
-            });
+            this.applyParams = JSON.parse(JSON.stringify(PROJECT_BASE_DATA));
+            this.isUpdate = false;
           }
-        },
-        fail: (error) => {
-          wx.hideLoading();
-        },
-      });
+        })
+        .catch((error) => {
+          uni.hideLoading();
+        });
     },
     uploadChooseFile() {
       //#ifdef MP-WEIXIN
@@ -1229,7 +1250,7 @@ export default {
     uploadBPFile(tempFiles) {
       uni.showLoading({
         title: `文件上传中`,
-      });      
+      });
       uni.uploadFile({
         url: HTTP_REQUEST_URL + "/api/upload/pdf",
         filePath: tempFiles.path,
@@ -1715,6 +1736,8 @@ page {
           color: #2f3031;
           font-size: 24rpx;
           line-height: 36rpx;
+          word-break: break-all;
+          padding: 0 20rpx;
         }
       }
     }
