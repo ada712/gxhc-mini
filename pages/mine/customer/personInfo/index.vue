@@ -17,6 +17,17 @@
         >
       </button>
 
+      <view class="row" @click="goPage">
+        <view class="label">能量</view>
+        <view class="right">
+          <text>100</text>
+          <image
+            :src="imgPath + '/icons/icon-right-arrow.png'"
+            class="icon-right-arrow"
+          />
+        </view>
+      </view>
+
       <view class="row">
         <view class="label">昵称</view>
         <view class="right">
@@ -140,6 +151,11 @@ export default {
     console.log(this.userInfo);
   },
   methods: {
+    goPage(){
+       uni.navigateTo({
+        url: "/subpackage1/energy/index/index",
+      });
+    },
     bindGenderChange(e) {
       const idx = e.detail.value;
       const { value } = this.genderList[idx];
@@ -196,7 +212,7 @@ export default {
     background: #ffffff;
     border-radius: 24rpx;
     box-sizing: border-box;
-    padding: 0 24rpx;
+    padding: 24rpx 24rpx 0 24rpx;
     .head-box {
       width: 100%;
       display: flex;

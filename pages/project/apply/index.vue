@@ -1095,36 +1095,6 @@ export default {
         });
     },
     fetchUpdateProject(params) {
-      const that = this;
-      wx.cloud.callFunction({
-        name: "getProjectInfo",
-        data: {
-          action: "cloundFunUpdateProject",
-          id: that.data.updateId,
-          data: params,
-        },
-        success: (res) => {
-          console.log("cloundFunAddProjectInfo=>", res);
-          uni.hideLoading();
-          this.clearProjectStorage();
-          if (res.result.success) {
-            uni.showModal({
-              content: "项目更新成功",
-              showCancel: false,
-              confirmText: "我知道了",
-              success(res) {
-                if (res.confirm) {
-                  uni.navigateTo({
-                    url: "/pages/project/evolve/index",
-                  });
-                }
-              },
-            });
-          } else {
-            showToastFunc("更新失败，请稍后再试");
-          }
-        },
-      });
       investProjectsSave({ id: this.updateId, ...params })
         .then((res) => {
           console.log("cloundFunAddProjectInfo=>", res);

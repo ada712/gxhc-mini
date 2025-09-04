@@ -2,8 +2,7 @@
   "easycom": {
     "autoscan": true,
     "custom": {
-      "^x-(.*)": "@/components/x-$1/x-$1.vue",
-      "^uni-(.*)": "@dcloudio/uni-ui/lib/uni-$1/uni-$1.vue"
+      "^x-(.*)": "@/components/x-$1/x-$1.vue"
     }
   },
   "pages": [
@@ -11,6 +10,12 @@
       "path": "pages/home/index/index",
       "style": {
         "navigationBarTitleText": "国信合创理事会"
+      }
+    },
+    {
+      "path": "pages/home/introduce/index",
+      "style": {
+        "navigationBarTitleText": "基金矩阵介绍"
       }
     },
     {
@@ -134,6 +139,72 @@
     }
   ],
   "subPackages": [
+    {
+      "root": "subpackage1",
+      "name": "subpackage",
+      "pages": [
+        {
+          "path": "agent/index/index",
+          "style": {
+            "navigationBarTitleText": "投资分析Agent"
+          }
+        },
+        {
+          "path": "agent/list/index",
+          "style": {
+            "navigationBarTitleText": "历史记录"
+          }
+        },
+        {
+          "path": "agent/detail/index",
+          "style": {
+            "navigationBarTitleText": "投资报告"
+          }
+        },
+        {
+          "path": "bp/index/index",
+          "style": {
+            "navigationBarTitleText": "BP一键诊断"
+          }
+        },
+        {
+          "path": "bp/list/index",
+          "style": {
+            "navigationBarTitleText": "BP上传记录"
+          }
+        },
+        {
+          "path": "bp/detail/index",
+          "style": {
+            "navigationBarTitleText": "BP诊断报告"
+          }
+        },
+        {
+          "path": "bp/result/base/index",
+          "style": {
+            "navigationBarTitleText": "BP诊断Base版"
+          }
+        },
+        {
+          "path": "bp/result/plus/index",
+          "style": {
+            "navigationBarTitleText": "BP诊断Plus版"
+          }
+        },
+        {
+          "path": "energy/index/index",
+          "style": {
+            "navigationBarTitleText": "我的能量"
+          }
+        },
+        {
+          "path": "energy/list/index",
+          "style": {
+            "navigationBarTitleText": "能量明细"
+          }
+        }
+      ]
+    },
     {
       "root": "explainPages",
       "name": "explain",

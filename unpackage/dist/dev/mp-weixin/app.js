@@ -7,6 +7,7 @@ const utils_cache = require("./utils/cache.js");
 const utils_util = require("./utils/util.js");
 if (!Math) {
   "./pages/home/index/index.js";
+  "./pages/home/introduce/index.js";
   "./pages/domain/index/index.js";
   "./pages/mine/index/index.js";
   "./pages/web/index.js";
@@ -28,6 +29,16 @@ if (!Math) {
   "./pages/home/serviceDetail/index.js";
   "./pages/home/vipServiceList/index.js";
   "./pages/home/serviceList/index.js";
+  "./subpackage1/agent/index/index.js";
+  "./subpackage1/agent/list/index.js";
+  "./subpackage1/agent/detail/index.js";
+  "./subpackage1/bp/index/index.js";
+  "./subpackage1/bp/list/index.js";
+  "./subpackage1/bp/detail/index.js";
+  "./subpackage1/bp/result/base/index.js";
+  "./subpackage1/bp/result/plus/index.js";
+  "./subpackage1/energy/index/index.js";
+  "./subpackage1/energy/list/index.js";
   "./explainPages/project/apply/index.js";
   "./explainPages/protocol/index.js";
   "./explainPages/protocol/serve/index.js";

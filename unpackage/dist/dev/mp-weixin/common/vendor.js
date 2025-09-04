@@ -1347,9 +1347,9 @@ function populateParameters(fromRes, toRes) {
     appVersion: "1.0.0",
     appVersionCode: "100",
     appLanguage: getAppLanguage(hostLanguage),
-    uniCompileVersion: "4.75",
-    uniCompilerVersion: "4.75",
-    uniRuntimeVersion: "4.75",
+    uniCompileVersion: "4.76",
+    uniCompilerVersion: "4.76",
+    uniRuntimeVersion: "4.76",
     uniPlatform: "mp-weixin",
     deviceBrand,
     deviceModel: model,
@@ -1498,9 +1498,9 @@ const getAppBaseInfo = {
       appLanguage: getAppLanguage(hostLanguage),
       isUniAppX: false,
       uniPlatform: "mp-weixin",
-      uniCompileVersion: "4.75",
-      uniCompilerVersion: "4.75",
-      uniRuntimeVersion: "4.75"
+      uniCompileVersion: "4.76",
+      uniCompilerVersion: "4.76",
+      uniRuntimeVersion: "4.76"
     };
     extend(toRes, parameters);
   }

@@ -1,6 +1,7 @@
 {
   "pages": [
     "pages/home/index/index",
+    "pages/home/introduce/index",
     "pages/domain/index/index",
     "pages/mine/index/index",
     "pages/web/index",
@@ -24,6 +25,22 @@
     "pages/home/serviceList/index"
   ],
   "subPackages": [
+    {
+      "root": "subpackage1",
+      "pages": [
+        "agent/index/index",
+        "agent/list/index",
+        "agent/detail/index",
+        "bp/index/index",
+        "bp/list/index",
+        "bp/detail/index",
+        "bp/result/base/index",
+        "bp/result/plus/index",
+        "energy/index/index",
+        "energy/list/index"
+      ],
+      "name": "subpackage"
+    },
     {
       "root": "explainPages",
       "pages": [

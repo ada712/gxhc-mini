@@ -1,5 +1,5 @@
 <template>
-	<web-view :src="webUrl"></web-view>
+	<web-view :src="webUrl" update-title></web-view>
 </template>
 
 <script>
@@ -22,7 +22,7 @@
 					delta: 1,
 				});
 			}
-		},
+		}
 	};
 </script>
 

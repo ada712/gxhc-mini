@@ -168,28 +168,4 @@ export default [
       },
     ],
   },
-  {
-    title: "校园合伙人专区",
-    show: 'xyhhrzq',
-    list: [
-      {
-        icon: `${imgUrls}/gn/icon_xy_dssq.png`,
-        label: "大使申请",
-        iswebUrl: false,
-        route: "/campusPages/parter/apply/index",
-      },
-      {
-        icon: `${imgUrls}/gn/icon_xy_jyzphb.png`,
-        label: "经验值排行榜",
-        iswebUrl: false,
-        route: "/campusPages/experience/rankingList/index",
-      },
-      {
-        icon: `${imgUrls}/gn/icon_xy_hdbm.png`,
-        label: "校园活动",
-        iswebUrl: false,
-        route: "/campusPages/activity/list/index",
-      },
-    ],
-  },
 ];

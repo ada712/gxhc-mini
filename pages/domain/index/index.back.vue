@@ -1,17 +1,74 @@
+@ -0,0 +1,272 @@
 <template>
   <view class="wripper">
     <view class="content">
-      <view class="same-module" v-for="(item, key) in menuList" :key="key">
-        <view class="title">{{ item.title }}</view>
+      <view class="same-module">
+        <view class="title">项目专区</view>
         <view class="list">
           <view
             class="item"
-            v-for="(child, index) in item.list"
-            :key="index"
-            @click="navigateToPage(child)"
+            v-for="(item, key) in projectMenus"
+            :key="key"
+            @click="navigateToPage(item)"
           >
-            <image :src="child.icon" class="item-icon" />
-            <view class="item-text">{{ child.label }}</view>
+            <image :src="item.icon" class="item-icon" />
+            <view class="item-text">{{ item.label }}</view>
+          </view>
+        </view>
+      </view>
+      <view class="same-module">
+        <view class="title">积分专区</view>
+        <view class="list">
+          <view
+            class="item"
+            v-for="(item, key) in pointsMenus"
+            :key="key"
+            @click="navigateToPage(item)"
+          >
+            <image :src="item.icon" class="item-icon" />
+            <view class="item-text">{{ item.label }}</view>
+          </view>
+        </view>
+      </view>
+      <view class="same-module" v-if="showDirectorModule">
+        <view class="title">理事成员专区</view>
+        <view class="list">
+          <view
+            class="item"
+            v-for="(item, key) in directorMenus"
+            :key="key"
+            @click="navigateToPage(item)"
+          >
+            <image :src="item.icon" class="item-icon" />
+            <view class="item-text">{{ item.label }}</view>
+          </view>
+        </view>
+      </view>
+      <view class="same-module" v-if="showCampusModule">
+        <view class="title">校园合伙人专区</view>
+        <view class="list">
+          <view
+            class="item"
+            v-for="(item, key) in campusMenus"
+            :key="key"
+            @click="navigateToPage(item)"
+          >
+            <image :src="item.icon" class="item-icon" />
+            <view class="item-text">{{ item.label }}</view>
+          </view>
+        </view>
+      </view>
+      <view class="same-module" v-if="showInvestorModule">
+        <view class="title">社群专区</view>
+        <view class="list">
+          <view
+            class="item"
+            v-for="(item, key) in investMenus"
+            :key="key"
+            @click="navigateToPage(item)"
+          >
+            <image :src="item.icon" class="item-icon" />
+            <view class="item-text">{{ item.label }}</view>
           </view>
         </view>
       </view>
@@ -20,14 +77,13 @@
 </template>
 
 <script>
-import list from "./menu";
 import { USER_IDENTITY } from "@/const/index";
 import { clearProjectStorage } from "@/utils/cache.js";
-const imgUrls =
-  "https://7072-prod-cloud-env-9gqq29j68db5f470-1326719267.tcb.qcloud.la/miniprogram/images";
+import { imgUrls } from "@/config/app";
 export default {
   data: function () {
     return {
+      userInfo: {},
       projectMenus: [
         {
           icon: `${imgUrls}/gn/icon_xm_fqxm.png`,
@@ -128,41 +184,34 @@ export default {
           route: "/projectPages/list/index",
         },
       ],
-      showPointModule: true,
-      showCampusModule: true,
-      showDirectorModule: true,
-      showInvestorModule: true,
-			permission: ['tzzq','fhzq','sqzq','lszq','jfzq','hbzq']
     };
   },
+  onShow() {
+    const userInfo = this.$Cache.get("USER_INFO");
+    if (userInfo) this.userInfo = JSON.parse(userInfo)
+    console.log(this.userInfo);
+  },
   computed: {
-    menuList() {
-      return list.filter(item => this.permission.includes(item.show));
+    showPointModule() {
+      if (!this.userInfo?.userTag) return true;
+      return ["director", "admin"].includes(this.userInfo.userTag);
+    },
+    showCampusModule() {
+      if (!this.userInfo?.userTag) return true;
+      return ["ambassador", "partner", "campusManage", "admin"].includes(
+        this.userInfo.userTag
+      );
+    },
+    showDirectorModule() {
+      if (!this.userInfo?.userTag) return false;
+      return ["director", "admin"].includes(this.userInfo.userTag);
+    },
+    showInvestorModule() {
+      if (!this.userInfo?.userTag) return false;
+      return ["investor", "admin"].includes(this.userInfo.userTag);
     },
   },
   methods: {
-    judgePointBox(userTag) {
-      return [
-        USER_IDENTITY.DIRECTOR,
-        USER_IDENTITY.ADMIN,
-        USER_IDENTITY.NORMAL,
-      ].includes(userTag);
-    },
-    judgeInvestBox(userTag) {
-      return [USER_IDENTITY.INVESTOR, USER_IDENTITY.ADMIN].includes(userTag);
-    },
-    judgeDirectorBox(userTag) {
-      return [USER_IDENTITY.DIRECTOR, USER_IDENTITY.ADMIN].includes(userTag);
-    },
-    judgeCampusBox(userTag) {
-      return [
-        USER_IDENTITY.CAMPUS_AMB,
-        USER_IDENTITY.CAMPUS_PARTNER,
-        USER_IDENTITY.CAMPUS_MANAGE,
-        USER_IDENTITY.NORMAL,
-        USER_IDENTITY.ADMIN,
-      ].includes(userTag);
-    },
     navigateToPage(item) {
       const { route, isWeb } = item;
       if (!route) return; // 如果 route 为空，则直接返回
@@ -185,7 +234,7 @@ export default {
 
 <style lang="scss" scoped>
 page {
-  background: #f6f8ff;
+  background: #f4f4f4;
 }
 
 .wripper {
@@ -229,10 +278,10 @@ page {
           margin-bottom: 24rpx;
 
           .item-icon {
-            width: 110rpx;
-            height: 110rpx;
+            width: 88rpx;
+            height: 88rpx;
             border-radius: 34rpx;
-            margin-bottom: 14rpx;
+            margin-bottom: 16rpx;
           }
 
           .item-text {
