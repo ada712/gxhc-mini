@@ -17,10 +17,21 @@
         >
       </button>
 
-      <view class="row" @click="goPage">
+      <view class="row" @click="goPage(1)">
         <view class="label">能量</view>
         <view class="right">
           <text>100</text>
+          <image
+            :src="imgPath + '/icons/icon-right-arrow.png'"
+            class="icon-right-arrow"
+          />
+        </view>
+      </view>
+
+      <view class="row" @click="goPage(2)">
+        <view class="label">身份</view>
+        <view class="right">
+          <text>金融创业者</text>
           <image
             :src="imgPath + '/icons/icon-right-arrow.png'"
             class="icon-right-arrow"
@@ -151,9 +162,15 @@ export default {
     console.log(this.userInfo);
   },
   methods: {
-    goPage(){
-       uni.navigateTo({
-        url: "/subpackage1/energy/index/index",
+    goPage(type) {
+      let url = "";
+      if (type == 1) {
+        url = "/subpackage1/energy/index/index";
+      } else if (type == 2) {
+        url = "/subpackage1/auth/index/index";
+      }
+      uni.navigateTo({
+        url,
       });
     },
     bindGenderChange(e) {

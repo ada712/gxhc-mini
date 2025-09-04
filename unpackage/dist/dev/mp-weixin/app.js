@@ -39,6 +39,8 @@ if (!Math) {
   "./subpackage1/bp/result/plus/index.js";
   "./subpackage1/energy/index/index.js";
   "./subpackage1/energy/list/index.js";
+  "./subpackage1/auth/index/index.js";
+  "./subpackage1/auth/certifica/index.js";
   "./explainPages/project/apply/index.js";
   "./explainPages/protocol/index.js";
   "./explainPages/protocol/serve/index.js";

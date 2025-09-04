@@ -37,7 +37,9 @@
         "bp/result/base/index",
         "bp/result/plus/index",
         "energy/index/index",
-        "energy/list/index"
+        "energy/list/index",
+        "auth/index/index",
+        "auth/certifica/index"
       ],
       "name": "subpackage"
     },
