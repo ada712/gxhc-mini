@@ -354,7 +354,6 @@ export default {
         font-size: 26rpx;
         color: #333333;
         text-align: center;
-        cursor: pointer;
 
         &.active {
           background: #f2f7ff;
@@ -374,7 +373,6 @@ export default {
           display: flex;
           align-items: center;
           margin-bottom: 20rpx;
-          cursor: pointer;
           .nl-select {
             width: 26rpx;
             height: 26rpx;
@@ -394,7 +392,6 @@ export default {
           display: inline-block;
           border-radius: 10rpx;
           margin-right: 10rpx;
-          cursor: pointer;
           &.active {
             background: #f2f7ff;
             color: #1e7cfb;
