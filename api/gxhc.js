@@ -47,3 +47,14 @@ export function investProjectsUpdateSupply(data) {
     noAuth: false,
   });
 }
+
+export function getIndustryCategories(data) {
+  return request.get("get_industry_categories/list", data, {
+    noAuth: false,
+  });
+}
+export function getIndustrySubCategories(data) {
+  return request.get("get_industry_sub_categories/list", data, {
+    noAuth: false,
+  });
+}

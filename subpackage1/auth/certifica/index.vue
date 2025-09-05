@@ -52,19 +52,20 @@
           placeholder-class="placeholder-class"
         />
       </view>
-      <view class="ivt">
+      <view class="ivt" @click="openIndustry">
         <text class="label">投资领域</text>
-        <picker mode="selector" :range="options" bindchange="updateGender">
-          <view class="selector" v-if="ivt === ''">
-            <text class="placeholder-class"> 请选择投资领域 </text>
-            <image
-              class="right-icon"
-              :src="imgUrl + '/index/icon_right_lan.png'"
-          /></view>
-          <view class="birthday" v-if="ivt">
-            {{ ivt }}
+        <view class="selector">
+          <text class="placeholder-class" v-if="!selectIndustry.length">
+            请选择投资领域
+          </text>
+          <view class="birthday" v-else>
+            {{ selectIndustryList }}
           </view>
-        </picker>
+          <image
+            class="right-icon"
+            :src="imgUrl + '/index/icon_right_lan.png'"
+          />
+        </view>
       </view>
     </view>
     <view class="upload" @click="goPage">
@@ -77,12 +78,20 @@
     <view class="btn" @click="onNext" :class="{ active: auth != '' }">
       <text class="btn-t">提交认证</text>
     </view>
+    <IndustryCategories
+      ref="IndustryCategoriesRef"
+      @confirm="onIndustryConfirm"
+    />
   </view>
 </template>
 
 <script>
 import { imgUrls } from "@/config/app";
+import IndustryCategories from "./components/IndustryCategories.vue";
 export default {
+  components: {
+    IndustryCategories,
+  },
   data: function () {
     return {
       imgUrl: imgUrls,
@@ -106,6 +115,7 @@ export default {
       ],
       ivt: "",
       auth: "",
+      selectIndustry: [],
     };
   },
   onLoad(option) {
@@ -114,6 +124,13 @@ export default {
     uni.setNavigationBarTitle({ title });
   },
   methods: {
+    // 接收选中数据
+    onIndustryConfirm(selectedData) {
+      this.selectIndustry = selectedData;
+    },
+    openIndustry() {
+      this.$refs.IndustryCategoriesRef.open(this.selectIndustry);
+    },
     goBack() {
       uni.navigateBack();
     },
@@ -130,6 +147,15 @@ export default {
     },
     onSelect(auth) {
       this.auth = auth;
+    },
+  },
+  computed: {
+    selectIndustryList() {
+      if (this.selectIndustry.length === 0) {
+        return "";
+      }
+      const selectIndustry = this.selectIndustry.map((item) => item.name);
+      return selectIndustry.join(",");
     },
   },
 };
@@ -177,10 +203,15 @@ page {
     .selector {
       display: flex;
       align-items: center;
-      .right-icon {
-        width: 48rpx;
-        height: 48rpx;
-      }
+    }
+    .right-icon {
+      width: 48rpx;
+      height: 48rpx;
+    }
+    .birthday {
+      color: #182855;
+      font-size: 24rpx;
+      font-weight: 400;
     }
     .label {
       color: #404040;
