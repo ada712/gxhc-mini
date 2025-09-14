@@ -120,12 +120,16 @@
             <text class="item-t">分享链接</text>
           </view>
           <view class="item">
-            <image class="item-icon" :src="imgUrl + '/subpackage1/hy.png'" />
-            <text class="item-t">微信好友</text>
+            <button open-type="share">
+              <image class="item-icon" :src="imgUrl + '/subpackage1/hy.png'" />
+              <text class="item-t">微信好友</text>
+            </button>
           </view>
           <view class="item">
-            <image class="item-icon" :src="imgUrl + '/subpackage1/pyq.png'" />
-            <text class="item-t">朋友圈</text>
+            <button open-type="shareTimeline">
+              <image class="item-icon" :src="imgUrl + '/subpackage1/pyq.png'" />
+              <text class="item-t">朋友圈</text>
+            </button>
           </view>
         </view>
       </view>
@@ -143,7 +147,37 @@ export default {
       showPopup: false,
     };
   },
+  onShareTimeline: function () {
+    return {
+      title: '分享到朋友圈的标题', // 分享标题
+      query: 'some=params', // 分享时携带的参数，可以在接收页面通过onLoad获取
+      imageUrl: 'https://example.com/path/to/image.jpg' // 分享图片链接
+    };
+  },
+  onShareAppMessage: function () {
+    return {
+      title: '分享给朋友的标题', // 分享标题  
+      query: 'some=params', // 分享时携带的参数，可以在接收页面通过onLoad获取
+      imageUrl: 'https://example.com/path/to/image.jpg' // 分享图片链接
+    };
+  },
   methods: {
+    test() {
+      uni.showShareMenu({
+        withShareTicket: true,
+      });
+      uni.updateTimelineShareData({
+        title: "分享标题", // 分享标题
+        link: "/pages/index/index", // 分享链接
+        imageUrl: "/images/share.jpg", // 分享图标
+        success: function () {
+          console.log("设置朋友圈分享内容成功");
+        },
+        fail: function (err) {
+          console.error("设置朋友圈分享内容失败", err);
+        },
+      });
+    },
     goPage(type) {
       if (type == 1) {
         uni.navigateTo({
