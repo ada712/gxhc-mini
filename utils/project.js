@@ -44,6 +44,19 @@ export const getStatusClass = (status) => {
  */
 export const previewPDF = (filePath) => {
   return new Promise((resolve, reject) => {
+    //#ifdef H5
+    uni.openDocument({
+      filePath: filePath,
+      fileType: "pdf",
+      success: () => {
+        resolve();
+      },
+      fail: (err) => {
+        reject(err);
+      },
+    });
+    //#endif
+    //#ifndef H5
     // 如果是云存储中的文件，先下载到本地
     uni.downloadFile({
       url: filePath, // 文件ID
@@ -66,6 +79,7 @@ export const previewPDF = (filePath) => {
         reject(err);
       },
     });
+    //#endif
   });
 };
 

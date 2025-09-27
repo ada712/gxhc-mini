@@ -58,6 +58,12 @@ function getUserAgreement(type) {
     noAuth: true
   });
 }
+function realName(data) {
+  return utils_request.request.post(`user/realName`, data);
+}
+function getRealName() {
+  return utils_request.request.get(`user/getRealName`, {});
+}
 exports.delAddress = delAddress;
 exports.editAddress = editAddress;
 exports.getAddressDetail = getAddressDetail;
@@ -65,6 +71,7 @@ exports.getAddressList = getAddressList;
 exports.getIntegralList = getIntegralList;
 exports.getLogout = getLogout;
 exports.getMsgDetails = getMsgDetails;
+exports.getRealName = getRealName;
 exports.getUserAgreement = getUserAgreement;
 exports.getUserInfo = getUserInfo;
 exports.invoiceDelete = invoiceDelete;
@@ -72,5 +79,6 @@ exports.invoiceDetail = invoiceDetail;
 exports.invoiceList = invoiceList;
 exports.invoiceSave = invoiceSave;
 exports.messageSystem = messageSystem;
+exports.realName = realName;
 exports.setAddressDefault = setAddressDefault;
 exports.userEdit = userEdit;

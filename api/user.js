@@ -720,11 +720,18 @@ export function changeRemindStatus(status) {
 	})
 }
 
-
 /**
  * 绑定员工
  * 
  */
 export function spreadAgent(data) {
 	return request.post(`agent/spread`, data);
+}
+
+export function realName(data) {
+	return request.post(`user/realName`, data);
+}
+
+export function getRealName() {
+	return request.get(`user/getRealName`, {});
 }

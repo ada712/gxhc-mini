@@ -32,7 +32,7 @@
     <view class="introduce">
       <view class="title">
         <text class="title-t">诊断样本案例</text>
-        <view class="more">
+        <view class="more" v-if="false">
           <text class="more-t">查看更多</text>
           <image
             class="right-icon"
@@ -40,22 +40,22 @@
           ></image>
         </view>
       </view>
-      <view class="item" v-for="(item, key) in 2" :key="key">
+      <view class="item" v-for="(item, key) in demos" :key="key">
         <item class="top">
-          <text class="title">东风证券公司诊断结果名称名称可改...</text>
-          <view class="more">
-            <text class="more-t">查看诊断详情</text>
+          <text class="title">{{item.title}}</text>
+          <view class="more" @click="showPdf(item.link)">
+            <text class="more-t">查看详情</text>
             <image
               class="right-icon"
               :src="imgUrl + '/icons/icon-black-right.png'"
             ></image>
           </view>
         </item>
-        <text class="time">2065 - 01 - 17 06:52</text>
+        <text class="time">{{item.time}}</text>
       </view>
     </view>
     <!-- 升级plus -->
-    <view class="mask" v-if="showPopup">
+    <view class="masks" v-if="showPopup">
       <view class="popup2">
         <view class="popup-content">
           <text class="title">Plus版</text>
@@ -138,13 +138,26 @@
 </template>
 
 <script>
-import { imgUrls } from "@/config/app";
+import { imgUrls, HTTP_REQUEST_URL } from "@/config/app";
+import { previewPDF } from "@/utils/project";
 export default {
   data: function () {
     return {
       imgUrl: imgUrls,
       sharePopup: false,
       showPopup: false,
+      demos: [
+        {
+          title: "ZPAI-BP诊断与优化建议",
+          time: "2025-09-27 10:00",
+          link: HTTP_REQUEST_URL+"/ZPAI-BP诊断与优化建议.pdf",
+        },
+        {
+          title: "YSKJ-BP诊断与优化建议",
+          time: "2025-09-27 10:00",
+          link: HTTP_REQUEST_URL+"/YSKJ-BP诊断与优化建议.pdf",
+        }
+      ]
     };
   },
   onShareTimeline: function () {
@@ -162,6 +175,9 @@ export default {
     };
   },
   methods: {
+    showPdf(url) {
+      previewPDF(url)
+    },
     test() {
       uni.showShareMenu({
         withShareTicket: true,
@@ -239,7 +255,7 @@ page {
       }
     }
   }
-  .mask {
+  .masks {
     position: fixed;
     left: 0;
     top: 0;
@@ -255,6 +271,8 @@ page {
       opacity: 1;
       border: 0 solid #979797;
       background: #ffffff;
+      position: relative;
+      z-index: 10;
       .popup-content {
         min-height: 200rpx;
         text-align: center;

@@ -1,7 +1,7 @@
 <template>
   <view class="wripper">
     <view class="content">
-      <view class="same-row" @click="goDirectorPage">
+      <!-- <view class="same-row" @click="goDirectorPage">
         <view class="left">
           <image :src="imgPath + '/admin/icon-jftj.png'" class="icon-menu" />
           <view class="col">
@@ -9,9 +9,9 @@
             <view class="notes">录入理事成员信息</view>
           </view>
         </view>
-      </view>
+      </view> -->
 
-      <view class="same-row">
+      <!-- <view class="same-row">
         <view class="left">
           <image :src="imgPath + '/admin/icon-jflr.png'" class="icon-menu" />
           <view class="col">
@@ -23,9 +23,9 @@
           <view class="operate-btn mb8" @click="goAddBanner">新增</view>
           <view class="operate-btn" @click="goDelBanner">删除</view>
         </view>
-      </view>
+      </view> -->
 
-      <view class="same-row" @click="goUsersPage">
+      <!-- <view class="same-row" @click="goUsersPage">
         <view class="left">
           <image :src="imgPath + '/admin/icon-jflr.png'" class="icon-menu" />
           <view class="col">
@@ -37,7 +37,7 @@
           :src="imgPath + '/icons/icon-right-arrow.png'"
           class="icon-right-arrow"
         />
-      </view>
+      </view> -->
 
       <view class="same-row" @click="goEnterPage">
         <view class="left">
