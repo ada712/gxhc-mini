@@ -11,7 +11,8 @@
     "pages/director/contract/index",
     "pages/points/ranking/index",
     "pages/points/detail/index",
-    "pages/mine/customer/adress/index",
+    "pages/mine/customer/address/list/index",
+    "pages/mine/customer/address/edit/index",
     "pages/mine/customer/realName/index",
     "pages/mine/customer/personInfo/index",
     "pages/mine/customer/index/index",
@@ -48,7 +49,6 @@
       "pages": [
         "project/apply/index",
         "protocol/index",
-        "protocol/serve/index",
         "protocol/privacy/index",
         "campus/intro/index",
         "points/ruleState/index",
@@ -103,6 +103,14 @@
         "updateFinance/index"
       ],
       "name": "project"
+    },
+    {
+      "root": "pages/users",
+      "pages": [
+        "user_invoice_list/index",
+        "user_invoice_form/index"
+      ],
+      "name": "users"
     }
   ],
   "window": {

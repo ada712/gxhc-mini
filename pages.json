@@ -71,7 +71,13 @@
       }
     },
     {
-      "path": "pages/mine/customer/adress/index",
+      "path": "pages/mine/customer/address/list/index",
+      "style": {
+        "navigationBarTitleText": "收件地址"
+      }
+    },
+    {
+      "path": "pages/mine/customer/address/edit/index",
       "style": {
         "navigationBarTitleText": "收件地址"
       }
@@ -205,8 +211,7 @@
         },
         {
           "path": "auth/index/index",
-          "style": {
-          }
+          "style": {}
         },
         {
           "path": "auth/certifica/index",
@@ -233,16 +238,8 @@
           }
         },
         {
-          "path": "protocol/serve/index",
-          "style": {
-            "navigationBarTitleText": "用户服务协议"
-          }
-        },
-        {
           "path": "protocol/privacy/index",
-          "style": {
-            "navigationBarTitleText": "隐私协议"
-          }
+          "style": {}
         },
         {
           "path": "campus/intro/index",
@@ -441,6 +438,24 @@
         {
           "path": "updateFinance/index",
           "style": {}
+        }
+      ]
+    },
+    {
+      "root": "pages/users",
+      "name": "users",
+      "pages": [
+        {
+          "path": "user_invoice_list/index",
+          "style": {
+            "navigationBarTitleText": "发票管理"
+          }
+        },
+        {
+          "path": "user_invoice_form/index",
+          "style": {
+            "navigationBarTitleText": "添加新发票"
+          }
         }
       ]
     }

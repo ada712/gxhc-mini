@@ -27,12 +27,12 @@ export default {
   methods: {
     onClickPrivacyProtocol() {
       uni.navigateTo({
-        url: "/explainPages/protocol/privacy/index",
+        url: "/explainPages/protocol/privacy/index?type=3",
       });
     },
     onClickServeProtocol() {
       uni.navigateTo({
-        url: "/explainPages/protocol/serve/index",
+        url: "/explainPages/protocol/privacy/index?type=4",
       });
     },
   },

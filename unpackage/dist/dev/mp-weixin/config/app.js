@@ -1,7 +1,7 @@
 "use strict";
-const imgUrls = "https://mini.cnbfmy.cn/statics/miniprogram/images";
-const miniprogramUrl = "https://mini.cnbfmy.cn/statics/miniprogram/";
-const HTTP_REQUEST_URL = `https://mini.cnbfmy.cn`;
+const imgUrls = "https://mini.acture-hub.com/statics/miniprogram/images";
+const miniprogramUrl = "https://mini.acture-hub.com/statics/miniprogram/";
+const HTTP_REQUEST_URL = `https://mini.acture-hub.com`;
 const HEADER = {
   "content-type": "application/json",
   "Form-type": "routine"

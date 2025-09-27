@@ -1,6 +1,7 @@
 "use strict";
 const common_vendor = require("../common/vendor.js");
 const config_app = require("../config/app.js");
+const libs_login = require("../libs/login.js");
 const store_index = require("../store/index.js");
 function baseRequest(url, method, data, {
   noAuth = false,
@@ -32,7 +33,7 @@ function baseRequest(url, method, data, {
         else if (res.data.status == 200)
           reslove(res.data, res);
         else if ([110002, 110003, 110004].indexOf(res.data.status) !== -1) {
-          toLogin();
+          libs_login.toLogin();
           reject(res.data);
         } else if (res.data.status == 100103) {
           common_vendor.index.showModal({

@@ -8,6 +8,34 @@
         "miniprogram": {
             "list": [
                 {
+                    "name": "pages/mine/customer/address/list/index",
+                    "pathName": "pages/mine/customer/address/list/index",
+                    "query": "",
+                    "launchMode": "default",
+                    "scene": null
+                },
+                {
+                    "name": "pages/mine/customer/address/list/index",
+                    "pathName": "pages/mine/customer/address/list/index",
+                    "query": "",
+                    "launchMode": "default",
+                    "scene": null
+                },
+                {
+                    "name": "pages/mine/index/index",
+                    "pathName": "pages/mine/index/index",
+                    "query": "",
+                    "launchMode": "default",
+                    "scene": null
+                },
+                {
+                    "name": "subpackage1/auth/index/index",
+                    "pathName": "subpackage1/auth/index/index",
+                    "query": "",
+                    "launchMode": "default",
+                    "scene": null
+                },
+                {
                     "name": "pages/domain/index/index",
                     "pathName": "pages/domain/index/index",
                     "query": "",
@@ -24,13 +52,6 @@
                 {
                     "name": "pages/mine/login/index",
                     "pathName": "pages/mine/login/index",
-                    "query": "",
-                    "launchMode": "default",
-                    "scene": null
-                },
-                {
-                    "name": "pages/user/index",
-                    "pathName": "pages/user/index",
                     "query": "",
                     "launchMode": "default",
                     "scene": null

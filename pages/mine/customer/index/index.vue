@@ -68,7 +68,7 @@ export default {
       this.navigateToPage("/pages/mine/customer/realName/index");
     },
     goAddressPage() {
-      this.navigateToPage("/pages/mine/customer/adress/index");
+      this.navigateToPage("/pages/mine/customer/address/list/index");
     },
   },
 };

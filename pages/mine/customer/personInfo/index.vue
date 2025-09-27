@@ -20,7 +20,7 @@
       <view class="row" @click="goPage(1)">
         <view class="label">能量</view>
         <view class="right">
-          <text>100</text>
+          <text>{{ userInfo.energy }}</text>
           <image
             :src="imgPath + '/icons/icon-right-arrow.png'"
             class="icon-right-arrow"
@@ -31,11 +31,16 @@
       <view class="row" @click="goPage(2)">
         <view class="label">身份</view>
         <view class="right">
-          <text>金融创业者</text>
-          <image
-            :src="imgPath + '/icons/icon-right-arrow.png'"
-            class="icon-right-arrow"
-          />
+          <text v-if="userInfo.auth">{{
+            userInfo.auth.identity_type == "finance" ? "金融从业者" : "创业者"
+          }}</text>
+          <template v-else>
+            <text class="input-place">请完善身份</text>
+            <image
+              :src="imgPath + '/icons/icon-right-arrow.png'"
+              class="icon-right-arrow"
+            />
+          </template>
         </view>
       </view>
 
@@ -103,13 +108,13 @@
         </view>
       </view>
 
-      <view class="address-row">
+      <view class="address-row" @click="goCreateAddress">
         <view class="label">收件地址</view>
-        <view class="right" @click="goCreateAddress">
-          <view class="address active-value" v-if="userInfo.receiveAddress">{{
+        <view class="right">
+          <!-- <view class="address active-value" v-if="userInfo.receiveAddress">{{
             userInfo.receiveAddress
           }}</view>
-          <view class="address input-place" v-else>请输入常用收件地址</view>
+          <view class="address input-place" v-else>请输入常用收件地址</view> -->
           <image
             :src="imgPath + '/icons/icon-right-arrow.png'"
             class="icon-right-arrow"
@@ -119,16 +124,17 @@
     </view>
 
     <view class="logout-btn" @click="handleLogout">退出登录</view>
-    <view class="log-off-row">
+    <!-- <view class="log-off-row">
       <text class="cancel" @click="handleWithdrawUser">注销账号</text
       >，注销后无法恢复，请谨慎操作！
-    </view>
+    </view> -->
   </view>
 </template>
 
 <script>
 import { imgUrls } from "@/config/app";
 import Cache from "@/utils/cache";
+import { userEdit, getLogout } from "@/api/user.js";
 export default {
   data: function () {
     return {
@@ -167,6 +173,9 @@ export default {
       if (type == 1) {
         url = "/subpackage1/energy/index/index";
       } else if (type == 2) {
+        if (this.userInfo.auth) {
+          return;
+        }
         url = "/subpackage1/auth/index/index";
       }
       uni.navigateTo({
@@ -177,6 +186,9 @@ export default {
       const idx = e.detail.value;
       const { value } = this.genderList[idx];
       this.userInfo.gender = value;
+      this.formUpdate({
+        gender: value,
+      });
     },
     bindBlurInput(e) {
       const that = this;
@@ -194,7 +206,11 @@ export default {
           title: "请输入有效的邮箱地址",
           icon: "none",
         });
+        return;
       }
+      this.formUpdate({
+        email: email,
+      });
     },
     handleNicknameInput(nickname) {
       if (nickname.length <= 2) {
@@ -202,18 +218,71 @@ export default {
           title: "昵称至少需要3个字符",
           icon: "none",
         });
+        return;
       }
+      this.formUpdate({
+        nickname: nickname,
+      });
     },
     goCreateAddress() {
       uni.navigateTo({
-        url: "/pages/mine/customer/adress/index",
+        url: "/pages/mine/customer/address/list/index",
       });
     },
     handleLogout() {
       uni.clearStorage();
-      uni.switchTab({
-        url: "/pages/mine/index/index",
+      let that = this;
+      uni.showModal({
+        title: `提示`,
+        content: `确认退出登录`,
+        success: function (res) {
+          if (res.confirm) {
+            getLogout()
+              .then((res) => {
+                // uni.clearStorage()
+                that.$store.commit("LOGOUT");
+                uni.reLaunch({
+                  url: "/pages/home/index/index",
+                });
+              })
+              .catch((err) => {});
+          } else if (res.cancel) {
+          }
+        },
       });
+    },
+    onChooseAvatar(e) {
+      const { avatarUrl } = e.detail;
+      this.$util.uploadImgs(
+        "upload/image",
+        avatarUrl,
+        (res) => {
+          this.userInfo.avatar = res.data.url;
+          this.formUpdate({
+            avatar: res.data.url,
+          });
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
+    },
+    formUpdate(data) {
+      userEdit(data)
+        .then((res) => {
+          uni.showToast({
+            title: res.msg,
+            icon: "none",
+            duration: 2000,
+          });
+        })
+        .catch((msg) => {
+          uni.showToast({
+            title: msg || `保存失败`,
+            icon: "none",
+            duration: 2000,
+          });
+        });
     },
   },
 };

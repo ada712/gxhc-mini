@@ -137,7 +137,7 @@ export default {
       is_default_avatar: 0,
     };
     this.$store.commit("LOGIN", {
-      token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwd2QiOiJkNDFkOGNkOThmMDBiMjA0ZTk4MDA5OThlY2Y4NDI3ZSIsImlzcyI6Im1pbmkuY25iZm15LmNuIiwiYXVkIjoibWluaS5jbmJmbXkuY24iLCJpYXQiOjE3NTY0OTA4OTksIm5iZiI6MTc1NjQ5MDg5OSwiZXhwIjoxNzU5MDgyODk5LCJqdGkiOnsiaWQiOjMsInR5cGUiOiJhcGkifX0.ODolmKstQypMnFuP5mkZDc4bKw4V0iFEuqgZLBemy04',
+      token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwd2QiOiJkNDFkOGNkOThmMDBiMjA0ZTk4MDA5OThlY2Y4NDI3ZSIsImlzcyI6Im1pbmkuY25iZm15LmNuIiwiYXVkIjoibWluaS5jbmJmbXkuY24iLCJpYXQiOjE3NTg4NjUwNzYsIm5iZiI6MTc1ODg2NTA3NiwiZXhwIjoxNzYxNDU3MDc2LCJqdGkiOnsiaWQiOjMsInR5cGUiOiJhcGkifX0.Jb3kLNs1zjaC0mympQh77oZZW-7-YMp50YQgcaufQwY',
       time: "234234234",
     });
     this.$store.commit("UPDATE_USERINFO", data);

@@ -1,81 +1,111 @@
 <template>
   <view class="pages">
     <text class="title">{{
-      auth == "finance" ? "上传名片" : "快速连接资源，从一张名片开始"
+      form.identity_type == "finance"
+        ? "上传名片"
+        : "快速连接资源，从一张名片开始"
     }}</text>
     <text class="title-d">{{
-      auth == "finance"
+      form.identity_type == "finance"
         ? "立即上传名片，完成身份认证"
         : "立即上传名片，精准匹配资源与机遇！"
     }}</text>
-    <view class="con" v-if="auth == 'finance'">
-      <view class="ivt">
-        <text class="label">机构名称</text>
-        <input
-          v-model="ivt"
-          class="value"
-          placeholder="请输入所属机构名称"
-          placeholder-class="placeholder-class"
-        />
+    <template v-if="form.identity_type == 'finance'">
+      <view class="con">
+        <view class="ivt">
+          <text class="label">机构名称</text>
+          <input
+            v-model="form.institution"
+            class="value"
+            placeholder="请输入所属机构名称"
+            placeholder-class="placeholder-class"
+          />
+        </view>
+        <view class="ivt">
+          <text class="label">机构所属类型</text>
+          <picker
+            mode="selector"
+            :value="form.institution_type"
+            :range="options"
+            @change="updateType"
+          >
+            <view class="flex">
+              <view class="selector" v-if="form.institution_type === ''">
+                <text class="placeholder-class"> 请选择所属机构所属类型 </text>
+              </view>
+              <view class="birthday" v-if="form.institution_type">
+                {{ options[form.institution_type] }}
+              </view>
+              <image
+                class="right-icon"
+                :src="imgUrl + '/index/icon_right_lan.png'"
+              />
+            </view>
+          </picker>
+        </view>
+        <view class="upload" @click="onImageUpload">
+          <image
+            class="upload-img"
+            :src="imgUrl + '/subpackage1/upload-icon2.png'"
+            v-if="form.business_card === ''"
+          ></image>
+          <image class="upload-img2" :src="form.business_card" v-else></image>
+          <text class="tips">支持拍照上传和图片上传</text>
+        </view>
       </view>
-      <view class="ivt">
-        <text class="label">机构所属类型</text>
-        <picker mode="selector" :range="options" bindchange="updateGender">
-          <view class="selector" v-if="ivt === ''">
-            <text class="placeholder-class"> 请选择所属机构所属类型 </text>
+    </template>
+    <template v-else>
+      <view class="con">
+        <view class="ivt">
+          <text class="label">机构名称</text>
+          <input
+            v-model="form.company_name"
+            class="value"
+            placeholder="请输入所属机构名称"
+            placeholder-class="placeholder-class"
+          />
+        </view>
+        <view class="ivt">
+          <text class="label">职位</text>
+          <input
+            v-model="form.business_position"
+            class="value"
+            placeholder="请输入职位"
+            placeholder-class="placeholder-class"
+          />
+        </view>
+        <view class="ivt" @click="openIndustry">
+          <text class="label">投资领域</text>
+          <view class="selector">
+            <text class="placeholder-class" v-if="!form.industry.length">
+              请选择投资领域
+            </text>
+            <view class="birthday" v-else>
+              {{ selectIndustryList }}
+            </view>
             <image
               class="right-icon"
               :src="imgUrl + '/index/icon_right_lan.png'"
-          /></view>
-          <view class="birthday" v-if="ivt">
-            {{ ivt }}
+            />
           </view>
-        </picker>
-      </view>
-    </view>
-    <view class="con" v-else>
-      <view class="ivt">
-        <text class="label">机构名称</text>
-        <input
-          v-model="ivt"
-          class="value"
-          placeholder="请输入所属机构名称"
-          placeholder-class="placeholder-class"
-        />
-      </view>
-      <view class="ivt">
-        <text class="label">职位</text>
-        <input
-          v-model="ivt"
-          class="value"
-          placeholder="请输入职位"
-          placeholder-class="placeholder-class"
-        />
-      </view>
-      <view class="ivt" @click="openIndustry">
-        <text class="label">投资领域</text>
-        <view class="selector">
-          <text class="placeholder-class" v-if="!selectIndustry.length">
-            请选择投资领域
-          </text>
-          <view class="birthday" v-else>
-            {{ selectIndustryList }}
-          </view>
+        </view>
+        <view class="upload" @click="onImageUpload">
           <image
-            class="right-icon"
-            :src="imgUrl + '/index/icon_right_lan.png'"
-          />
+            class="upload-img"
+            :src="imgUrl + '/subpackage1/upload-icon2.png'"
+            v-if="form.business_card2 === ''"
+          ></image>
+          <image class="upload-img2" :src="form.business_card2" v-else></image>
+          <text class="tips">支持拍照上传和图片上传</text>
         </view>
       </view>
-    </view>
-    <view class="upload" @click="goPage">
-      <image
-        class="upload-img"
-        :src="imgUrl + '/subpackage1/upload-icon2.png'"
-      ></image>
-      <text class="tips">支持拍照上传和图片上传</text>
-    </view>
-    <view class="btn" @click="onNext" :class="{ active: auth != '' }">
+    </template>
+
+    <view
+      class="btn"
+      @click="onNext"
+      :class="{ active: form.identity_type != '' }"
+    >
       <text class="btn-t">提交认证</text>
     </view>
     <IndustryCategories
@@ -88,6 +118,7 @@
 <script>
 import { imgUrls } from "@/config/app";
 import IndustryCategories from "./components/IndustryCategories.vue";
+import { userAuth } from "@/api/gxhc";
 export default {
   components: {
     IndustryCategories,
@@ -113,48 +144,73 @@ export default {
         "律所/会计师事务所",
         "其他",
       ],
-      ivt: "",
-      auth: "",
-      selectIndustry: [],
+      form: {
+        identity_type: "",
+        institution: "",
+        institution_type: "",
+        business_card: "",
+        company_name: "",
+        business_position: "",
+        industry: [],
+        business_card2: "",
+      },
     };
   },
   onLoad(option) {
-    this.auth = option.auth;
+    this.form.identity_type = option.auth;
     const title = option.auth == "finance" ? "金融从业者认证" : "创业者认证";
     uni.setNavigationBarTitle({ title });
   },
   methods: {
+    updateType(e) {
+      this.form.institution_type = e.detail.value;
+    },
     // 接收选中数据
     onIndustryConfirm(selectedData) {
-      this.selectIndustry = selectedData;
+      this.form.industry = selectedData;
     },
     openIndustry() {
-      this.$refs.IndustryCategoriesRef.open(this.selectIndustry);
+      this.$refs.IndustryCategoriesRef.open(this.form.industry);
     },
     goBack() {
       uni.navigateBack();
     },
-    onNext() {
-      if (!this.auth) {
-        uni.showToast({
-          title: "请选择身份～",
-          icon: "none",
-        });
-      }
-      uni.navigateTo({
-        url: `/subpackage1/auth/${this.auth}/index`,
+    onImageUpload() {
+      let that = this;
+      that.$util.uploadImageChange("upload/image", (res) => {
+        if (that.form.identity_type == "finance") {
+          that.form.business_card = res.data.url;
+          return;
+        }
+        that.form.business_card2 = res.data.url;
       });
     },
-    onSelect(auth) {
-      this.auth = auth;
+    onNext() {
+      userAuth(this.form).then((res) => {
+        if (res.status == 200) {
+          thisl.$util.Tips(
+            {
+              title: res.msg || `保存失败`,
+            },
+            {
+              tab: 3,
+            }
+          );
+          return;
+        }
+        uni.showToast({
+          title: res.msg,
+          icon: "none",
+        });
+      });
     },
   },
   computed: {
     selectIndustryList() {
-      if (this.selectIndustry.length === 0) {
+      if (this.form.industry.length === 0) {
         return "";
       }
-      const selectIndustry = this.selectIndustry.map((item) => item.name);
+      const selectIndustry = this.form.industry.map((item) => item.name);
       return selectIndustry.join(",");
     },
   },
@@ -167,6 +223,10 @@ page {
 }
 </style>
 <style lang="scss" scoped>
+.flex {
+  display: flex;
+  align-items: center;
+}
 .placeholder-class {
   color: #999999;
   font-size: 24rpx;
@@ -233,6 +293,12 @@ page {
     .upload-img {
       width: 100%;
       height: 200rpx;
+      border-radius: 8rpx;
+    }
+    .upload-img2 {
+      width: 100%;
+      height: 200rpx;
+      border: 1px dashed #95b4ff;
       border-radius: 8rpx;
     }
     .tips {

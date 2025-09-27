@@ -37,6 +37,15 @@
         </view>
       </view>
     </view>
+    1{{ isShow }}
+    <block>
+      <editUserModal
+        :isShow="isShow"
+        @closeEdit="closeEdit"
+        @editSuccess="editSuccess"
+      >
+      </editUserModal>
+    </block>
   </view>
 </template>
 
@@ -46,9 +55,14 @@ import { routineBindingPhone } from "@/api/public";
 import { getUserInfo } from "@/api/user.js";
 import Routine from "@/libs/routine";
 import { imgUrls } from "@/config/app";
+import editUserModal from '@/components/eidtUserModal/index'
 export default {
+  components: {
+    editUserModal
+  },
   data: function () {
     return {
+      isShow: false,
       imgPath: imgUrls,
       isAgreeProtocol: false, // 是否阅读了协议
       checkedImageUrl: `${imgUrls}/icons/icon-agree-active.png`,
@@ -58,16 +72,36 @@ export default {
     };
   },
   methods: {
+    closeEdit() {
+      this.isShow = false;
+      this.$util.Tips(
+        {
+          title: this.$t(`登录成功`),
+          icon: "success",
+        },
+        {
+          tab: 3,
+        }
+      );
+    },
+    editSuccess() {
+      console.log('editSuccess');
+      this.isShow = false
+      uni.redirectTo({
+        url: "/subpackage1/auth/index/index",
+      });
+    },
     // 小程序获取手机号码
     getphonenumber(e) {
-      // #ifndef MP
-      // uni.showToast({
-      //   title: "环境错误～",
-      //   icon: "none",
-      //   duration: 2000,
-      // });
-      // return;
-      // #endif
+      if (e.detail.errMsg != "getPhoneNumber:ok") {
+        uni.showToast({
+          title: "获取手机号码失败",
+          icon: "none",
+          duration: 2000,
+        });
+        this.getUserInfo(1);
+        return;
+      }
       uni.showLoading({
         title: `正在登录中`,
       });
@@ -121,7 +155,10 @@ export default {
           that.$store.commit("SETUID", res.data.uid);
           that.$store.commit("UPDATE_USERINFO", res.data);
           if (new_user) {
-            this.isShow = true;
+            // this.isShow = true;
+            uni.redirectTo({
+              url: "/subpackage1/auth/index/index",
+            });
           } else {
             // #ifdef MP
             that.$util.Tips(
@@ -175,7 +212,7 @@ export default {
      */
     onOpenProtocol() {
       uni.navigateTo({
-        url: "/explainPages/protocol/serve/index",
+        url: "/explainPages/protocol/privacy/index?type=4",
       });
     },
     /**
@@ -183,7 +220,7 @@ export default {
      */
     onOpenPrivacy() {
       uni.navigateTo({
-        url: "/explainPages/protocol/privacy/index",
+        url: "/explainPages/protocol/privacy/index?type=3",
       });
     },
   },

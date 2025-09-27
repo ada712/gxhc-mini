@@ -83,7 +83,7 @@
         </view>
       </view>
 
-      <view class="same-box" v-if="isLogin && (isCampusManage || isAdmin)">
+      <view class="same-box" v-if="isLogin && (isCampusManage || isAdmin) && false">
         <view class="title">校园合伙人管理专区</view>
         <view class="same-menus">
           <view
@@ -125,6 +125,21 @@
               class="icon_brief_menu"
             />
             <text class="ft32">客户中心</text>
+          </view>
+          <view class="right">
+            <image
+              :src="imgPath + '/icons/icon-gray-right2.png'"
+              class="icon_right_arrow"
+            />
+          </view>
+        </view>
+        <view class="row common-row" v-if="isLogin" @click="goInvoicePage">
+          <view class="left">
+            <image
+              :src="imgPath + '/mine/icon_khzx.png'"
+              class="icon_brief_menu"
+            />
+            <text class="ft32">发票管理</text>
           </view>
           <view class="right">
             <image
@@ -304,6 +319,9 @@ export default {
     },
     goLoginPage() {
       this.navigateToPage("/pages/mine/login/index");
+    },
+    goInvoicePage() {
+      this.navigateToPage("/pages/users/user_invoice_list/index");
     },
     goPersonInfoPage() {
       this.navigateToPage("/pages/mine/customer/personInfo/index");

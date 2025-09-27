@@ -58,3 +58,9 @@ export function getIndustrySubCategories(data) {
     noAuth: false,
   });
 }
+
+export function userAuth(data) {
+  return request.post("user/auth", data, {
+    noAuth: false,
+  });
+}

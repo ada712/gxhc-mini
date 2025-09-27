@@ -144,10 +144,10 @@ export function updateURLParameter(url, param, paramVal) {
 }
 
 let VUE_APP_WS_URL = Cache.get('WORKERMAN_URL') || ''
-getWorkermanUrl().then(res => {
-	Cache.set('WORKERMAN_URL', res.data.chat)
-	VUE_APP_WS_URL = res.data.chat;
-})
+// getWorkermanUrl().then(res => {
+// 	Cache.set('WORKERMAN_URL', res.data.chat)
+// 	VUE_APP_WS_URL = res.data.chat;
+// })
 
 export {
 	VUE_APP_WS_URL

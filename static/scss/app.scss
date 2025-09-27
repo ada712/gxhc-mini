@@ -77,3 +77,64 @@ $theme-bgc:#EEEFF3;
   background-repeat: no-repeat;
   background-size: 100% 100%;
 }
+
+
+radio .wx-radio-input {
+	border-radius: 50%;
+	width: 36rpx;
+	height: 36rpx
+}
+
+radio .wx-radio-input.wx-radio-input-checked {
+	border: 1px solid #2969ff !important;
+	background-color: #2969ff !important
+}
+
+radio .uni-radio-input {
+	border-radius: 50%;
+	width: 36rpx;
+	height: 36rpx
+}
+
+radio .uni-radio-input.uni-radio-input-checked {
+	border: 1px solid #2969ff !important;
+	background-color: #2969ff !important
+}
+
+
+checkbox .wx-checkbox-input {
+	border-radius: 50%;
+	width: 38rpx;
+	height: 38rpx
+}
+
+checkbox .wx-checkbox-input.wx-checkbox-input-checked {
+	border: 1px solid #2969ff !important;
+	background-color: #2969ff !important;
+	color: #fff !important
+}
+
+checkbox .wx-checkbox-input.wx-checkbox-input-checked::before {
+	font-size: 35rpx
+}
+
+checkbox .uni-checkbox-input {
+	border-radius: 50%;
+	width: 38rpx;
+	height: 38rpx
+}
+
+checkbox .uni-checkbox-input.uni-checkbox-input-checked {
+	border: 1px solid #2969ff !important;
+	background-color: #2969ff !important;
+	color: #fff !important
+}
+
+checkbox .uni-checkbox-input.uni-checkbox-input-disabled {
+	background-color: #e1e1e1 !important;
+	border: 1px solid #e1e1e1 !important;
+}
+
+checkbox .uni-checkbox-input.uni-checkbox-input-checked::before {
+	font-size: 35rpx
+}

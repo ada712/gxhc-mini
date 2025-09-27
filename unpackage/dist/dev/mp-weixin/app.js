@@ -17,7 +17,8 @@ if (!Math) {
   "./pages/director/contract/index.js";
   "./pages/points/ranking/index.js";
   "./pages/points/detail/index.js";
-  "./pages/mine/customer/adress/index.js";
+  "./pages/mine/customer/address/list/index.js";
+  "./pages/mine/customer/address/edit/index.js";
   "./pages/mine/customer/realName/index.js";
   "./pages/mine/customer/personInfo/index.js";
   "./pages/mine/customer/index/index.js";
@@ -43,7 +44,6 @@ if (!Math) {
   "./subpackage1/auth/certifica/index.js";
   "./explainPages/project/apply/index.js";
   "./explainPages/protocol/index.js";
-  "./explainPages/protocol/serve/index.js";
   "./explainPages/protocol/privacy/index.js";
   "./explainPages/campus/intro/index.js";
   "./explainPages/points/ruleState/index.js";
@@ -78,6 +78,8 @@ if (!Math) {
   "./projectPages/updateBP/index.js";
   "./projectPages/updateIndex/index.js";
   "./projectPages/updateFinance/index.js";
+  "./pages/users/user_invoice_list/index.js";
+  "./pages/users/user_invoice_form/index.js";
 }
 const _sfc_main = {
   onLaunch: function() {

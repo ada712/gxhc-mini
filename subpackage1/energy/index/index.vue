@@ -9,7 +9,7 @@
       </view>
     </view>
     <view class="energy-more" @click="goPage">
-      <text class="energy-more-t">积分明细</text>
+      <text class="energy-more-t">能量明细</text>
       <view class="more">
         <text class="more-t">查看明细</text>
         <image
@@ -19,7 +19,7 @@
       </view>
     </view>
     <view class="tips">
-      <text class="tips-t">积分说明</text>
+      <text class="tips-t">能量说明</text>
       <text class="tips-p">一、“能量”定义与规则</text>
       <text class="tips-p mb">
         “能量”是国信合创AI共创理事会小程序内的专属代币。能量可直接用于兑换或抵扣完整版BP诊断报告等指定增值服务。
@@ -67,7 +67,7 @@
         “有效邀请”的判定标准以国信合创AI共创理事会系统后台记录为准。
       </text>
       <text class="tips-p mb">
-        能量积分长期有效，若未来规则变更，我们将通过平台公告等方式提前通知。
+        能量长期有效，若未来规则变更，我们将通过平台公告等方式提前通知。
       </text>
       <text class="tips-p mb">
         严禁通过任何作弊、违规或利用系统漏洞等不正当手段获取能量。一经发现，我们有权对违规账户进行处理，包括但不限于清空能量、限制账户功能，乃至封禁账户。

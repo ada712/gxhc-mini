@@ -4,10 +4,9 @@ import {
 	TOKENNAME,
 	TIMEOUT
 } from '@/config/app';
-// import {
-// 	toLogin,
-// 	checkLogin
-// } from '../libs/login';
+import {
+	toLogin
+} from '@/libs/login';
 import store from '../store';
 
 /**

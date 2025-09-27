@@ -3,22 +3,22 @@
 // export const imgUrls2 = "/cloud/miniprogram/images";
 // export const directorUrl = "https://7072-prod-cloud-env-9gqq29j68db5f470-1326719267.tcb.qcloud.la/miniprogram/";
 
-export const imgUrls = "https://mini.cnbfmy.cn/statics/miniprogram/images";
+export const imgUrls = "https://mini.acture-hub.com/statics/miniprogram/images";
 export const imgUrls2 = "/cloud/miniprogram/images";
-export const miniprogramUrl = "https://mini.cnbfmy.cn/statics/miniprogram/";
+export const miniprogramUrl = "https://mini.acture-hub.com/statics/miniprogram/";
 
 
 // 小程序 / APP请求配置
 // #ifdef MP || APP-PLUS
 // 请求域名 格式： https://您的域名
-export const HTTP_REQUEST_URL = `https://mini.cnbfmy.cn`;
+export const HTTP_REQUEST_URL = `https://mini.acture-hub.com`;
 // #endif
 
 // H5请求配置
 // #ifdef H5
 // H5接口是浏览器地址，非单独部署不用修改
 // HTTP_REQUEST_URL: window.location.protocol + "//" + window.location.host
-export const HTTP_REQUEST_URL = "https://mini.cnbfmy.cn";
+export const HTTP_REQUEST_URL = "https://mini.acture-hub.com";
 // #endif
 
 // 后台版本号
