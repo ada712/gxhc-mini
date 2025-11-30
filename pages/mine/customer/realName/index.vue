@@ -1,5 +1,11 @@
 <template>
-  <view class="wripper">
+  <!-- 页面加载动画 -->
+  <view v-if="pageLoading" class="page-loading">
+    <view class="loading-spinner"></view>
+    <text class="loading-text">加载中...</text>
+  </view>
+  <!-- 主要内容区域 -->
+  <view class="wripper" v-else>
     <view class="tips" v-if="is_sm == 1">已申请审核，等待平台审核中～</view>
     <view class="tips suc" v-else-if="is_sm == 2"
       >您已经实名认证，如需重新认证，请重新上传身份信息!</view
@@ -94,6 +100,7 @@ export default {
       isShowUpdate: false,
       is_sm: 0,
       refuse: "",
+      pageLoading: true,
     };
   },
   onLoad() {
@@ -132,6 +139,10 @@ export default {
             title: "获取信息失败，请稍后重试",
             icon: "none",
           });
+        })
+        .finally(() => {
+          // 无论成功或失败都隐藏loading
+          this.pageLoading = false;
         });
     },
     chooseImage(e, imgType) {
@@ -295,7 +306,7 @@ export default {
                 }
               },
             });
-            this.getUserInfo()
+            this.getUserInfo();
           } else {
             uni.showToast({
               title: res.msg,
@@ -306,9 +317,9 @@ export default {
         .catch((error) => {
           uni.hideLoading();
           uni.showToast({
-              title: error,
-              icon: "none",
-            });
+            title: error,
+            icon: "none",
+          });
           console.log(error);
         });
     },
@@ -317,6 +328,38 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.page-loading {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 20vh;
+  width: 100%;
+}
+
+.loading-spinner {
+  width: 40rpx;
+  height: 40rpx;
+  border: 4rpx solid #f3f3f3;
+  border-top: 4rpx solid #2969ff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 20rpx;
+}
+
+.loading-text {
+  font-size: 28rpx;
+  color: #666;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
 .wripper {
   width: 100%;
   box-sizing: border-box;
@@ -324,10 +367,10 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+
   .tips {
     width: 100%;
     background: #eef6ff;
-    height: 72rpx;
     box-sizing: border-box;
     padding-left: 24rpx;
     font-size: 28rpx;
@@ -338,6 +381,7 @@ export default {
     display: flex;
     align-items: center;
     &.suc {
+      padding: 20rpx 30rpx;
       color: #67c23a;
     }
     &.err {

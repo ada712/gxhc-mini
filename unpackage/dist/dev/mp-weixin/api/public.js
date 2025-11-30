@@ -1,5 +1,10 @@
 "use strict";
 const utils_request = require("../utils/request.js");
+function getShare() {
+  return utils_request.request.get("share", {}, {
+    noAuth: true
+  });
+}
 function routineBindingPhone(data) {
   return utils_request.request.post("v2/routine/auth_binding_phone", data, {
     noAuth: true
@@ -28,5 +33,6 @@ function getEnterprise() {
 exports.basicConfig = basicConfig;
 exports.getColleges = getColleges;
 exports.getEnterprise = getEnterprise;
+exports.getShare = getShare;
 exports.routineBindingPhone = routineBindingPhone;
 exports.routineLogin = routineLogin;

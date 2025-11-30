@@ -52,13 +52,6 @@
     <view class="report">
       <text class="title">AI创诊报告</text>
       <view class="report-list">
-        <view class="report-item" @click="goPage('')">
-          <text class="report-t">投资分析Agent</text>
-          <view class="report-ts">
-            <text class="report-t1">金融从业者专属</text>
-            <text class="report-t1"> 全维度市场分析</text>
-          </view>
-        </view>
         <view
           class="report-item"
           @click="goPage('/subpackage1/bp/index/index')"
@@ -67,6 +60,13 @@
           <view class="report-ts">
             <text class="report-t1">创业者专属！</text>
             <text class="report-t1"> 精准拆解短板</text>
+          </view>
+        </view>
+        <view class="report-item gray" @click="goPage('')">
+          <text class="report-t">投资分析Agent</text>
+          <view class="report-ts">
+            <text class="report-t1">金融从业者专属</text>
+            <text class="report-t1"> 全维度市场分析</text>
           </view>
         </view>
       </view>
@@ -104,14 +104,63 @@
 
 <script>
 import { imgUrls } from "@/config/app";
+import { getShare } from "@/api/public.js";
+import { mapGetters } from "vuex";
 export default {
   data: function () {
     return {
       imgUrl: imgUrls,
+      shareInfo: {},
     };
+  },
+  computed: { ...mapGetters(["uid"]) },
+  //#ifdef MP
+  onShareAppMessage() {
+    let uid = this.uid ? this.uid : 0;
+    if (this.shareInfo.img) {
+      console.log({
+        title: this.shareInfo.title,
+        path: "/pages/home/index/index?spread=" + uid,
+        imageUrl: this.shareInfo.img,
+        desc: this.shareInfo.synopsis,
+      });
+      return {
+        title: this.shareInfo.title,
+        path: "/pages/home/index/index?spread=" + uid,
+        imageUrl: this.shareInfo.img,
+        desc: this.shareInfo.synopsis,
+      };
+    } else {
+      return {
+        title: this.shareInfo.title,
+        path: "/pages/home/index/index?spread=" + uid,
+        // imageUrl: this.shareInfo.img,
+        // desc: this.shareInfo.synopsis
+      };
+    }
+  },
+  //#endif
+  onLoad(options) {
+    getShare().then((res) => {
+      this.shareInfo = res.data;
+    });
+    if (options.spread) {
+      uni.navigateTo({
+        url: "/subpackage1/share/index?spread=" + options.spread,
+      });
+    }
   },
   methods: {
     goPage(url) {
+      if (
+        url == "/subpackage1/bp/index/index" &&
+        !this.$store.state.app?.token
+      ) {
+        uni.navigateTo({
+          url: "/pages/mine/login/index",
+        });
+        return;
+      }
       if (!url) {
         return uni.showToast({
           title: "功能开发中，敬请期待",
@@ -234,9 +283,9 @@ page {
       padding: 0 18rpx;
       overflow: hidden;
       box-sizing: border-box;
-      @include bmgOss("/index/ai_bj1.png");
+      @include bmgOss("/index/ai_bj2.png");
       &:last-child {
-        @include bmgOss("/index/ai_bj2.png");
+        @include bmgOss("/index/ai_bj11.png");
       }
       .report-t {
         color: #ffffff;

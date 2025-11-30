@@ -2,10 +2,10 @@
   <view class="pages">
     <view class="card">
       <text class="card-t">您目前已获得能量</text>
-      <text class="card-n">5348</text>
+      <text class="card-n">{{ energy }}</text>
       <view class="line">
         <text class="line-t">已邀请</text>
-        <text class="line-t">16 位</text>
+        <text class="line-t">{{ uids }} 位</text>
       </view>
     </view>
     <view class="energy-more" @click="goPage">
@@ -81,13 +81,41 @@
 
 <script>
 import { imgUrls } from "@/config/app";
+import { userEnergy } from "@/api/gxhc";
 export default {
   data: function () {
     return {
       imgUrl: imgUrls,
+      energy: 0,
+      uids: 0,
     };
   },
+  onLoad(options) {
+    this.getData();
+  },
   methods: {
+    getData() {
+      userEnergy()
+        .then((res) => {
+          if (res.status === 200 && res.data) {
+            // 更新用户能量值
+            this.energy = res.data.energy || 0;
+            this.uids = res.data.spredadUids || 0;
+          } else {
+            uni.showToast({
+              title: "获取能量数据失败",
+              icon: "none",
+            });
+          }
+        })
+        .catch((error) => {
+          uni.showToast({
+            title: "网络错误",
+            icon: "none",
+          });
+          console.error("获取能量数据异常:", error);
+        });
+    },
     goPage() {
       uni.navigateTo({
         url: "/subpackage1/energy/list/index",

@@ -99,7 +99,7 @@ export default {
           icon: "none",
           duration: 2000,
         });
-        this.getUserInfo(1);
+        // this.getUserInfo(1);
         return;
       }
       uni.showLoading({

@@ -171,7 +171,7 @@ export default {
     goPage(type) {
       let url = "";
       if (type == 1) {
-        url = "/subpackage1/energy/index/index";
+        url = "/subpackage1/energy/index/index?energy="+(this.userInfo.energy || 0);
       } else if (type == 2) {
         if (this.userInfo.auth) {
           return;

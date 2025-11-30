@@ -37,10 +37,13 @@
         "bp/detail/index",
         "bp/result/base/index",
         "bp/result/plus/index",
+        "bp/applyPlay/index",
         "energy/index/index",
         "energy/list/index",
         "auth/index/index",
-        "auth/certifica/index"
+        "auth/certifica/index",
+        "share/index",
+        "bp/internalList/index"
       ],
       "name": "subpackage"
     },

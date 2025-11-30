@@ -38,10 +38,13 @@ if (!Math) {
   "./subpackage1/bp/detail/index.js";
   "./subpackage1/bp/result/base/index.js";
   "./subpackage1/bp/result/plus/index.js";
+  "./subpackage1/bp/applyPlay/index.js";
   "./subpackage1/energy/index/index.js";
   "./subpackage1/energy/list/index.js";
   "./subpackage1/auth/index/index.js";
   "./subpackage1/auth/certifica/index.js";
+  "./subpackage1/share/index.js";
+  "./subpackage1/bp/internalList/index.js";
   "./explainPages/project/apply/index.js";
   "./explainPages/protocol/index.js";
   "./explainPages/protocol/privacy/index.js";

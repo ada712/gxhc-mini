@@ -3,13 +3,11 @@ const common_vendor = require("../common/vendor.js");
 const config_app = require("../config/app.js");
 const libs_login = require("../libs/login.js");
 const store_index = require("../store/index.js");
-function baseRequest(url, method, data, {
-  noAuth = false,
-  noVerify = false
-}) {
+function baseRequest(url, method, data, { noAuth = false, noVerify = false }) {
   let Url = config_app.HTTP_REQUEST_URL, header = config_app.HEADER;
   if (!noAuth) {
     if (!store_index.store.state.app.token) {
+      libs_login.toLogin();
       return Promise.reject({
         msg: `未登录`
       });
@@ -21,8 +19,9 @@ function baseRequest(url, method, data, {
     if (common_vendor.index.getStorageSync("locale")) {
       header["Cb-lang"] = common_vendor.index.getStorageSync("locale");
     }
+    let newUrl = Url + "/api/" + url;
     common_vendor.index.request({
-      url: Url + "/api/" + url,
+      url: newUrl,
       method: method || "GET",
       header,
       data: data || {},
@@ -52,7 +51,9 @@ function baseRequest(url, method, data, {
   });
 }
 const request = {};
-["options", "get", "post", "put", "head", "delete", "trace", "connect"].forEach((method) => {
-  request[method] = (api, data, opt) => baseRequest(api, method, data, opt || {});
-});
+["options", "get", "post", "put", "head", "delete", "trace", "connect"].forEach(
+  (method) => {
+    request[method] = (api, data, opt) => baseRequest(api, method, data, opt || {});
+  }
+);
 exports.request = request;

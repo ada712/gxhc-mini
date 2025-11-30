@@ -137,7 +137,7 @@ export default {
       is_default_avatar: 0,
     };
     this.$store.commit("LOGIN", {
-      token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwd2QiOiJkNDFkOGNkOThmMDBiMjA0ZTk4MDA5OThlY2Y4NDI3ZSIsImlzcyI6Im1pbmkuY25iZm15LmNuIiwiYXVkIjoibWluaS5jbmJmbXkuY24iLCJpYXQiOjE3NTg4NjUwNzYsIm5iZiI6MTc1ODg2NTA3NiwiZXhwIjoxNzYxNDU3MDc2LCJqdGkiOnsiaWQiOjMsInR5cGUiOiJhcGkifX0.Jb3kLNs1zjaC0mympQh77oZZW-7-YMp50YQgcaufQwY',
+      token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwd2QiOiJkNDFkOGNkOThmMDBiMjA0ZTk4MDA5OThlY2Y4NDI3ZSIsImlzcyI6Im1pbmkuYWN0dXJlLWh1Yi5jb20iLCJhdWQiOiJtaW5pLmFjdHVyZS1odWIuY29tIiwiaWF0IjoxNzY0NDE0MTk1LCJuYmYiOjE3NjQ0MTQxOTUsImV4cCI6MTc2NzAwNjE5NSwianRpIjp7ImlkIjozLCJ0eXBlIjoiYXBpIn19.on2iLJtM1r5rdfggweOCgV50DDDzWmvlKhdYhtiYOLY',
       time: "234234234",
     });
     this.$store.commit("UPDATE_USERINFO", data);

@@ -198,6 +198,12 @@
           }
         },
         {
+          "path": "bp/applyPlay/index",
+          "style": {
+            "navigationBarTitleText": "一对一诊断直播申请"
+          }
+        },
+        {
           "path": "energy/index/index",
           "style": {
             "navigationBarTitleText": "我的能量"
@@ -217,6 +223,18 @@
           "path": "auth/certifica/index",
           "style": {
             "navigationBarTitleText": ""
+          }
+        },
+        {
+          "path": "share/index",
+          "style": {
+            "navigationBarTitleText": "好友分享"
+          }
+        },
+        {
+          "path": "bp/internalList/index",
+          "style": {
+            "navigationBarTitleText": "诊断样本案例"
           }
         }
       ]

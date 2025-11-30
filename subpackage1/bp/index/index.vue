@@ -7,7 +7,7 @@
         src="/cloud/miniprogram/images/icons/icon-black-right.png"
       ></image>
     </div>
-    <view class="upload" @click="goPage">
+    <view class="upload" @click="choosePDF">
       <image
         class="upload-img"
         src="/cloud/miniprogram/images/subpackage1/upload-icon.png"
@@ -30,22 +30,174 @@
 </template>
 
 <script>
+import { runBp } from "@/api/gxhc.js";
+import { HTTP_REQUEST_URL, TOKENNAME } from "@/config/app";
 import { imgUrls } from "@/config/app";
 export default {
   data: function () {
-    return {};
+    return {
+      uploading: false,
+    };
+  },
+  onLoad() {
+    // this.postBP();
   },
   methods: {
     goMore() {
       uni.navigateTo({
-        url: '/subpackage1/bp/list/index',
+        url: "/subpackage1/bp/list/index",
       });
     },
     goPage() {
       uni.navigateTo({
-        url: '/subpackage1/bp/result/base/index',
+        url: "/subpackage1/bp/result/base/index",
       });
-    }
+    },
+    choosePDF() {
+      if (this.uploading) {
+        return;
+      }
+
+      // #ifdef MP-WEIXIN
+      uni.chooseMessageFile({
+        count: 1,
+        type: "file",
+        extension: ["pdf"],
+        success: (res) => {
+          const tempFiles = res.tempFiles;
+          if (tempFiles && tempFiles.length > 0) {
+            const file = tempFiles[0];
+            if (file.size > 10 * 1024 * 1024) {
+              uni.showToast({
+                title: "文件大小不能超过10MB",
+                icon: "none",
+              });
+              return;
+            }
+            this.uploadPDF(file);
+          }
+        },
+        fail: (err) => {
+          console.error("选择文件失败", err);
+        },
+      });
+      // #endif
+
+      // #ifdef H5
+      uni.chooseFile({
+        count: 1,
+        type: "file",
+        extension: ["pdf"],
+        success: (res) => {
+          const tempFiles = res.tempFiles;
+          if (tempFiles && tempFiles.length > 0) {
+            const file = tempFiles[0];
+            if (file.size > 10 * 1024 * 1024) {
+              uni.showToast({
+                title: "文件大小不能超过10MB",
+                icon: "none",
+              });
+              return;
+            }
+            this.uploadPDF(file);
+          }
+        },
+        fail: (err) => {
+          console.error("选择文件失败", err);
+        },
+      });
+      // #endif
+    },
+    uploadPDF(file) {
+      this.uploading = true;
+      // 显示上传提示
+      uni.showLoading({
+        title: "上传中...",
+      });
+      uni.uploadFile({
+        url: HTTP_REQUEST_URL + "/api/runBp", // 替换为实际的API地址
+        // url: HTTP_REQUEST_URL+'/bp/api/runs', // 替换为实际的API地址
+        // url: 'https://gxhc-agent.mahanova.com/api/runs', // 替换为实际的API地址
+        filePath: file.path || file,
+        name: "files",
+        header: {
+          // #ifdef MP
+          "Content-Type": "multipart/form-data",
+          // "Content-Type": "application/json",
+          // #endif
+          // 'Authorization': "Bearer sk-SDQ2J97ezAs1iILJzn00LQ"
+          [TOKENNAME]: "Bearer " + this.$store.state.app.token,
+        },
+        formData: {
+          // 其他需要提交的表单数据
+          pipeline: "bp_diagnosis",
+          target: "export_preliminary",
+          filename: file.name || "unknown.pdf", // 添加原文件名
+        },
+        success: (uploadFileRes) => {
+          uni.hideLoading();
+          this.uploading = false;
+
+          // 解析返回结果
+          let data;
+          try {
+            data = JSON.parse(uploadFileRes.data);
+          } catch (e) {
+            console.error("解析响应失败", e);
+            uni.showToast({
+              title: "上传失败",
+              icon: "none",
+            });
+            return;
+          }
+          console.log(data);
+          // 判断上传是否成功
+          if (data.status == 200) {
+            uni.showToast({
+              title: "上传成功",
+              icon: "none",
+            });
+            // 可以跳转到结果页面
+            uni.navigateTo({
+              url: "/subpackage1/bp/result/base/index?runId=" + data.data.run_id
+            });
+          } else {
+            uni.showToast({
+              title: data.msg || "上传失败",
+              icon: "none",
+            });
+          }
+        },
+        fail: (err) => {
+          uni.hideLoading();
+          this.uploading = false;
+          console.error("上传失败", err);
+          uni.showToast({
+            title: "上传失败",
+            icon: "none",
+          });
+        },
+      });
+
+      // 模拟上传过程（演示用，实际应删除）
+      // setTimeout(() => {
+      //   uni.hideLoading();
+      //   this.uploading = false;
+      //   uni.showToast({
+      //     title: '上传成功',
+      //     icon: 'success'
+      //   });
+      //   // 模拟上传成功后跳转到结果页
+      //   setTimeout(() => {
+      //     this.goPage();
+      //   }, 1000);
+      // }, 2000);
+    },
+    postBP() {
+      runBp({}).then((res) => {
+        console.log(res);
+      });
+    },
   },
 };
 </script>

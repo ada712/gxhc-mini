@@ -8,6 +8,48 @@
         "miniprogram": {
             "list": [
                 {
+                    "name": "pages/home/index/index",
+                    "pathName": "pages/home/index/index",
+                    "query": "spread=1",
+                    "scene": null,
+                    "launchMode": "default"
+                },
+                {
+                    "name": "subpackage1/bp/result/base/index",
+                    "pathName": "subpackage1/bp/result/base/index",
+                    "query": "runId=28fc3b80-6f08-4969-813a-4cbb0ba99b61",
+                    "launchMode": "default",
+                    "scene": null
+                },
+                {
+                    "name": "subpackage1/bp/detail/index",
+                    "pathName": "subpackage1/bp/detail/index",
+                    "query": "id=94&target=export_preliminary",
+                    "launchMode": "default",
+                    "scene": null
+                },
+                {
+                    "name": "subpackage1/bp/result/base/index",
+                    "pathName": "subpackage1/bp/result/base/index",
+                    "query": "runId=ae49752c-97d7-43ef-b9c0-b3625f027cff",
+                    "launchMode": "default",
+                    "scene": null
+                },
+                {
+                    "name": "subpackage1/bp/index/index",
+                    "pathName": "subpackage1/bp/index/index",
+                    "query": "",
+                    "launchMode": "default",
+                    "scene": null
+                },
+                {
+                    "name": "subpackage1/bp/result/plus/index",
+                    "pathName": "subpackage1/bp/result/plus/index",
+                    "query": "",
+                    "launchMode": "default",
+                    "scene": null
+                },
+                {
                     "name": "pages/mine/customer/address/list/index",
                     "pathName": "pages/mine/customer/address/list/index",
                     "query": "",
@@ -79,5 +121,6 @@
                 }
             ]
         }
-    }
+    },
+    "libVersion": "3.10.0"
 }

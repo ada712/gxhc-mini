@@ -1,7 +1,7 @@
 <template>
   <view class="wripper">
     <view class="content">
-      <!-- <view class="same-row" @click="goDirectorPage">
+      <view class="same-row" @click="goDirectorPage">
         <view class="left">
           <image :src="imgPath + '/admin/icon-jftj.png'" class="icon-menu" />
           <view class="col">
@@ -9,7 +9,7 @@
             <view class="notes">录入理事成员信息</view>
           </view>
         </view>
-      </view> -->
+      </view>
 
       <!-- <view class="same-row">
         <view class="left">
