@@ -392,15 +392,18 @@
 								}
 								break;
 							case 'order_details':
-								if (that.id) {
-									uni.navigateTo({
-										url: `/pages/goods/order_details/index?order_id=${that.order_id}&invoice_id=${that.id}&header_type=${this.header_type}`
-									})
-								} else {
-									uni.navigateTo({
-										url: `/pages/goods/order_details/index?order_id=${that.order_id}&invoice_id=${res.data.id}&header_type=${this.header_type}`
-									})
-								}
+								// if (that.id) {
+								// 	uni.navigateTo({
+								// 		url: `/pages/goods/order_details/index?order_id=${that.order_id}&invoice_id=${that.id}&header_type=${this.header_type}`
+								// 	})
+								// } else {
+								// 	uni.navigateTo({
+								// 		url: `/pages/goods/order_details/index?order_id=${that.order_id}&invoice_id=${res.data.id}&header_type=${this.header_type}`
+								// 	})
+								// }
+								uni.navigateBack({
+									 delta: 1
+								});
 								break;
 							default:
 								uni.navigateTo({

@@ -39,6 +39,8 @@ if (!Math) {
   "./subpackage1/bp/result/base/index.js";
   "./subpackage1/bp/result/plus/index.js";
   "./subpackage1/bp/applyPlay/index.js";
+  "./subpackage1/bp/feedback/index.js";
+  "./subpackage1/kf/index.js";
   "./subpackage1/energy/index/index.js";
   "./subpackage1/energy/list/index.js";
   "./subpackage1/auth/index/index.js";
@@ -83,6 +85,7 @@ if (!Math) {
   "./projectPages/updateFinance/index.js";
   "./pages/users/user_invoice_list/index.js";
   "./pages/users/user_invoice_form/index.js";
+  "./pages/users/user_spread_code/index.js";
 }
 const _sfc_main = {
   onLaunch: function() {

@@ -1,6 +1,6 @@
 <template>
   <view class="int">
-    <template v-if="!(bpInfo.status === 'SUCCEEDED' && bpInfo.progress == 100)">
+    <template v-if="bpInfo.target === 'export_preliminary'">
       <view class="icon-list">
         <view class="icon1">
           <image
@@ -55,7 +55,7 @@
           <image
             @click="handleShareClick"
             class="img"
-            :src="imgUrl + '/subpackage1/share-icon11.png'"
+            :src="imgUrl + '/subpackage1/share-icon111.png'"
           />
         </view>
       </view>
@@ -125,7 +125,7 @@
         </view>
       </view>
     </view>
-    <!-- 分享 -->
+    <!-- 分享
     <x-popup
       :round="20"
       :show="internalSharePopup && !pageLoading"
@@ -141,25 +141,40 @@
           />
         </view>
         <view class="list">
-          <!-- <view class="item">
-            <image class="item-icon" :src="imgUrl + '/subpackage1/lj.png'" />
-            <text class="item-t">分享链接</text>
-          </view> -->
           <view class="item">
             <button open-type="share">
               <image class="item-icon" :src="imgUrl + '/subpackage1/hy.png'" />
               <text class="item-t">微信好友</text>
             </button>
           </view>
-          <!-- <view class="item">
-            <button open-type="shareTimeline">
-              <image class="item-icon" :src="imgUrl + '/subpackage1/pyq.png'" />
-              <text class="item-t">朋友圈</text>
-            </button>
-          </view> -->
         </view>
       </view>
     </x-popup>
+     -->
+    <view class="masks" v-if="internalSharePopup && !pageLoading">
+      <view class="popup2">
+        <view class="popup-content">
+          <text class="title">邀请好友获取能量</text>
+          <text class="p-t">已分享{{ shareCount || 0 }}次</text>
+          <text class="p-t"></text>
+          <view class="p-ivt" @click="handleRuleClick">
+            <text class="p-t2">查看能量明细/助力好友</text>
+            <image
+              class="ivt-icon"
+              :src="imgUrl + '/icons/icon-right-arrow.png'"
+            />
+          </view>
+        </view>
+        <view class="popup-btns">
+          <view class="popup-btn" @click="handleCloseSharePopup">
+            <text class="popup-btn-t1">取消</text>
+          </view>
+          <button open-type="share" class="popup-btn">
+            <text class="popup-btn-t2">邀请好友</text>
+          </button>
+        </view>
+      </view>
+    </view>
   </view>
 </template>
 
@@ -186,6 +201,10 @@ export default {
       type: [Number, String],
       default: 0,
     },
+    shareCount: {
+      type: [Number, String],
+      default: 0,
+    },
   },
   data() {
     return {
@@ -208,6 +227,10 @@ export default {
         },
       ],
     };
+  },
+  created() {
+    // 创建防抖后的支付方法
+    this.debouncedHandleGoPay = this.Debounce(this.handleGoPayInternal, 500);
   },
   watch: {
     energy: {
@@ -261,14 +284,32 @@ export default {
     handleCancelPopup() {
       this.internalShowPopup = false;
     },
-    handleGoPay() {
+    // 原始支付逻辑
+    handleGoPayInternal() {
       const payData = {
         useEnergy: this.internalUseEnergy,
         payAmount: this.internalPayAmount,
         deductedEnergy: this.internalDeductedEnergy,
         remainingEnergy: this.internalRemainingEnergy,
       };
+      this.internalShowPopup = false
       this.$emit("go-pay", payData);
+    },
+
+    // 防抖后的支付方法
+    handleGoPay() {
+      this.debouncedHandleGoPay();
+    },
+
+    // 防抖函数实现（如果工具库没有提供或不能使用）
+    Debounce(func, delay) {
+      let timeoutId;
+      return function (...args) {
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(() => {
+          func.apply(this, args);
+        }, delay);
+      };
     },
     calculateEnergyValues() {
       if (!this.internalUseEnergy) {
@@ -428,12 +469,18 @@ export default {
         .popup-btn {
           width: 50%;
           padding: 22rpx 0;
+          box-sizing: border-box;
+          border-radius: 0;
+          line-height: normal;
           display: flex;
           align-items: center;
           justify-content: center;
           border-top: 1px solid #f6f6f6;
           &:last-child {
             border-left: 1px solid #f6f6f6;
+          }
+          &::after {
+            border-radius: 0;
           }
           .popup-btn-t1 {
             color: #404040;
@@ -466,7 +513,6 @@ export default {
     display: block;
     height: 428rpx;
     border-radius: 28rpx;
-    margin-bottom: 100rpx;
   }
   .btn-footer {
     position: fixed;

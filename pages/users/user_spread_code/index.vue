@@ -198,14 +198,14 @@ export default {
     if (this.shareInfo.img) {
       return {
         title: this.shareInfo.title,
-        path: "/pages/home/index/index?spread=" + uid,
+        path: "/pages/home/index/index?spid=" + uid,
         imageUrl: this.shareInfo.img,
         desc: this.shareInfo.synopsis,
       };
     } else {
       return {
         title: this.shareInfo.title,
-        path: "/pages/home/index/index?spread=" + uid,
+        path: "/pages/home/index/index?spid=" + uid,
         // imageUrl: this.shareInfo.img,
         // desc: this.shareInfo.synopsis
       };

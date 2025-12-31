@@ -31,15 +31,20 @@ export default {
     return {
       imgUrl: imgUrls,
       internalDemos: [
+        // {
+        //   title: "ZPAI-BP诊断与优化建议",
+        //   time: "2025-09-27 10:00",
+        //   link: HTTP_REQUEST_URL + "/ZPAI-BP诊断与优化建议.pdf",
+        // },
+        // {
+        //   title: "YSKJ-BP诊断与优化建议",
+        //   time: "2025-09-27 10:00",
+        //   link: HTTP_REQUEST_URL + "/YSKJ-BP诊断与优化建议.pdf",
+        // },
         {
-          title: "ZPAI-BP诊断与优化建议",
-          time: "2025-09-27 10:00",
-          link: HTTP_REQUEST_URL + "/ZPAI-BP诊断与优化建议.pdf",
-        },
-        {
-          title: "YSKJ-BP诊断与优化建议",
-          time: "2025-09-27 10:00",
-          link: HTTP_REQUEST_URL + "/YSKJ-BP诊断与优化建议.pdf",
+          title: "具身智能独角兽_BP商业计划优化建议书",
+          time: "2025-12-21 17:00",
+          link: HTTP_REQUEST_URL + "/具身智能独角兽_BP商业计划优化建议书.pdf",
         },
       ],
     };

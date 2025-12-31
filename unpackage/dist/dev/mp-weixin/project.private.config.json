@@ -8,11 +8,53 @@
         "miniprogram": {
             "list": [
                 {
+                    "name": "pages/users/user_spread_code/index",
+                    "pathName": "pages/users/user_spread_code/index",
+                    "query": "",
+                    "scene": null,
+                    "launchMode": "default"
+                },
+                {
+                    "name": "subpackage1/energy/index/index",
+                    "pathName": "subpackage1/energy/index/index",
+                    "query": "energy=55",
+                    "launchMode": "default",
+                    "scene": null
+                },
+                {
+                    "name": "subpackage1/bp/detail/index",
+                    "pathName": "subpackage1/bp/detail/index",
+                    "query": "id=2&target=export_optimization",
+                    "launchMode": "default",
+                    "scene": null
+                },
+                {
+                    "name": "subpackage1/bp/detail/index",
+                    "pathName": "subpackage1/bp/detail/index",
+                    "query": "id=13&target=export_optimization",
+                    "launchMode": "default",
+                    "scene": null
+                },
+                {
+                    "name": "pages/home/index/index",
+                    "pathName": "pages/home/index/index",
+                    "query": "spid=1",
+                    "launchMode": "default",
+                    "scene": null
+                },
+                {
                     "name": "pages/home/index/index",
                     "pathName": "pages/home/index/index",
                     "query": "spread=1",
-                    "scene": null,
-                    "launchMode": "default"
+                    "launchMode": "default",
+                    "scene": null
+                },
+                {
+                    "name": "pages/users/user_spread_code/index",
+                    "pathName": "pages/users/user_spread_code/index",
+                    "query": "",
+                    "launchMode": "default",
+                    "scene": null
                 },
                 {
                     "name": "subpackage1/bp/result/base/index",

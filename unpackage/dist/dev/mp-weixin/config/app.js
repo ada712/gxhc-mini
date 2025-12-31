@@ -1,7 +1,8 @@
 "use strict";
-const imgUrls = "https://mini.acture-hub.com/statics/miniprogram/images";
-const miniprogramUrl = "https://mini.acture-hub.com/statics/miniprogram/";
-const HTTP_REQUEST_URL = `https://mini.acture-hub.com`;
+const env = "test";
+const imgUrls = `https://${env}.acture-hub.com/statics/miniprogram/images`;
+const miniprogramUrl = `https://${env}.acture-hub.com/statics/miniprogram/`;
+const HTTP_REQUEST_URL = `https://${env}.acture-hub.com`;
 const HEADER = {
   "content-type": "application/json",
   "Form-type": "routine"
@@ -14,5 +15,6 @@ exports.HEADER = HEADER;
 exports.HTTP_REQUEST_URL = HTTP_REQUEST_URL;
 exports.TIMEOUT = TIMEOUT;
 exports.TOKENNAME = TOKENNAME;
+exports.env = env;
 exports.imgUrls = imgUrls;
 exports.miniprogramUrl = miniprogramUrl;

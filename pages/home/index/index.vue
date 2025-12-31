@@ -1,5 +1,8 @@
 <template>
   <view class="pages">
+    <view class="env" v-if="env == 'test'">
+      <text class="env-t">测试环境</text>
+    </view>
     <view class="video">
       <image class="video-bg" :src="imgUrl + '/index/video_bg.png'"></image>
       <image class="play-btn" :src="imgUrl + '/index/play_btn.png'"></image>
@@ -68,6 +71,7 @@
             <text class="report-t1">金融从业者专属</text>
             <text class="report-t1"> 全维度市场分析</text>
           </view>
+          <image class="report-icon" :src="imgUrl + '/index/qd.png'" />
         </view>
       </view>
     </view>
@@ -103,12 +107,14 @@
 </template>
 
 <script>
-import { imgUrls } from "@/config/app";
+import { imgUrls, env } from "@/config/app";
 import { getShare } from "@/api/public.js";
+import { getShare as getShare2 } from "@/api/gxhc";
 import { mapGetters } from "vuex";
 export default {
   data: function () {
     return {
+      env: env,
       imgUrl: imgUrls,
       shareInfo: {},
     };
@@ -120,20 +126,20 @@ export default {
     if (this.shareInfo.img) {
       console.log({
         title: this.shareInfo.title,
-        path: "/pages/home/index/index?spread=" + uid,
+        path: "/pages/home/index/index?spid=" + uid,
         imageUrl: this.shareInfo.img,
         desc: this.shareInfo.synopsis,
       });
       return {
         title: this.shareInfo.title,
-        path: "/pages/home/index/index?spread=" + uid,
+        path: "/pages/home/index/index?spid=" + uid,
         imageUrl: this.shareInfo.img,
         desc: this.shareInfo.synopsis,
       };
     } else {
       return {
         title: this.shareInfo.title,
-        path: "/pages/home/index/index?spread=" + uid,
+        path: "/pages/home/index/index?spid=" + uid,
         // imageUrl: this.shareInfo.img,
         // desc: this.shareInfo.synopsis
       };
@@ -141,15 +147,31 @@ export default {
   },
   //#endif
   onLoad(options) {
+    console.log(options);
+    if (options.spid) {
+      uni.setStorageSync("SPID", options.spid);
+    }
+    if (options.scene) {
+      uni.setStorageSync("SCENE", options.scene);
+    }
     getShare().then((res) => {
       this.shareInfo = res.data;
     });
-    if (options.spread) {
-      uni.navigateTo({
-        url: "/subpackage1/share/index?spread=" + options.spread,
+    if (options.spread || options.spid) {
+      getShare2({
+        spread: options.spread || options.spid || 0,
+      }).then((res) => {
+        this.shareInfo = res.data;
       });
     }
+    // if (options.spread) {
+    //   uni.setStorageSync("SPID", options.spread);
+    //   uni.navigateTo({
+    //     url: "/subpackage1/share/index?spread=" + options.spread,
+    //   });
+    // }
   },
+  onShow() {},
   methods: {
     goPage(url) {
       if (
@@ -191,6 +213,27 @@ page {
 .pages {
   width: 100%;
   box-sizing: border-box;
+  // 环境标识优化
+  .env {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(90deg, #ff6b6b, #ff8e53);
+    padding: 16rpx;
+    text-align: center;
+    z-index: 9999;
+    font-size: 26rpx;
+    box-shadow: 0 4rpx 12rpx rgba(255, 107, 107, 0.3);
+
+    .env-t {
+      color: #ffffff;
+      font-size: 28rpx;
+      font-weight: 600;
+      text-align: center;
+      letter-spacing: 1rpx;
+    }
+  }
   .title {
     color: #182855;
     font-size: 24rpx;
@@ -283,9 +326,18 @@ page {
       padding: 0 18rpx;
       overflow: hidden;
       box-sizing: border-box;
+      position: relative;
       @include bmgOss("/index/ai_bj2.png");
       &:last-child {
         @include bmgOss("/index/ai_bj11.png");
+      }
+      .report-icon {
+        width: 126rpx;
+        height: 34rpx;
+        position: absolute;
+        right: 0;
+        top: 0;
+        z-index: 1;
       }
       .report-t {
         color: #ffffff;

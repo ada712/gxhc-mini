@@ -47,6 +47,18 @@ function invoiceDelete(id) {
 function invoiceDetail(id) {
   return utils_request.request.get("v2/invoice/detail/" + id);
 }
+function makeUpinvoice(data) {
+  return utils_request.request.post("v2/order/make_up_invoice", data);
+}
+function spreadMsg() {
+  return utils_request.request.get("user/spread_info");
+}
+function imgToBase(data) {
+  return utils_request.request.post("image_base64", data);
+}
+function routineCode(data) {
+  return utils_request.request.get("user/routine_code", data);
+}
 function messageSystem(data) {
   return utils_request.request.get("user/message_system/list", data);
 }
@@ -74,11 +86,15 @@ exports.getMsgDetails = getMsgDetails;
 exports.getRealName = getRealName;
 exports.getUserAgreement = getUserAgreement;
 exports.getUserInfo = getUserInfo;
+exports.imgToBase = imgToBase;
 exports.invoiceDelete = invoiceDelete;
 exports.invoiceDetail = invoiceDetail;
 exports.invoiceList = invoiceList;
 exports.invoiceSave = invoiceSave;
+exports.makeUpinvoice = makeUpinvoice;
 exports.messageSystem = messageSystem;
 exports.realName = realName;
+exports.routineCode = routineCode;
 exports.setAddressDefault = setAddressDefault;
+exports.spreadMsg = spreadMsg;
 exports.userEdit = userEdit;

@@ -23,26 +23,38 @@
 import list from "./menu";
 import { USER_IDENTITY } from "@/const/index";
 import { clearProjectStorage } from "@/utils/cache.js";
+import { mapGetters } from "vuex";
+
 const imgUrls =
   "https://7072-prod-cloud-env-9gqq29j68db5f470-1326719267.tcb.qcloud.la/miniprogram/images";
 export default {
   data: function () {
     return {
-			permission: ['tzzq','fhzq','sqzq','lszq','jfzq','hbzq']
+      permission: ["tzzq", "fhzq", "sqzq", "lszq", "jfzq", "hbzq"],
     };
   },
   computed: {
     menuList() {
-      return list.filter(item => this.permission.includes(item.show));
+      return list.filter((item) => this.permission.includes(item.show));
     },
+    ...mapGetters({
+      isLogin: "isLogin",
+    }),
   },
   methods: {
     navigateToPage(item) {
+      if (!this.isLogin) {
+        uni.navigateTo({
+          url: "/pages/mine/login/index",
+        });
+        return;
+      }
       const { route, isWeb } = item;
-      if (!route) return uni.showToast({
-            title: "功能开发中，敬请期待",
-            icon: "none",
-          }); // 如果 route 为空，则直接返回
+      if (!route)
+        return uni.showToast({
+          title: "功能开发中，敬请期待",
+          icon: "none",
+        }); // 如果 route 为空，则直接返回
 
       if (route === "/pages/project/apply/index") {
         clearProjectStorage();

@@ -4,20 +4,26 @@
       <image :src="imgPath + '/mine/img_mine_bg.png'" class="img-top-bg" />
       <view class="login-box" v-if="isLogin">
         <view class="row">
-          <view class="row-left" @click="goPersonInfoPage">
+          <view class="row-left">
             <view class="head">
-              <image
-                :src="userInfo.avatar"
-                class="img-head"
-                v-if="userInfo.avatar"
-              />
-              <image
-                :src="imgPath + '/mine/default-head.png'"
-                class="img-head"
-                v-else
-              />
+              <button
+                class="head-box"
+                open-type="chooseAvatar"
+                @chooseavatar="onChooseAvatar"
+              >
+                <image
+                  :src="userInfo.avatar"
+                  class="img-head"
+                  v-if="userInfo.avatar"
+                />
+                <image
+                  :src="imgPath + '/mine/default-head.png'"
+                  class="img-head"
+                  v-else
+                />
+              </button>
             </view>
-            <view class="info">
+            <view class="info" @click="goPersonInfoPage">
               <view class="nickname">{{ userInfo.nickname }}</view>
               <view class="mark-row">
                 <view class="identity-box" v-if="identityLabel">{{
@@ -83,7 +89,10 @@
         </view>
       </view>
 
-      <view class="same-box" v-if="isLogin && (isCampusManage || isAdmin) && false">
+      <view
+        class="same-box"
+        v-if="isLogin && (isCampusManage || isAdmin) && false"
+      >
         <view class="title">校园合伙人管理专区</view>
         <view class="same-menus">
           <view
@@ -136,10 +145,25 @@
         <view class="row common-row" v-if="isLogin" @click="goInvoicePage">
           <view class="left">
             <image
-              :src="imgPath + '/mine/icon_khzx.png'"
+              :src="imgPath + '/mine/icon_fpgl.png'"
               class="icon_brief_menu"
             />
             <text class="ft32">发票管理</text>
+          </view>
+          <view class="right">
+            <image
+              :src="imgPath + '/icons/icon-gray-right2.png'"
+              class="icon_right_arrow"
+            />
+          </view>
+        </view>
+        <view class="row common-row" v-if="isLogin" @click="goInvitePage">
+          <view class="left">
+            <image
+              :src="imgPath + '/mine/icon_kfzx.png'"
+              class="icon_brief_menu"
+            />
+            <text class="ft32">推广名片</text>
           </view>
           <view class="right">
             <image
@@ -178,7 +202,7 @@
             />
           </view>
         </button>
-        <view class="row common-row" @click="goCustomerPage">
+        <view class="row common-row" v-if="false" @click="goCustomerPage">
           <view class="left">
             <image
               :src="imgPath + '/mine/icon_zxkf.png'"
@@ -193,13 +217,28 @@
             />
           </view>
         </view>
+        <view class="row common-row" @click="goCustomerPage2">
+          <view class="left">
+            <image
+              :src="imgPath + '/mine/icon_zxkf.png'"
+              class="icon_brief_menu"
+            />
+            <text class="ft32">帮助与客服</text>
+          </view>
+          <view class="right">
+            <image
+              :src="imgPath + '/icons/icon-gray-right2.png'"
+              class="icon_right_arrow"
+            />
+          </view>
+        </view>
       </view>
     </view>
   </view>
 </template>
 
 <script>
-import { getUserInfo } from "@/api/user.js";
+import { getUserInfo, userEdit } from "@/api/user.js";
 import { mapGetters } from "vuex";
 import { imgUrls } from "@/config/app";
 export default {
@@ -246,7 +285,7 @@ export default {
         },
       ],
       userInfo: {
-        userTag: ''
+        userTag: "",
       },
       experienceValue: 0,
       messageTips: "",
@@ -273,10 +312,10 @@ export default {
       );
     },
     isCampusManage() {
-      return this.userInfo.userTag === 'campusManage'
+      return this.userInfo.userTag === "campusManage";
     },
     isAdmin() {
-      return this.userInfo.userTag === 'admin'
+      return this.userInfo.userTag === "admin";
     },
   },
   onShow() {
@@ -285,6 +324,39 @@ export default {
     }
   },
   methods: {
+    onChooseAvatar(e) {
+      const { avatarUrl } = e.detail;
+      this.$util.uploadImgs(
+        "upload/image",
+        avatarUrl,
+        (res) => {
+          this.userInfo.avatar = res.data.url;
+          this.formUpdate({
+            avatar: res.data.url,
+          });
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
+    },
+    formUpdate(data) {
+      userEdit(data)
+        .then((res) => {
+          uni.showToast({
+            title: res.msg,
+            icon: "none",
+            duration: 2000,
+          });
+        })
+        .catch((msg) => {
+          uni.showToast({
+            title: msg || `保存失败`,
+            icon: "none",
+            duration: 2000,
+          });
+        });
+    },
     /**
      * 获取个人用户信息
      */
@@ -323,6 +395,9 @@ export default {
     goInvoicePage() {
       this.navigateToPage("/pages/users/user_invoice_list/index");
     },
+    goInvitePage() {
+      this.navigateToPage("/pages/users/user_spread_code/index");
+    },
     goPersonInfoPage() {
       this.navigateToPage("/pages/mine/customer/personInfo/index");
     },
@@ -344,6 +419,9 @@ export default {
     goCustomerPage() {
       this.navigateToPage("https://cha.mahanova.com/", true);
     },
+    goCustomerPage2() {
+      this.navigateToPage("/subpackage1/kf/index");
+    },
     goMessageList() {
       this.navigateToPage("/pages/mine/message/index");
     },
@@ -362,6 +440,20 @@ button {
   &::after {
     display: none;
   }
+}
+
+.head-box {
+  margin: 0;
+  padding: 0;
+  line-height: 0;
+  border-radius: 0;
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .center-wripper {
@@ -412,7 +504,6 @@ button {
             width: 96rpx;
             height: 96rpx;
             border-radius: 50%;
-            border: 4rpx solid #ffffff;
           }
         }
 

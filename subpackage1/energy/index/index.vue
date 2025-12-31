@@ -3,8 +3,8 @@
     <view class="card">
       <text class="card-t">您目前已获得能量</text>
       <text class="card-n">{{ energy }}</text>
-      <view class="line">
-        <text class="line-t">已邀请</text>
+      <view class="line" @click="sharePopup = true">
+        <text class="line-t">已邀请助力</text>
         <text class="line-t">{{ uids }} 位</text>
       </view>
     </view>
@@ -76,6 +76,34 @@
         本规则的最终解释权在法律允许的范围内归国信合创AI共创理事会所有。
       </text>
     </view>
+
+    <x-popup
+      :round="20"
+      :show="sharePopup && !pageLoading"
+      @close="handleCancelPopup"
+    >
+      <view class="popup">
+        <view class="head">
+          <text class="title">邀请好友助力</text>
+          <image
+            @click="handleCancelPopup"
+            class="close"
+            :src="imgUrl + '/subpackage1/close.png'"
+          />
+        </view>
+        <view class="list">
+          <view class="item" v-for="(item, key) in list" :key="key">
+            <image
+              v-if="!item.icon"
+              class="item-icon"
+              :src="imgUrl + '/subpackage1/add-png.png'"
+            />
+            <image v-else class="item-icon" :src="item.icon" />
+            <text class="item-t">{{ item.title || "邀请助力" }}</text>
+          </view>
+        </view>
+      </view>
+    </x-popup>
   </view>
 </template>
 
@@ -88,12 +116,39 @@ export default {
       imgUrl: imgUrls,
       energy: 0,
       uids: 0,
+      pageLoading: false,
+      sharePopup: false,
+      list: [
+        {
+          icon: "",
+          title: "邀请助力",
+        },
+        {
+          icon: "",
+          title: "邀请助力",
+        },
+        {
+          icon: "",
+          title: "邀请助力",
+        },
+        {
+          icon: "",
+          title: "邀请助力",
+        },
+        {
+          icon: "",
+          title: "邀请助力",
+        },
+      ],
     };
   },
   onLoad(options) {
     this.getData();
   },
   methods: {
+    handleCancelPopup() {
+      this.sharePopup = false;
+    },
     getData() {
       userEnergy()
         .then((res) => {
@@ -101,6 +156,13 @@ export default {
             // 更新用户能量值
             this.energy = res.data.energy || 0;
             this.uids = res.data.spredadUids || 0;
+            if (res.data.spredadUidsList.length > 0) {
+              this.list = res.data.spredadUidsList.map((item) => ({
+                ...item,
+                icon: item.avatar,
+                title: item.nickname,
+              }));
+            }
           } else {
             uni.showToast({
               title: "获取能量数据失败",
@@ -133,6 +195,51 @@ page {
 <style lang="scss" scoped>
 .pages {
   padding-bottom: 80rpx;
+  .popup {
+    height: 468rpx;
+    .head {
+      margin: 32rpx 30rpx;
+      display: flex;
+      align-items: center;
+      text-align: center;
+      justify-content: center;
+      position: relative;
+      .close {
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 48rpx;
+        height: 48rpx;
+      }
+    }
+    .list {
+      display: flex;
+      align-items: center;
+      text-align: center;
+      margin: 50rpx 60rpx 0 60rpx;
+      flex-wrap: wrap;
+      .item {
+        margin-right: 50rpx;
+        margin-bottom: 30rpx;
+        box-sizing: border-box;
+        text-align: center;
+        &:last-child {
+          margin-right: 0;
+        }
+        .item-icon {
+          width: 80rpx;
+          height: 80rpx;
+          display: block;
+        }
+        .item-t {
+          color: #1b2132;
+          font-size: 20rpx;
+          margin-top: 20rpx;
+          display: block;
+        }
+      }
+    }
+  }
   .mb {
     text-indent: 1em;
   }

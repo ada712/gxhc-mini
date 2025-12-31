@@ -38,6 +38,8 @@
         "bp/result/base/index",
         "bp/result/plus/index",
         "bp/applyPlay/index",
+        "bp/feedback/index",
+        "kf/index",
         "energy/index/index",
         "energy/list/index",
         "auth/index/index",
@@ -111,7 +113,8 @@
       "root": "pages/users",
       "pages": [
         "user_invoice_list/index",
-        "user_invoice_form/index"
+        "user_invoice_form/index",
+        "user_spread_code/index"
       ],
       "name": "users"
     }

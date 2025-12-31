@@ -1,3 +1,4 @@
+<!-- /subpackage1/bp/applyPlay/index.vue -->
 <template>
   <view class="container">
     <view class="form-container">
@@ -18,13 +19,19 @@
           </view>
           <view class="detail-item" v-if="existingApplication.agree_public">
             <text class="label">预约时间:</text>
-            <text class="value">{{ existingApplication.expected_date }} {{ existingApplication.expected_time }}</text>
+            <text class="value"
+              >{{ existingApplication.expected_date }}
+              {{ existingApplication.expected_time }}</text
+            >
           </view>
         </view>
       </view>
 
       <view class="form-item">
-        <view class="form-label">您的姓名？</view>
+        <view class="form-label">
+          <text class="required">*</text>
+          您的姓名？
+        </view>
         <input
           class="form-input"
           placeholder="请输入您的姓名"
@@ -34,7 +41,10 @@
       </view>
 
       <view class="form-item">
-        <view class="form-label">您的项目名称/简称？</view>
+        <view class="form-label">
+          <text class="required">*</text>
+          您的项目名称/简称？
+        </view>
         <input
           class="form-input"
           placeholder="请输入项目名称或简称"
@@ -44,7 +54,10 @@
       </view>
 
       <view class="form-item">
-        <view class="form-label">您是否同意直播公开讲解BP</view>
+        <view class="form-label">
+          <text class="required">*</text>
+          您是否同意直播公开讲解BP
+        </view>
         <view class="radio-group">
           <label
             class="radio-item"
@@ -66,9 +79,17 @@
       <!-- 仅在同意公开讲解时显示以下内容 -->
       <block v-if="formData.agree_public === '1' && !hasExistingApplication">
         <view class="form-item">
-          <view class="form-label">您期望的直播时间段</view>
+          <view class="form-label">
+            <text class="required">*</text>
+            您期望的直播时间段
+          </view>
           <view class="date-selector">
-            <picker mode="date" :value="selectedDate" :start="minDate" @change="onDateChange">
+            <picker
+              mode="date"
+              :value="selectedDate"
+              :start="minDate"
+              @change="onDateChange"
+            >
               <view class="date-picker">
                 {{ selectedDate ? formatDate(selectedDate) : "请选择日期" }}
                 <text class="arrow">▶</text>
@@ -98,7 +119,10 @@
         </view>
 
         <view class="form-item">
-          <view class="form-label">您是否接受时间调剂</view>
+          <view class="form-label">
+            <text class="required">*</text>
+            您是否接受时间调剂
+          </view>
           <view class="radio-group">
             <label
               class="radio-item"
@@ -119,17 +143,25 @@
 
       <block v-if="formData.agree_public === '1' && hasExistingApplication">
         <view class="form-item">
-          <view class="form-label">您期望的直播时间段</view>
-          <view class="date-display" v-if="existingApplication && existingApplication.expected_date">
-            {{ existingApplication.expected_date }} {{ existingApplication.expected_time }}
+          <view class="form-label">
+            <text class="required">*</text>
+            您期望的直播时间段
+          </view>
+          <view
+            class="date-display"
+            v-if="existingApplication && existingApplication.expected_date"
+          >
+            {{ existingApplication.expected_date }}
+            {{ existingApplication.expected_time }}
           </view>
         </view>
       </block>
 
       <view class="form-item">
-        <view class="form-label"
-          >请输入您的手机号或联系方式，以便我们及时通知您相关的直播信息</view
-        >
+        <view class="form-label">
+          <text class="required">*</text>
+          请输入您的手机号或联系方式，以便我们及时通知您相关的直播信息
+        </view>
         <input
           class="form-input"
           placeholder="请输入手机号或微信号等联系方式"
@@ -137,20 +169,31 @@
           :disabled="hasExistingApplication"
         />
       </view>
+      <view class="tips">
+        <text class="tips-t">如报名直播请添加我们官方客服微信：gxhc-cha</text>
+      </view>
 
       <!-- 只有在没有申请时才显示提交按钮 -->
-      <button class="submit-btn" @click="submitForm" v-if="!hasExistingApplication">提交申请</button>
-      
+      <button
+        class="submit-btn"
+        @click="submitForm"
+        v-if="!hasExistingApplication"
+      >
+        提交申请
+      </button>
+
       <!-- 已有申请时显示提示 -->
-      <view class="applied-tip" v-else>
-        您已提交申请，请等待联系~
-      </view>
+      <view class="applied-tip" v-else> 您已提交申请，请等待联系~ </view>
     </view>
   </view>
 </template>
 
 <script>
-import { applyLiveApply, getBookedTimeSlots, getUserApplyLive } from "@/api/gxhc";
+import {
+  applyLiveApply,
+  getBookedTimeSlots,
+  getUserApplyLive,
+} from "@/api/gxhc";
 
 export default {
   data() {
@@ -222,7 +265,7 @@ export default {
         console.error("检查申请状态失败:", error);
         uni.showToast({
           title: "检查申请状态失败",
-          icon: "none"
+          icon: "none",
         });
       }
     },
@@ -234,14 +277,14 @@ export default {
       this.formData.agree_public = application.agree_public ? "1" : "0";
       this.formData.accept_adjust = application.accept_adjust ? "1" : "0";
       this.formData.contact = application.contact || "";
-      
+
       // 如果已同意公开讲解，设置日期和时间
       if (application.agree_public) {
         this.selectedDate = application.expected_date || "";
         this.formData.expected_date = application.expected_date || "";
         this.selectedTimeSlot = application.expected_time || "";
         this.formData.expected_time = application.expected_time || "";
-        
+
         // 加载该日期的预订信息
         if (this.selectedDate) {
           this.loadBookedSlots(this.selectedDate);
@@ -252,43 +295,45 @@ export default {
     // 获取申请状态文本
     getStatusText(status) {
       const statusMap = {
-        0: '待审核',
-        1: '审核通过',
-        2: '审核拒绝',
-        3: '已取消'
+        0: "待审核",
+        1: "审核通过",
+        2: "审核拒绝",
+        3: "已取消",
       };
-      return statusMap[status] || '未知状态';
+      return statusMap[status] || "未知状态";
     },
-    
+
     // 获取申请状态样式类
     getStatusClass(status) {
       const classMap = {
-        0: 'status-pending',
-        1: 'status-approved',
-        2: 'status-rejected',
-        3: 'status-cancelled'
+        0: "status-pending",
+        1: "status-approved",
+        2: "status-rejected",
+        3: "status-cancelled",
       };
-      return classMap[status] || '';
+      return classMap[status] || "";
     },
 
     // 获取今天的日期字符串，格式为 YYYY-MM-DD
     getTodayString() {
       const today = new Date();
       const year = today.getFullYear();
-      const month = String(today.getMonth() + 1).padStart(2, '0');
-      const day = String(today.getDate()).padStart(2, '0');
+      const month = String(today.getMonth() + 1).padStart(2, "0");
+      const day = String(today.getDate()).padStart(2, "0");
       return `${year}-${month}-${day}`;
     },
 
     // 从服务器加载已预订的时间段
-    async loadBookedSlots(date = '') {
+    async loadBookedSlots(date = "") {
       try {
         const params = date ? { date: date } : {};
         const res = await getBookedTimeSlots(params);
         if (res.status === 200) {
           if (date) {
             // 如果指定了日期，只更新该日期的预订信息
-            this.bookedSlots = this.bookedSlots.filter(slot => slot.date !== date);
+            this.bookedSlots = this.bookedSlots.filter(
+              (slot) => slot.date !== date
+            );
             this.bookedSlots = [...this.bookedSlots, ...(res.data || [])];
           } else {
             // 如果没有指定日期，更新所有预订信息
@@ -299,11 +344,11 @@ export default {
         console.error("获取已预订时间段失败:", error);
         uni.showToast({
           title: "获取时间段信息失败",
-          icon: "none"
+          icon: "none",
         });
       }
     },
-    
+
     // 刷新已预订时间段
     refreshBookedSlots(date) {
       this.loadBookedSlots(date);
@@ -409,14 +454,14 @@ export default {
 
       // 实际提交表单逻辑
       uni.showLoading({
-        title: "提交中..."
+        title: "提交中...",
       });
-      
+
       try {
         const res = await applyLiveApply(this.formData);
         uni.hideLoading();
         console.log(res);
-        
+
         if (res.status === 200) {
           uni.showModal({
             title: "提交成功",
@@ -429,12 +474,12 @@ export default {
               this.checkExistingApplication();
               // 可以根据需要跳转页面或重置表单
               // uni.navigateBack();
-            }
+            },
           });
         } else {
           uni.showToast({
             title: res.msg || "提交失败",
-            icon: "none"
+            icon: "none",
           });
         }
       } catch (error) {
@@ -442,7 +487,7 @@ export default {
         console.error("提交失败:", error);
         uni.showToast({
           title: error || "提交失败，请稍后重试",
-          icon: "none"
+          icon: "none",
         });
       }
     },
@@ -451,6 +496,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.tips {
+  .tips-t {
+    font-size: 26rpx;
+    color: #666;
+  }
+}
 .container {
   min-height: 100vh;
   background-color: #f5f5f5;
@@ -539,6 +590,11 @@ export default {
   padding: 30rpx;
   color: #666;
   font-size: 28rpx;
+}
+
+.required {
+  color: #ff4d4f;
+  margin-right: 8rpx;
 }
 
 .form-title {
@@ -667,6 +723,6 @@ export default {
   height: 88rpx;
   line-height: 88rpx;
   border-radius: 12rpx;
-  margin-top: 50rpx;
+  margin-top: 30rpx;
 }
 </style>

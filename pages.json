@@ -204,6 +204,18 @@
           }
         },
         {
+          "path": "bp/feedback/index",
+          "style": {
+            "navigationBarTitleText": "我要反馈"
+          }
+        },
+        {
+          "path": "kf/index",
+          "style": {
+            "navigationBarTitleText": "客服"
+          }
+        },
+        {
           "path": "energy/index/index",
           "style": {
             "navigationBarTitleText": "我的能量"
@@ -473,6 +485,12 @@
           "path": "user_invoice_form/index",
           "style": {
             "navigationBarTitleText": "添加新发票"
+          }
+        },
+        {
+          "path": "user_spread_code/index",
+          "style": {
+            "navigationBarTitleText": "推广名片"
           }
         }
       ]

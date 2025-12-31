@@ -12,11 +12,7 @@
         </view>
         <text class="tip" @click="copyBpUrl">复制下载链接</text>
       </template>
-      <template
-        v-else-if="
-          ['QUEUED', 'RUNNING'].includes(bpInfo.status) && bpInfo.progress < 100
-        "
-      >
+      <template v-else-if="bpInfo.progress < 100">
         <image class="icon" :src="imgUrl + '/subpackage1/head-icon2.png'" />
         <text class="title">诊断中</text>
         <text class="desc2">诊断报告正在诊断中，请稍后</text>
@@ -25,7 +21,9 @@
       <template v-else-if="['FAILED', 'CANCELED'].includes(bpInfo.status)">
         <image class="icon" :src="imgUrl + '/subpackage1/head-icon3.png'" />
         <text class="title">诊断失败</text>
-        <text class="desc">该诊断报告诊断失败，请重新诊断</text>
+        <text class="desc"
+          >检测到您上传的文档似乎不是一份完整的商业计划书，无法提取有效信息，请检查文件是否正确。</text
+        >
         <view class="btn" @click="showBp">
           <text class="btn-t">重新诊断</text>
         </view>
@@ -156,6 +154,10 @@ export default {
         console.warn("缺少file_id参数");
         return;
       }
+      uni.showLoading({
+        title: "下载中",
+        mask: true,
+      });
       uni.downloadFile({
         url:
           HTTP_REQUEST_URL +
@@ -180,6 +182,9 @@ export default {
         },
         fail: (err) => {
           console.log(err);
+        },
+        complete: () => {
+          uni.hideLoading();
         },
       });
     },

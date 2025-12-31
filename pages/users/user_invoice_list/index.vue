@@ -7,8 +7,8 @@
 		<view v-show="nav === 1" class="record-wrapper">
 			<view v-for="item in orderList" :key="item.id" class="item">
 				<view class="item-hd acea-row">
-					<image class="image" :src="item.order.cartInfo[0].productInfo.image"></image>
-					<view class="text">{{ item.order.cartInfo[0].productInfo.store_name + item.order.cartInfo[0].productInfo.attrInfo.suk || '' }}</view>
+					<view class="text">BP升级PLUS</view>
+					<view class="text">{{ item.order.order_id || '' }}</view>
 				</view>
 				<view class="item-bd acea-row row-between-wrapper">
 					<view>
@@ -397,7 +397,7 @@ export default {
 }
 
 .record-wrapper {
-	margin-top: 110rpx;
+	padding-bottom: 110rpx;
 
 	.item {
 		padding-right: 30rpx;
@@ -422,7 +422,6 @@ export default {
 				-webkit-box-orient: vertical;
 				-webkit-line-clamp: 2;
 				overflow: hidden;
-				margin-left: 24rpx;
 				font-size: 26rpx;
 				line-height: 37rpx;
 				color: #282828;

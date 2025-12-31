@@ -14,7 +14,6 @@
         </template>
         <template
           v-else-if="
-            ['QUEUED', 'RUNNING'].includes(bpInfo.status) &&
             bpInfo.progress < 100
           "
         >
@@ -28,7 +27,9 @@
         <template v-else-if="['FAILED', 'CANCELED'].includes(bpInfo.status)">
           <image class="icon" :src="imgUrl + '/subpackage1/head-icon3.png'" />
           <text class="title">诊断失败</text>
-          <text class="desc">该诊断报告诊断失败，请重新诊断</text>
+          <text class="desc"
+            >检测到您上传的文档似乎不是一份完整的商业计划书，无法提取有效信息，请检查文件是否正确。</text
+          >
         </template>
       </view>
     </view>
@@ -39,15 +40,40 @@
       <text class="btn-tip" @click="copyBpUrl">复制下载链接</text>
     </template>
 
-    <view class="info-list" v-if="false">
+    <view
+      class="info-list"
+      v-if="bpInfo.target === 'export_optimization' && bpInfo.order_info"
+    >
       <view class="info-item">
-        <text class="info-label">创建时间：</text>
-        <text class="info-value">{{ bpInfo.add_time || "未知" }}</text>
+        <text class="info-label">订单号：</text>
+        <text class="info-value">{{ bpInfo.order_id || "-" }}</text>
+      </view>
+      <view class="info-item">
+        <text class="info-label">总金额：</text>
+        <text class="info-value">299</text>
+      </view>
+      <view class="info-item" v-if="bpInfo.order_info.deduction_price">
+        <text class="info-label">抵扣金额：</text>
+        <text class="info-value">{{ bpInfo.order_info.deduction_price }}</text>
+      </view>
+      <view class="info-item">
+        <text class="info-label">支付金额：</text>
+        <view class="payment-row">
+          <text class="info-value">{{ bpInfo.order_info.pay_price }}</text>
+          <button
+            class="invoice-btn"
+            v-if="bpInfo.order_info.pay_price > 0"
+            @click="invoiceApply"
+          >
+            开发票
+          </button>
+        </view>
       </view>
     </view>
 
     <!-- 使用封装的组件 -->
     <bp-introduction
+      :shareCount="shareCount"
       :bp-info="bpInfo"
       :img-url="imgUrl"
       :page-loading="pageLoading"
@@ -55,17 +81,45 @@
       @toggle-energy-deduction="toggleEnergyDeduction"
       @go-pay="goPay"
     />
+
+    <view class="feedback-section">
+      <view class="popup-btn" @click="handleGoFeedback">
+        <text class="popup-btn-t2">我要反馈</text>
+      </view>
+    </view>
+
+    <invoice-picker
+      :inv-show="invShow"
+      :is-special="special_invoice"
+      :url-query="urlQuery"
+      :inv-checked="invChecked"
+      :order-id="bpInfo.order_id"
+      :inv-list="invList"
+      :is-order="1"
+      @inv-close="invClose"
+      @inv-change="invSub"
+      @inv-cancel="invCancel"
+    ></invoice-picker>
   </view>
 </template>
 
 <script>
+import { getUserInfo, invoiceList, makeUpinvoice } from "@/api/user.js";
+import invoicePicker from "../components/invoicePicker/index.vue";
 import BpIntroduction from "../components/bp-introduction.vue";
 import { imgUrls, HTTP_REQUEST_URL, TOKENNAME } from "@/config/app";
-import { userEnergy, createOrder, pay, getBpResultInfo } from "@/api/gxhc";
+import {
+  userEnergy,
+  createOrder,
+  pay,
+  getBpResultInfo,
+  shareSet,
+} from "@/api/gxhc";
 import { getShare } from "@/api/public.js";
-import { mapGetters } from 'vuex';
+import { mapGetters } from "vuex";
 export default {
   components: {
+    invoicePicker,
     BpIntroduction,
   },
   data: function () {
@@ -75,7 +129,16 @@ export default {
       id: null,
       pageLoading: true,
       energy: 0,
+      shareCount: 0,
       useEnergy: false,
+      // 发票相关数据
+      invShow: false,
+      special_invoice: 0,
+      urlQuery: "",
+      invChecked: {},
+      invList: [],
+      userInfo: {},
+      moreBtn: false,
     };
   },
   computed: {
@@ -103,6 +166,10 @@ export default {
   //#ifdef MP
   onShareAppMessage() {
     let uid = this.uid ? this.uid : 0;
+    shareSet({
+      spread: uid,
+    }).then((res) => {});
+    console.log(this.shareInfo);
     if (this.shareInfo.img) {
       return {
         title: this.shareInfo.title,
@@ -137,16 +204,105 @@ export default {
   onShow() {
     this.getUserEnergy();
     this.getBpDetail();
+    this.getInvoiceList();
   },
   methods: {
+    handleGoFeedback() {
+      uni.navigateTo({
+        url: "/subpackage1/bp/feedback/index",
+      });
+    },
+    // 关闭发票弹窗
+    invClose() {
+      this.invShow = false;
+      // 如果需要刷新发票列表可以调用此方法
+      this.getInvoiceList();
+    },
+
+    // 申请开票
+    invoiceApply() {
+      // 设置特殊发票参数
+      // this.urlQuery = `&specialInvoice=${this.userInfo?.special_invoice || 0}`;
+      // 获取发票列表
+      this.getInvoiceList();
+      this.moreBtn = false;
+      this.invShow = true;
+    },
+
+    // 获取发票列表（需要根据实际API实现）
+    getInvoiceList() {
+      uni.showLoading({
+        title: `正在加载中`,
+      });
+      invoiceList()
+        .then((res) => {
+          uni.hideLoading();
+          this.invList = res.data.map((item) => {
+            item.id = item.id.toString();
+            return item;
+          });
+          const result = this.invList.find(
+            (item) => item.id == this.invChecked
+          );
+          if (result) {
+            let name = "";
+            name += result.header_type === 1 ? `个人` : `企业`;
+            name += result.type === 1 ? `普通` : `专用`;
+            name += `发票`;
+            this.invTitle = name;
+          }
+        })
+        .catch((err) => {
+          uni.showToast({
+            title: err,
+            icon: "none",
+          });
+        });
+    },
+
+    // 选择发票
+    invSub(id) {
+      this.invChecked = id;
+      let data = {
+        order_id: this.bpInfo.order_id,
+        invoice_id: this.invChecked,
+      };
+      makeUpinvoice(data)
+        .then((res) => {
+          uni.showToast({
+            title: `申请成功`,
+            icon: "success",
+          });
+          this.invShow = false;
+          this.aleartStatus = true;
+          this.getBpDetail();
+        })
+        .catch((err) => {
+          uni.showToast({
+            title: err,
+            icon: "none",
+          });
+        });
+    },
+
+    // 取消发票选择
+    invCancel() {
+      this.invShow = false;
+      this.invChecked = {};
+    },
+
     getBpDetail() {
       if (!this.id) return;
       this.pageLoading = true;
-
       getBpResultInfo({ id: this.id })
         .then((res) => {
           if (res.status === 200) {
             this.bpInfo = res.data || {};
+            if (this.bpInfo.target === "export_optimization") {
+              uni.setNavigationBarTitle({
+                title: "BP-PLUS诊断报告",
+              });
+            }
           } else {
             uni.showToast({
               title: res.message || "获取详情失败",
@@ -169,6 +325,7 @@ export default {
       userEnergy().then((res) => {
         if (res.status === 200) {
           this.energy = res.data.energy;
+          this.shareCount = res.data.shareCount;
         }
       });
     },
@@ -220,6 +377,10 @@ export default {
         console.warn("缺少file_id参数");
         return;
       }
+      uni.showLoading({
+        title: "下载中",
+        mask: true,
+      });
       uni.downloadFile({
         url:
           HTTP_REQUEST_URL +
@@ -244,6 +405,9 @@ export default {
         },
         fail: (err) => {
           console.log(err);
+        },
+        complete: () => {
+          uni.hideLoading();
         },
       });
     },
@@ -341,7 +505,63 @@ page {
 </style>
 <style lang="scss" scoped>
 .pages {
-  padding-bottom: 50rpx;
+  padding-bottom: 150rpx;
+  .payment-row {
+    display: flex;
+    align-items: center;
+    flex: 1;
+
+    .info-value {
+      color: #182855;
+      font-size: 28rpx;
+      font-weight: 600;
+      margin-right: 20rpx;
+    }
+
+    .invoice-btn {
+      height: 56rpx;
+      line-height: 56rpx;
+      padding: 0 24rpx;
+      background: #2969ff;
+      border-radius: 28rpx;
+      color: #ffffff;
+      font-size: 24rpx;
+      font-weight: 400;
+      border: none;
+      min-width: 120rpx;
+
+      &::after {
+        border: none;
+      }
+    }
+  }
+  .info-list {
+    margin: 24rpx 32rpx;
+    border-radius: 24rpx;
+    background: #ffffff;
+    padding: 15rpx 30rpx;
+  }
+
+  .info-item {
+    display: flex;
+    align-items: center;
+    padding: 15rpx 0;
+
+    .info-label {
+      color: #666666;
+      font-size: 28rpx;
+      font-weight: 500;
+      min-width: 120rpx;
+    }
+
+    .info-value {
+      color: #182855;
+      font-size: 28rpx;
+      font-weight: 600;
+      flex: 1;
+      word-break: break-all;
+    }
+  }
   .img {
     width: 100%;
     height: 100%;
@@ -540,6 +760,63 @@ page {
     margin-top: 40rpx;
     display: block;
     text-align: center;
+  }
+
+  .feedback-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 40rpx;
+    .feedback-badge {
+      display: flex;
+      align-items: center;
+      background: #f0f9ff;
+      border: 1rpx solid #ccecff;
+      border-radius: 30rpx;
+      padding: 10rpx 20rpx;
+      margin-bottom: 20rpx;
+    }
+
+    .feedback-icon {
+      width: 28rpx;
+      height: 28rpx;
+      margin-right: 10rpx;
+    }
+
+    .feedback-text {
+      color: #2969ff;
+      font-size: 24rpx;
+      font-weight: 500;
+    }
+
+    .popup-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #2969ff, #2dd4bf);
+      border-radius: 30rpx;
+      padding: 20rpx 40rpx;
+      box-shadow: 0 4rpx 12rpx rgba(41, 105, 255, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    .popup-btn:active {
+      transform: translateY(2rpx);
+      box-shadow: 0 2rpx 6rpx rgba(41, 105, 255, 0.2);
+    }
+
+    .popup-icon {
+      width: 32rpx;
+      height: 32rpx;
+      margin-right: 12rpx;
+    }
+
+    .popup-btn-t2 {
+      color: #ffffff;
+      font-size: 28rpx;
+      font-weight: 500;
+      letter-spacing: 1rpx;
+    }
   }
 }
 </style>

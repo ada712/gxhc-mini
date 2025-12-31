@@ -18,7 +18,7 @@
         <text class="d-p">注意事项</text>
         <text class="d-p">报告获取时间十分钟，完成后会通过短信通知</text>
       </view>
-      <text class="d-p">免责申明</text>
+      <text class="d-p">免责声明</text>
       <text class="d-p"
         >1.本工具生成内容完全由AI自动生成，信息内容来源于用户上传文件和全网信息，模型经过调优依然可能存在幻觉现象，不保证内容真实性，仅供参考</text
       >
@@ -67,9 +67,9 @@ export default {
           const tempFiles = res.tempFiles;
           if (tempFiles && tempFiles.length > 0) {
             const file = tempFiles[0];
-            if (file.size > 10 * 1024 * 1024) {
+            if (file.size > 50 * 1024 * 1024) {
               uni.showToast({
-                title: "文件大小不能超过10MB",
+                title: "文件大小不能超过50MB",
                 icon: "none",
               });
               return;

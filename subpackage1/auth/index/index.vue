@@ -2,7 +2,7 @@
   <view class="pages">
     <text class="title">请选择您的身份</text>
     <text class="title-d">从下方选择您的身份类型，使用专属功能</text>
-    <view class="ivt">
+    <!-- <view class="ivt">
       <text class="label">邀请码（选填）</text>
       <input
         v-model="ivt"
@@ -10,7 +10,7 @@
         placeholder="请输入邀请码"
         placeholder-class="placeholder-class"
       />
-    </view>
+    </view> -->
     <view class="select">
       <view
         class="select-item"

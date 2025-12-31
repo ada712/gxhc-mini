@@ -119,6 +119,7 @@
 import { imgUrls } from "@/config/app";
 import IndustryCategories from "./components/IndustryCategories.vue";
 import { userAuth } from "@/api/gxhc";
+import { set } from "vue";
 export default {
   components: {
     IndustryCategories,
@@ -187,21 +188,19 @@ export default {
     },
     onNext() {
       userAuth(this.form).then((res) => {
-        if (res.status == 200) {
-          thisl.$util.Tips(
-            {
-              title: res.msg || `保存失败`,
-            },
-            {
-              tab: 3,
-            }
-          );
-          return;
-        }
+        console.log(res);
         uni.showToast({
           title: res.msg,
           icon: "none",
         });
+        if (res.status == 200) {
+          setTimeout(() => {
+            uni.reLaunch({
+              url: "/pages/home/index/index",
+            });
+          }, 1400);
+          return;
+        }
       });
     },
   },

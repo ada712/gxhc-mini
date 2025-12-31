@@ -366,26 +366,10 @@ const util = {
         ctx.setTextAlign("left");
         ctx.setFontSize(12);
         ctx.setFillStyle("#333");
-        let codex = 0.1906;
-        let codey = 0.7746;
+        let codex = 0.6606;
+        let codey = 0.7246;
         let codeSize = 0.21666;
-        let namex = 0.4283;
-        let namey = 0.8215;
-        let markx = 0.4283;
-        let marky = 0.8685;
         ctx.drawImage(arr2[0], w * codex, h * codey, w * codeSize, w * codeSize);
-        if (w < 270) {
-          ctx.setFontSize(8);
-        } else {
-          ctx.setFontSize(10);
-        }
-        ctx.fillText(nickname, w * namex, h * namey);
-        if (w < 270) {
-          ctx.setFontSize(8);
-        } else {
-          ctx.setFontSize(10);
-        }
-        ctx.fillText(`邀请您加入` + sitename, w * markx, h * marky);
         ctx.save();
         ctx.draw(true, function() {
           common_vendor.index.canvasToTempFilePath({

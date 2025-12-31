@@ -163,3 +163,14 @@ export function getShare(data) {
   });
 }
 
+export function shareSet(data) {
+  return request.get(`share_set`, data, {
+    noAuth: true,
+  });
+}
+
+export function feedBack(data) {
+  return request.post("feedback", data, {
+    noAuth: false,
+  });
+}

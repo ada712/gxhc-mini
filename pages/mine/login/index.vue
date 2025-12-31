@@ -116,11 +116,14 @@ export default {
     },
     // 小程序获取手机号码回调
     getUserPhoneNumber(encryptedData, iv, code) {
+      let spid = uni.getStorageSync("SPID");
+      let scene = uni.getStorageSync("SCENE");
       routineBindingPhone({
         encryptedData: encryptedData,
         iv: iv,
         code: code,
-        spread_spid: app.globalData.spid,
+        spread_spid: spid,
+        scene: scene,
         shopId: this.$Cache.get("shopId"),
         spread_code: app.globalData.code,
         key: this.authKey,
@@ -132,7 +135,7 @@ export default {
             time: time,
           });
           this.$Cache.clear("snsapiKey");
-          this.getUserInfo(res.data.bindName);
+          this.getUserInfo(res.data.new_user);
         })
         .catch((res) => {
           uni.hideLoading();
@@ -154,7 +157,7 @@ export default {
           that.userInfo = res.data;
           that.$store.commit("SETUID", res.data.uid);
           that.$store.commit("UPDATE_USERINFO", res.data);
-          if (new_user) {
+          if (new_user == 1) {
             // this.isShow = true;
             uni.redirectTo({
               url: "/subpackage1/auth/index/index",

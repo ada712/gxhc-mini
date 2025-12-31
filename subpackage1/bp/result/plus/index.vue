@@ -12,11 +12,7 @@
         </view>
         <text class="tip" @click="copyBpUrl">复制下载链接</text>
       </template>
-      <template
-        v-else-if="
-          ['QUEUED', 'RUNNING'].includes(bpInfo.status) && bpInfo.progress < 100
-        "
-      >
+      <template v-else-if="bpInfo.progress < 100">
         <image class="icon" :src="imgUrl + '/subpackage1/head-icon2.png'" />
         <text class="title">诊断中</text>
         <text class="desc2">诊断报告正在诊断中，请稍后</text>
@@ -25,27 +21,32 @@
       <template v-else-if="['FAILED', 'CANCELED'].includes(bpInfo.status)">
         <image class="icon" :src="imgUrl + '/subpackage1/head-icon3.png'" />
         <text class="title">诊断失败</text>
-        <text class="desc">该诊断报告诊断失败，请重新诊断</text>
+        <text class="desc"
+          >检测到您上传的文档似乎不是一份完整的商业计划书，无法提取有效信息，请检查文件是否正确。</text
+        >
         <view class="btn" @click="showBp">
           <text class="btn-t">重新诊断</text>
         </view>
       </template>
     </view>
-    <template v-if="bpInfo.status === 'SUCCEEDED' && bpInfo.progress == 100">
-      <view class="play">
-        <image class="banner" :src="imgUrl + '/subpackage1/play-bj.png'" />
-      </view>
-      <view class="play-btn" @click="goPage">立即报名参与直播课</view>
-    </template>
+    <bp-introduction
+      :bp-info="bpInfo"
+      :img-url="imgUrl"
+      :page-loading="pageLoading"
+    />
   </view>
 </template>
 
 <script>
+import BpIntroduction from "../../components/bp-introduction.vue";
 import { imgUrls, HTTP_REQUEST_URL, TOKENNAME } from "@/config/app";
 import { getBpInfo } from "@/api/gxhc";
 import { previewPDF } from "@/utils/project";
 
 export default {
+  components: {
+    BpIntroduction,
+  },
   data: function () {
     return {
       imgUrl: imgUrls,
@@ -97,6 +98,10 @@ export default {
         console.warn("缺少file_id参数");
         return;
       }
+      uni.showLoading({
+        title: "下载中",
+        mask: true,
+      });
       uni.downloadFile({
         url:
           HTTP_REQUEST_URL +
@@ -127,6 +132,9 @@ export default {
             title: "下载失败",
             icon: "none",
           });
+        },
+        complete: () => {
+          uni.hideLoading();
         },
       });
     },
@@ -162,6 +170,11 @@ export default {
     goPage() {
       uni.navigateTo({
         url: "/subpackage1/bp/applyPlay/index",
+      });
+    },
+    handleGoFeedback() {
+      uni.navigateTo({
+        url: "/subpackage1/bp/feedback/index",
       });
     },
   },
@@ -264,6 +277,63 @@ page {
       font-weight: 400;
       margin-top: 40rpx;
       display: block;
+    }
+  }
+
+  .feedback-section {
+    margin-top: 50rpx;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .feedback-badge {
+      display: flex;
+      align-items: center;
+      background: #f0f9ff;
+      border: 1rpx solid #ccecff;
+      border-radius: 30rpx;
+      padding: 10rpx 20rpx;
+      margin-bottom: 20rpx;
+    }
+
+    .feedback-icon {
+      width: 28rpx;
+      height: 28rpx;
+      margin-right: 10rpx;
+    }
+
+    .feedback-text {
+      color: #2969ff;
+      font-size: 24rpx;
+      font-weight: 500;
+    }
+
+    .popup-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #2969ff, #2dd4bf);
+      border-radius: 30rpx;
+      padding: 20rpx 40rpx;
+      box-shadow: 0 4rpx 12rpx rgba(41, 105, 255, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    .popup-btn:active {
+      transform: translateY(2rpx);
+      box-shadow: 0 2rpx 6rpx rgba(41, 105, 255, 0.2);
+    }
+
+    .popup-icon {
+      width: 32rpx;
+      height: 32rpx;
+      margin-right: 12rpx;
+    }
+
+    .popup-btn-t2 {
+      color: #ffffff;
+      font-size: 28rpx;
+      font-weight: 500;
+      letter-spacing: 1rpx;
     }
   }
 }
