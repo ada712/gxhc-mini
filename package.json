@@ -1,0 +1,13 @@
+{
+    "name": "gxhc-mini",
+    "version": "1.0.0",
+    "description": "国信合创理事会小程序",
+    "main": "main.js",
+    "scripts": {
+        "dev:mp-weixin": "uni build --watch --platform mp-weixin",
+        "build:mp-weixin": "uni build --platform mp-weixin"
+    },
+    "devDependencies": {
+        "sass": "^1.97.1"
+    }
+}

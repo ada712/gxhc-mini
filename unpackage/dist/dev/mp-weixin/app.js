@@ -5,6 +5,17 @@ const api_public = require("./api/public.js");
 const store_index = require("./store/index.js");
 const utils_cache = require("./utils/cache.js");
 const utils_util = require("./utils/util.js");
+require("./utils/request.js");
+require("./config/app.js");
+require("./libs/login.js");
+require("./utils/validate.js");
+require("./config/cache.js");
+require("./store/modules/index.js");
+require("./store/modules/app.js");
+require("./api/user.js");
+require("./store/modules/hotWords.js");
+require("./store/modules/indexData.js");
+require("./store/getters.js");
 if (!Math) {
   "./pages/home/index/index.js";
   "./pages/home/introduce/index.js";
@@ -100,8 +111,9 @@ const _sfc_main = {
     console.log("App Hide");
   }
 };
+const App = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__file", "/Users/ada/work/pt/gx/gxhc-mini/App.vue"]]);
 function createApp() {
-  const app = common_vendor.createSSRApp(_sfc_main);
+  const app = common_vendor.createSSRApp(App);
   app.use(store_index.store);
   app.config.globalProperties.$Cache = utils_cache.Cache;
   app.config.globalProperties.$util = utils_util.util;
