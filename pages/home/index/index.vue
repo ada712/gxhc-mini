@@ -3,106 +3,107 @@
     <view class="env" v-if="env == 'test'">
       <text class="env-t">测试环境</text>
     </view>
-    <view class="video">
-      <image class="video-bg" :src="imgUrl + '/index/video_bg.png'"></image>
-      <image class="play-btn" :src="imgUrl + '/index/play_btn.png'"></image>
+    
+    <!-- 顶部视频展示区域 -->
+    <view class="video-showcase">
+      <image class="video-bg" src="/pages/users/static/home/video_img.png" mode="aspectFill"></image>
+      <view class="video-content">
+        <view class="play-btn-wrapper" @click="handleVideoPlay">
+          <image class="play-icon" src="/pages/users/static/home/start.png" mode="aspectFit"></image>
+        </view>
+        <text class="video-text">PRODUCT SHOWCASE</text>
+      </view>
     </view>
-    <view class="introduce">
-      <view
-        class="introduce-item"
-        @click="goPage('/pages/home/introduce/index')"
+
+    <!-- 已开放功能 -->
+    <view class="section">
+      <view class="section-header">
+        <view class="section-line"></view>
+        <text class="section-title">已开放功能</text>
+      </view>
+      <view class="feature-cards">
+        <view class="feature-card card-blue" @click="goPage('/subpackage1/bp/index/index')">
+          <view class="card-content">
+            <text class="card-title">Uni 1.0\nBP诊断Agent</text>
+            <text class="card-subtitle">投资人是叫的优化建议</text>
+            <view class="card-btn" @click.stop="goPage('/subpackage1/bp/index/index')">
+              <text class="btn-text">立即使用</text>
+              <image class="btn-icon" src="/pages/users/static/home/huojian.png" mode="aspectFit"></image>
+            </view>
+          </view>
+        </view>
+        <view class="feature-card card-orange" @click="goPage('/subpackage1/bp/applyPlay/index')">
+          <view class="card-content">
+            <text class="card-title">创业导师\n直播连线</text>
+            <text class="card-subtitle">30分钟导师深度咨询</text>
+            <view class="card-btn" @click.stop="goPage('/subpackage1/bp/applyPlay/index')">
+              <text class="btn-text">立即预约</text>
+              <image class="btn-icon" src="/pages/users/static/home/rili.png" mode="aspectFit"></image>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 用户反馈 -->
+    <view class="feedback-section">
+      <text class="feedback-label">——"来自用户的真实反馈"</text>
+      <!-- 第一行：向左滚动 -->
+      <view class="feedback-row feedback-row-left">
+        <view class="feedback-content">
+          <view class="feedback-item" v-for="(item, index) in feedbackList" :key="'left-' + index">
+            <text class="feedback-text">"{{ item.text }}"</text>
+            <text class="feedback-user">——@{{ item.user }}</text>
+          </view>
+          <!-- 复制一份实现无缝循环 -->
+          <view class="feedback-item" v-for="(item, index) in feedbackList" :key="'left-copy-' + index">
+            <text class="feedback-text">"{{ item.text }}"</text>
+            <text class="feedback-user">——@{{ item.user }}</text>
+          </view>
+        </view>
+      </view>
+      <!-- 第二行：向右滚动 -->
+      <view class="feedback-row feedback-row-right">
+        <view class="feedback-content">
+          <view class="feedback-item" v-for="(item, index) in feedbackList" :key="'right-' + index">
+            <text class="feedback-text">"{{ item.text }}"</text>
+            <text class="feedback-user">——@{{ item.user }}</text>
+          </view>
+          <!-- 复制一份实现无缝循环 -->
+          <view class="feedback-item" v-for="(item, index) in feedbackList" :key="'right-copy-' + index">
+            <text class="feedback-text">"{{ item.text }}"</text>
+            <text class="feedback-user">——@{{ item.user }}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 敬请期待 -->
+    <view class="section">
+      <view class="section-header">
+        <view class="section-line"></view>
+        <text class="section-title">敬请期待</text>
+      </view>
+      <view class="coming-soon-cards">
+        <view class="coming-card" v-for="(item, index) in comingSoonList" :key="index">
+          <image class="coming-icon" :src="item.icon" mode="aspectFit"></image>
+          <text class="coming-text">{{ item.title }}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 浮动客服按钮 -->
+    <movable-area class="movable-area">
+      <movable-view 
+        class="customer-service-btn" 
+        direction="all"
+        :x="serviceBtnX"
+        :y="serviceBtnY"
+        @click="goCustomerService"
       >
-        <image class="int-icon" :src="imgUrl + '/index/int_icon1.png'" />
-        <view class="introduce-info">
-          <view class="int-t">
-            <text>基金矩阵介绍</text>
-            <view class="int-more">
-              <text class="int-m-t">前往了解</text>
-              <image
-                class="right-icon"
-                :src="imgUrl + '/index/icon_right_lan.png'"
-              />
-            </view>
-          </view>
-          <view class="int-b">
-            <text class="int-b-t"
-              >汇聚多元资本力量，构建产业升级新矩阵，驱动经济高质量发展新引擎</text
-            >
-          </view>
-        </view>
-      </view>
-      <view class="introduce-item" @click="goCha">
-        <image class="int-icon" :src="imgUrl + '/index/int_icon2.png'" />
-        <view class="introduce-info">
-          <view class="int-t">
-            <text>理事会介绍</text>
-            <view class="int-more">
-              <text class="int-m-t">前往了解</text>
-              <image
-                class="right-icon"
-                :src="imgUrl + '/index/icon_right_lan.png'"
-              />
-            </view>
-          </view>
-          <view class="int-b">
-            <text class="int-b-t"
-              >以孵化人工智能初创项目为主要目标的非盈利组织</text
-            >
-          </view>
-        </view>
-      </view>
-    </view>
-    <view class="report">
-      <text class="title">AI创诊报告</text>
-      <view class="report-list">
-        <view
-          class="report-item"
-          @click="goPage('/subpackage1/bp/index/index')"
-        >
-          <text class="report-t">BP一键诊断</text>
-          <view class="report-ts">
-            <text class="report-t1">创业者专属！</text>
-            <text class="report-t1"> 精准拆解短板</text>
-          </view>
-        </view>
-        <view class="report-item gray" @click="goPage('')">
-          <text class="report-t">投资分析Agent</text>
-          <view class="report-ts">
-            <text class="report-t1">金融从业者专属</text>
-            <text class="report-t1"> 全维度市场分析</text>
-          </view>
-          <image class="report-icon" :src="imgUrl + '/index/qd.png'" />
-        </view>
-      </view>
-    </view>
-    <view class="invest">
-      <text class="title">智能投顾助手</text>
-      <view class="invest-list">
-        <view class="invest-item">
-          <image class="invest-icon" :src="imgUrl + '/index/gw_icon1.png'" />
-          <text class="invest-t">上市公司服务AI</text>
-          <text class="invest-d">暂未开放 敬请期待</text>
-        </view>
-        <view class="invest-item">
-          <image class="invest-icon" :src="imgUrl + '/index/gw_icon2.png'" />
-          <text class="invest-t">行业研究AI</text>
-          <text class="invest-d">暂未开放 敬请期待</text>
-        </view>
-        <view class="invest-item">
-          <image class="invest-icon" :src="imgUrl + '/index/gw_icon3.png'" />
-          <text class="invest-t">专家BOT</text>
-          <text class="invest-d">暂未开放 敬请期待</text>
-        </view>
-      </view>
-    </view>
-    <view class="media">
-      <image class="media-bd" :src="imgUrl + '/index/xmt_bj.png'" />
-      <view class="media-t">
-        <text class="media-t1">新媒体赋能</text>
-        <text class="media-t2">智媒破界，赋能新生</text>
-        <text class="media-t3" v-if="false">去查看</text>
-      </view>
-    </view>
+        <image class="service-icon" src="/pages/users/static/home/service.png" mode="aspectFit"></image>
+      </movable-view>
+    </movable-area>
   </view>
 </template>
 
@@ -117,6 +118,18 @@ export default {
       env: env,
       imgUrl: imgUrls,
       shareInfo: {},
+      feedbackList: [
+        { text: "用了之后导师主动约我!", user: "深空-tech" },
+        { text: "BP诊断很专业，帮助很大", user: "创业者A" },
+        { text: "导师咨询非常有用", user: "创业者B" },
+      ],
+      comingSoonList: [
+        { icon: "/pages/users/static/home/people.png", title: "导师对练\nAgent" },
+        { icon: "/pages/users/static/home/company.png", title: "上市公司服务\nAgent" },
+        { icon: "/pages/users/static/home/paper.png", title: "行业研究\nAgent" },
+      ],
+      serviceBtnX: 0,
+      serviceBtnY: 0,
     };
   },
   computed: { ...mapGetters(["uid"]) },
@@ -164,6 +177,17 @@ export default {
         this.shareInfo = res.data;
       });
     }
+    // 初始化客服按钮位置（右下角）
+    this.$nextTick(() => {
+      const systemInfo = uni.getSystemInfoSync();
+      // movable-view 的 x 和 y 单位是 px，需要将 rpx 转换为 px
+      const btnWidth = uni.upx2px(120); // 按钮宽度
+      const btnHeight = uni.upx2px(120); // 按钮高度
+      const rightMargin = uni.upx2px(32); // 右边距
+      const bottomMargin = uni.upx2px(200); // 底部距离
+      this.serviceBtnX = systemInfo.windowWidth - btnWidth - rightMargin;
+      this.serviceBtnY = systemInfo.windowHeight - btnHeight - bottomMargin;
+    });
     // if (options.spread) {
     //   uni.setStorageSync("SPID", options.spread);
     //   uni.navigateTo({
@@ -199,21 +223,39 @@ export default {
         url: `/pages/web/index?url=${encodeURIComponent(url)}`,
       });
     },
+    handleVideoPlay() {
+      // 处理视频播放
+      uni.showToast({
+        title: "视频播放功能开发中",
+        icon: "none",
+      });
+    },
+    goCustomerService() {
+      uni.navigateTo({
+        url: "/subpackage1/kf/index",
+      });
+    },
   },
 };
 </script>
 
 <style>
 page {
-  background: #f5f8ff;
-  padding-bottom: 100rpx;
+  background: #ffffff;
+  padding-bottom: 200rpx;
+}
+
+uni-page-body {
+  background: #ffffff;
 }
 </style>
 <style lang="scss" scoped>
 .pages {
   width: 100%;
   box-sizing: border-box;
-  // 环境标识优化
+  padding-bottom: 200rpx;
+  background: #fff;
+  // 环境标识
   .env {
     position: fixed;
     top: 0;
@@ -234,214 +276,324 @@ page {
       letter-spacing: 1rpx;
     }
   }
-  .title {
-    color: #182855;
-    font-size: 24rpx;
-    font-weight: 600;
-  }
-  .video {
-    height: 412rpx;
+
+  // 顶部视频展示区域
+  .video-showcase {
+    height: 400rpx;
     position: relative;
+    background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+
     .video-bg {
+      position: absolute;
       width: 100%;
       height: 100%;
       z-index: 1;
     }
-    .play-btn {
-      width: 80rpx;
-      height: 80rpx;
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 2;
-    }
-  }
-  .introduce {
-    position: relative;
-    z-index: 3;
-    margin: -30rpx 24rpx 0 24rpx;
-    border-radius: 28rpx;
-    background: #ffffff;
-    padding: 32rpx 36rpx;
-    .introduce-item {
-      display: flex;
-      &:first-child {
-        margin-bottom: 30rpx;
-      }
-      .int-icon {
-        width: 160rpx;
-        height: 160rpx;
-        flex-shrink: 0;
-      }
-      .introduce-info {
-        margin-left: 50rpx;
-        .int-t {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          margin-bottom: 26rpx;
-        }
-        .int-b {
-          background: #f4faff;
-          border-radius: 8rpx;
-          padding: 12rpx 20rpx;
-          .int-b-t {
-            color: #60738e;
-            font-size: 22rpx;
-            font-weight: 400;
-          }
-        }
-        .int-more {
-          display: flex;
-          align-items: center;
-          .int-m-t {
-            font-size: 24rpx;
-            font-weight: 400;
-            color: #bfc3cf;
-          }
-          .right-icon {
-            width: 48rpx;
-            height: 48rpx;
-          }
-        }
-      }
-    }
-  }
-  .report {
-    border-radius: 28rpx;
-    background: #ffffff;
-    margin: 24rpx 24rpx 0 24rpx;
-    padding: 34rpx 24rpx;
-    .report-list {
+
+    .video-content {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      margin-top: 24rpx;
+      justify-content: center;
+      gap: 24rpx;
+      z-index: 2;
+      position: relative;
     }
-    .report-item {
-      width: 316rpx;
-      height: 182rpx;
-      border-radius: 20rpx;
-      padding: 0 18rpx;
-      overflow: hidden;
+
+    .play-btn-wrapper {
+      z-index: 2;
+
+      .play-icon {
+        width: 80rpx;
+        height: 80rpx;
+      }
+    }
+
+    .video-text {
+      width: 312rpx;
+      height: 40rpx;
+      opacity: 1;
+      color: #ffffff;
+      text-align: left;
+      font-size: 28rpx;
+      font-weight: 600;
+      font-family: "PingFang SC";
+      z-index: 2;
+      display: block;
+    }
+  }
+
+  // 通用区块样式
+  .section {
+    margin: 60rpx 28rpx 0;
+    
+    .section-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 32rpx;
+
+      .section-line {
+        width: 8rpx;
+        height: 32rpx;
+        background: linear-gradient(180deg, #2969ff 0%, #1a56e5 100%);
+        border-radius: 4rpx;
+        margin-right: 20rpx;
+      }
+
+      .section-title {
+        font-size: 24rpx;
+        color: #596b86;
+        font-weight: 600;
+      }
+    }
+  }
+
+  // 已开放功能卡片
+  .feature-cards {
+    display: flex;
+    gap: 24rpx;
+    margin-top: 24rpx;
+
+    .feature-card {
+      flex: 1;
+      min-width: 334rpx;
+      height: 420rpx;
+      border-radius: 46rpx;
+      padding: 32rpx;
       box-sizing: border-box;
       position: relative;
-      @include bmgOss("/index/ai_bj2.png");
-      &:last-child {
-        @include bmgOss("/index/ai_bj11.png");
+      overflow: hidden;
+      box-shadow: 0 8rpx 20rpx 0 rgba(0, 0, 0, 0.2);
+
+      &.card-blue {
+        background: linear-gradient(155.4deg, #285ee7 0%, #403ccd 100%);
       }
-      .report-icon {
-        width: 126rpx;
-        height: 34rpx;
-        position: absolute;
-        right: 0;
-        top: 0;
-        z-index: 1;
+
+      &.card-orange {
+        background: linear-gradient(135.3deg, #fa9336 0%, #f69e0f 100%);
+        
+        .card-content .card-btn .btn-text {
+          color: #ed6712;
+        }
       }
-      .report-t {
-        color: #ffffff;
-        display: inline-block;
-        text-align: center;
-        font-size: 28rpx;
-        font-weight: 500;
-        margin-top: 22rpx;
-      }
-      .report-ts {
-        margin-top: 30rpx;
-        .report-t1 {
+
+      .card-content {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        z-index: 2;
+
+        .card-title {
+          height: 100rpx;
+          opacity: 1;
+          color: #ffffff;
+          text-align: left;
+          font-size: 40rpx;
+          font-weight: 600;
+          font-family: "PingFang SC";
+          line-height: 50rpx;
           display: block;
+          white-space: pre-line;
+        }
+
+        .card-subtitle {
+          height: 30rpx;
+          opacity: 1;
           color: #ffffff;
           text-align: left;
           font-size: 24rpx;
-          font-weight: 300;
+          font-weight: 400;
+          font-family: "PingFang SC";
+          line-height: 30rpx;
+          display: block;
+          margin-top: 20rpx;
+          margin-bottom: 60rpx;
+        }
+
+        .card-btn {
+          width: 240rpx;
+          height: 90rpx;
+          border-radius: 18rpx;
+          opacity: 1;
+          background: #ffffff;
+          box-shadow: 0 8rpx 20rpx 0 rgba(16, 26, 134, 0.3);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 8rpx;
+
+          .btn-text {
+            width: 96rpx;
+            height: 30rpx;
+            opacity: 1;
+            color: #3f5bda;
+            text-align: left;
+            font-size: 24rpx;
+            font-weight: 600;
+            font-family: "PingFang SC";
+            line-height: 30rpx;
+            display: block;
+          }
+
+          .btn-icon {
+            width: 60rpx;
+            height: 60rpx;
+          }
         }
       }
     }
   }
-  .invest {
-    border-radius: 28rpx;
-    background: #ffffff;
-    margin: 24rpx 24rpx 0 24rpx;
-    padding: 34rpx 24rpx;
-    .invest-list {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-top: 32rpx;
-      .invest-item {
-        .invest-icon {
-          width: 88rpx;
-          height: 88rpx;
-          margin: 0 auto;
-          display: block;
-        }
-        .invest-t {
-          margin-top: 14rpx;
-          display: block;
-          text-align: center;
-          color: #404040;
+
+  // 用户反馈区域
+  .feedback-section {
+    margin: 60rpx 32rpx 0;
+    padding-bottom: 20rpx;
+
+    .feedback-label {
+      display: block;
+      text-align: center;
+      font-size: 24rpx;
+      color: #999;
+      margin-bottom: 24rpx;
+    }
+
+    .feedback-row {
+      width: 100%;
+      overflow: hidden;
+      margin-bottom: 10rpx;
+
+      .feedback-content {
+        display: flex;
+        white-space: nowrap;
+        width: fit-content;
+        padding: 10rpx;
+      }
+
+      &.feedback-row-left .feedback-content {
+        animation: scrollLeft 40s linear infinite;
+      }
+
+      &.feedback-row-right .feedback-content {
+        animation: scrollRight 40s linear infinite;
+      }
+
+      .feedback-item {
+        display: inline-flex;
+        align-items: center;
+        padding: 0rpx 18rpx;
+        height: 68rpx;
+        border-radius: 48rpx;
+        opacity: 1;
+        background: #ffffff;
+        box-shadow: 0 2px 6px 0 #0000001a;
+        margin-right: 24rpx;
+        min-width: 500rpx;
+        flex-shrink: 0;
+        gap: 16rpx;
+
+        .feedback-text {
           font-size: 24rpx;
-          font-weight: 400;
+           color: #95a3b8;;
+          line-height: 1.6;
+          white-space: nowrap;
         }
-        .invest-d {
-          margin-top: 8rpx;
-          display: block;
-          opacity: 0.4;
-          text-align: center;
-          color: #de252b;
-          font-size: 22rpx;
-          font-weight: 400;
+
+        .feedback-user {
+          font-size: 24rpx;
+           color: #95a3b8;;
+          white-space: nowrap;
         }
       }
     }
   }
-  .media {
-    margin: 24rpx 24rpx 0 24rpx;
-    position: relative;
-    height: 100rpx;
+
+  // 滚动动画
+  @keyframes scrollLeft {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  @keyframes scrollRight {
+    0% {
+      transform: translateX(-50%);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+
+  // 敬请期待卡片
+  .coming-soon-cards {
+    display: flex;
+    gap: 24rpx;
+    margin-top: 24rpx;
+
+    .coming-card {
+      flex: 1;
+      width: 224rpx;
+      height: 244rpx;
+      border-radius: 15rpx;
+      opacity: 1;
+      border: 1px solid #f3f6fa;
+      background: #f8fafc;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 32rpx 24rpx;
+      box-sizing: border-box;
+
+      .coming-icon {
+        width: 80rpx;
+        height: 80rpx;
+        margin-bottom: 20rpx;
+      }
+
+      .coming-text {
+        font-size: 24rpx;
+        color: #93a2b7;
+        text-align: center;
+        line-height: 1.6;
+        font-weight: 600;
+        white-space: pre-line;
+      }
+    }
+  }
+
+  // 可拖动客服按钮区域
+  .movable-area {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 999;
+    pointer-events: none;
+  }
+
+  // 浮动客服按钮
+  .customer-service-btn {
+    width: 120rpx;
+    height: 120rpx;
+    background: linear-gradient(135deg, #2969ff 0%, #1a56e5 100%);
+    border-radius: 50%;
     display: flex;
     align-items: center;
-    .media-bd {
-      width: 100%;
-      height: 100%;
-      border-radius: 28rpx;
-      position: absolute;
-      left: 0;
-      z-index: 1;
-    }
-    .media-t {
-      padding: 0rpx 24rpx;
-      position: relative;
-      z-index: 2;
-      flex: 1;
-      display: flex;
-      align-items: center;
-      .media-t1 {
-        color: #ffffff;
-        font-size: 28rpx;
-        font-weight: 500;
-      }
-      .media-t2 {
-        color: #ffffff;
-        font-size: 27rpx;
-        font-weight: 300;
-        margin-left: 14rpx;
-      }
-      .media-t3 {
-        width: 122rpx;
-        height: 56rpx;
-        border-radius: 290rpx;
-        opacity: 1;
-        background: #fc780c;
-        color: #ffffff;
-        text-align: center;
-        line-height: 56rpx;
-        margin-left: auto;
-        font-size: 24rpx;
-        font-weight: 400;
-        display: inline-block;
-      }
+    justify-content: center;
+    box-shadow: 0 8rpx 24rpx rgba(41, 105, 255, 0.3);
+    pointer-events: auto;
+
+    .service-icon {
+      width: 120rpx;
+      height: 120rpx;
     }
   }
 }
