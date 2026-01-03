@@ -13,7 +13,15 @@ function baseRequest(url, method, data, { noAuth = false, noVerify = false }) {
     //登录过期自动登录
     // && !checkLogin()
     if (!store.state.app.token) {
-      toLogin();
+      // ========== 测试阶段：暂时不跳转登录页面 ==========
+      console.warn("测试模式：检测到未登录，但不跳转登录页面");
+      uni.showToast({
+        title: "未登录（测试模式）",
+        icon: "none",
+        duration: 2000,
+      });
+      // toLogin(); // 测试阶段注释掉
+      // ========== 测试代码结束 ==========
       return Promise.reject({
         msg: `未登录`,
       });
@@ -38,7 +46,15 @@ function baseRequest(url, method, data, { noAuth = false, noVerify = false }) {
         if (noVerify) reslove(res.data, res);
         else if (res.data.status == 200) reslove(res.data, res);
         else if ([110002, 110003, 110004].indexOf(res.data.status) !== -1) {
-          toLogin();
+          // ========== 测试阶段：暂时不跳转登录页面 ==========
+          console.warn("测试模式：检测到登录过期，但不跳转登录页面", res.data);
+          uni.showToast({
+            title: res.data.msg || "请登录（测试模式）",
+            icon: "none",
+            duration: 2000,
+          });
+          // toLogin(); // 测试阶段注释掉
+          // ========== 测试代码结束 ==========
           reject(res.data);
         } else if (res.data.status == 100103) {
           uni.showModal({

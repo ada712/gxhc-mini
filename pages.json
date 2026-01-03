@@ -20,7 +20,7 @@
         {
             "path": "pages/domain/index/index",
             "style": {
-                "navigationBarTitleText": "功能"
+                "navigationBarTitleText": "国信合创Lab"
             }
         },
         {
@@ -495,7 +495,6 @@
         }
     ],
     "tabBar": {
-        // 底部菜单
         "color": "#D8D8D8",
         "selectedColor": "#218DFF",
         "backgroundColor": "#ffffff",
