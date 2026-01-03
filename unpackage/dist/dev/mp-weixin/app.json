@@ -141,7 +141,7 @@
         "pagePath": "pages/domain/index/index",
         "iconPath": "static/images/tabbar/icon_gn_default.png",
         "selectedIconPath": "static/images/tabbar/icon_gn_active.png",
-        "text": "功能"
+        "text": "动态"
       },
       {
         "pagePath": "pages/mine/index/index",

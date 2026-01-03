@@ -1,533 +1,524 @@
 {
-  "easycom": {
-    "autoscan": true,
-    "custom": {
-      "^x-(.*)": "@/components/x-$1/x-$1.vue"
-    }
-  },
-  "pages": [
-    {
-      "path": "pages/home/index/index",
-      "style": {
-        "navigationBarTitleText": "国信合创理事会"
-      }
-    },
-    {
-      "path": "pages/home/introduce/index",
-      "style": {
-        "navigationBarTitleText": "基金矩阵介绍"
-      }
-    },
-    {
-      "path": "pages/domain/index/index",
-      "style": {
-        "navigationBarTitleText": "功能"
-      }
-    },
-    {
-      "path": "pages/mine/index/index",
-      "style": {
-        "navigationStyle": "custom"
-      }
-    },
-    {
-      "path": "pages/web/index",
-      "style": {
-        "navigationBarTitleText": "国信合创理事会"
-      }
-    },
-    {
-      "path": "pages/videos/index/index",
-      "style": {}
-    },
-    {
-      "path": "pages/director/list/index",
-      "style": {
-        "navigationBarTitleText": "理事成员"
-      }
-    },
-    {
-      "path": "pages/director/detail/index",
-      "style": {
-        "navigationBarTitleText": "成员简介"
-      }
-    },
-    {
-      "path": "pages/director/contract/index",
-      "style": {
-        "navigationBarTitleText": "我的合同"
-      }
-    },
-    {
-      "path": "pages/points/ranking/index",
-      "style": {
-        "navigationBarTitleText": "积分排行榜"
-      }
-    },
-    {
-      "path": "pages/points/detail/index",
-      "style": {
-        "navigationBarTitleText": "我的积分"
-      }
-    },
-    {
-      "path": "pages/mine/customer/address/list/index",
-      "style": {
-        "navigationBarTitleText": "收件地址"
-      }
-    },
-    {
-      "path": "pages/mine/customer/address/edit/index",
-      "style": {
-        "navigationBarTitleText": "收件地址"
-      }
-    },
-    {
-      "path": "pages/mine/customer/realName/index",
-      "style": {
-        "navigationBarTitleText": "实名认证"
-      }
-    },
-    {
-      "path": "pages/mine/customer/personInfo/index",
-      "style": {
-        "navigationBarTitleText": "个人信息"
-      }
-    },
-    {
-      "path": "pages/mine/customer/index/index",
-      "style": {
-        "navigationBarTitleText": "客户中心"
-      }
-    },
-    {
-      "path": "pages/mine/login/index",
-      "style": {}
-    },
-    {
-      "path": "pages/mine/message/index",
-      "style": {
-        "navigationBarTitleText": "消息中心",
-        "enablePullDownRefresh": true
-      }
-    },
-    {
-      "path": "pages/project/detail/index",
-      "style": {
-        "navigationBarTitleText": "项目详情"
-      }
-    },
-    {
-      "path": "pages/project/evolve/index",
-      "style": {
-        "navigationBarTitleText": "项目进展"
-      }
-    },
-    {
-      "path": "pages/project/apply/index",
-      "style": {
-        "navigationBarTitleText": "发起项目"
-      }
-    },
-    {
-      "path": "pages/home/serviceDetail/index",
-      "style": {}
-    },
-    {
-      "path": "pages/home/vipServiceList/index",
-      "style": {
-        "navigationBarTitleText": "资源列表"
-      }
-    },
-    {
-      "path": "pages/home/serviceList/index",
-      "style": {}
-    }
-  ],
-  "subPackages": [
-    {
-      "root": "subpackage1",
-      "name": "subpackage",
-      "pages": [
-        {
-          "path": "agent/index/index",
-          "style": {
-            "navigationBarTitleText": "投资分析Agent"
-          }
-        },
-        {
-          "path": "agent/list/index",
-          "style": {
-            "navigationBarTitleText": "历史记录"
-          }
-        },
-        {
-          "path": "agent/detail/index",
-          "style": {
-            "navigationBarTitleText": "投资报告"
-          }
-        },
-        {
-          "path": "bp/index/index",
-          "style": {
-            "navigationBarTitleText": "BP一键诊断"
-          }
-        },
-        {
-          "path": "bp/list/index",
-          "style": {
-            "navigationBarTitleText": "BP上传记录"
-          }
-        },
-        {
-          "path": "bp/detail/index",
-          "style": {
-            "navigationBarTitleText": "BP诊断报告"
-          }
-        },
-        {
-          "path": "bp/result/base/index",
-          "style": {
-            "navigationBarTitleText": "BP诊断Base版"
-          }
-        },
-        {
-          "path": "bp/result/plus/index",
-          "style": {
-            "navigationBarTitleText": "BP诊断Plus版"
-          }
-        },
-        {
-          "path": "bp/applyPlay/index",
-          "style": {
-            "navigationBarTitleText": "一对一诊断直播申请"
-          }
-        },
-        {
-          "path": "bp/feedback/index",
-          "style": {
-            "navigationBarTitleText": "我要反馈"
-          }
-        },
-        {
-          "path": "kf/index",
-          "style": {
-            "navigationBarTitleText": "客服"
-          }
-        },
-        {
-          "path": "energy/index/index",
-          "style": {
-            "navigationBarTitleText": "我的能量"
-          }
-        },
-        {
-          "path": "energy/list/index",
-          "style": {
-            "navigationBarTitleText": "能量明细"
-          }
-        },
-        {
-          "path": "auth/index/index",
-          "style": {}
-        },
-        {
-          "path": "auth/certifica/index",
-          "style": {
-            "navigationBarTitleText": ""
-          }
-        },
-        {
-          "path": "share/index",
-          "style": {
-            "navigationBarTitleText": "好友分享"
-          }
-        },
-        {
-          "path": "bp/internalList/index",
-          "style": {
-            "navigationBarTitleText": "诊断样本案例"
-          }
+    "easycom": {
+        "autoscan": true,
+        "custom": {
+            "^x-(.*)": "@/components/x-$1/x-$1.vue"
         }
-      ]
     },
-    {
-      "root": "explainPages",
-      "name": "explain",
-      "pages": [
-        {
-          "path": "project/apply/index",
-          "style": {
-            "navigationBarTitleText": "项目发起标准和流程"
-          }
+    "pages": [{
+            "path": "pages/home/index/index",
+            "style": {
+                "navigationBarTitleText": "国信合创理事会"
+            }
         },
         {
-          "path": "protocol/index",
-          "style": {
-            "navigationBarTitleText": "协议说明"
-          }
+            "path": "pages/home/introduce/index",
+            "style": {
+                "navigationBarTitleText": "基金矩阵介绍"
+            }
         },
         {
-          "path": "protocol/privacy/index",
-          "style": {}
+            "path": "pages/domain/index/index",
+            "style": {
+                "navigationBarTitleText": "功能"
+            }
         },
         {
-          "path": "campus/intro/index",
-          "style": {
-            "navigationBarTitleText": "校园合伙人介绍"
-          }
+            "path": "pages/mine/index/index",
+            "style": {
+                "navigationStyle": "custom"
+            }
         },
         {
-          "path": "points/ruleState/index",
-          "style": {
-            "navigationBarTitleText": "积分管理制度"
-          }
+            "path": "pages/web/index",
+            "style": {
+                "navigationBarTitleText": "国信合创理事会"
+            }
         },
         {
-          "path": "points/obtain/index",
-          "style": {
-            "navigationBarTitleText": "积分获取方式说明"
-          }
+            "path": "pages/videos/index/index",
+            "style": {}
         },
         {
-          "path": "news/mohe/index",
-          "style": {}
+            "path": "pages/director/list/index",
+            "style": {
+                "navigationBarTitleText": "理事成员"
+            }
         },
         {
-          "path": "news/opencsg/index",
-          "style": {}
+            "path": "pages/director/detail/index",
+            "style": {
+                "navigationBarTitleText": "成员简介"
+            }
+        },
+        {
+            "path": "pages/director/contract/index",
+            "style": {
+                "navigationBarTitleText": "我的合同"
+            }
+        },
+        {
+            "path": "pages/points/ranking/index",
+            "style": {
+                "navigationBarTitleText": "积分排行榜"
+            }
+        },
+        {
+            "path": "pages/points/detail/index",
+            "style": {
+                "navigationBarTitleText": "我的积分"
+            }
+        },
+        {
+            "path": "pages/mine/customer/address/list/index",
+            "style": {
+                "navigationBarTitleText": "收件地址"
+            }
+        },
+        {
+            "path": "pages/mine/customer/address/edit/index",
+            "style": {
+                "navigationBarTitleText": "收件地址"
+            }
+        },
+        {
+            "path": "pages/mine/customer/realName/index",
+            "style": {
+                "navigationBarTitleText": "实名认证"
+            }
+        },
+        {
+            "path": "pages/mine/customer/personInfo/index",
+            "style": {
+                "navigationBarTitleText": "个人信息"
+            }
+        },
+        {
+            "path": "pages/mine/customer/index/index",
+            "style": {
+                "navigationBarTitleText": "客户中心"
+            }
+        },
+        {
+            "path": "pages/mine/login/index",
+            "style": {}
+        },
+        {
+            "path": "pages/mine/message/index",
+            "style": {
+                "navigationBarTitleText": "消息中心",
+                "enablePullDownRefresh": true
+            }
+        },
+        {
+            "path": "pages/project/detail/index",
+            "style": {
+                "navigationBarTitleText": "项目详情"
+            }
+        },
+        {
+            "path": "pages/project/evolve/index",
+            "style": {
+                "navigationBarTitleText": "项目进展"
+            }
+        },
+        {
+            "path": "pages/project/apply/index",
+            "style": {
+                "navigationBarTitleText": "发起项目"
+            }
+        },
+        {
+            "path": "pages/home/serviceDetail/index",
+            "style": {}
+        },
+        {
+            "path": "pages/home/vipServiceList/index",
+            "style": {
+                "navigationBarTitleText": "资源列表"
+            }
+        },
+        {
+            "path": "pages/home/serviceList/index",
+            "style": {}
         }
-      ]
+    ],
+    "subPackages": [{
+            "root": "subpackage1",
+            "name": "subpackage",
+            "pages": [{
+                    "path": "agent/index/index",
+                    "style": {
+                        "navigationBarTitleText": "投资分析Agent"
+                    }
+                },
+                {
+                    "path": "agent/list/index",
+                    "style": {
+                        "navigationBarTitleText": "历史记录"
+                    }
+                },
+                {
+                    "path": "agent/detail/index",
+                    "style": {
+                        "navigationBarTitleText": "投资报告"
+                    }
+                },
+                {
+                    "path": "bp/index/index",
+                    "style": {
+                        "navigationBarTitleText": "BP一键诊断"
+                    }
+                },
+                {
+                    "path": "bp/list/index",
+                    "style": {
+                        "navigationBarTitleText": "BP上传记录"
+                    }
+                },
+                {
+                    "path": "bp/detail/index",
+                    "style": {
+                        "navigationBarTitleText": "BP诊断报告"
+                    }
+                },
+                {
+                    "path": "bp/result/base/index",
+                    "style": {
+                        "navigationBarTitleText": "BP诊断Base版"
+                    }
+                },
+                {
+                    "path": "bp/result/plus/index",
+                    "style": {
+                        "navigationBarTitleText": "BP诊断Plus版"
+                    }
+                },
+                {
+                    "path": "bp/applyPlay/index",
+                    "style": {
+                        "navigationBarTitleText": "一对一诊断直播申请"
+                    }
+                },
+                {
+                    "path": "bp/feedback/index",
+                    "style": {
+                        "navigationBarTitleText": "我要反馈"
+                    }
+                },
+                {
+                    "path": "kf/index",
+                    "style": {
+                        "navigationBarTitleText": "客服"
+                    }
+                },
+                {
+                    "path": "energy/index/index",
+                    "style": {
+                        "navigationBarTitleText": "我的能量"
+                    }
+                },
+                {
+                    "path": "energy/list/index",
+                    "style": {
+                        "navigationBarTitleText": "能量明细"
+                    }
+                },
+                {
+                    "path": "auth/index/index",
+                    "style": {}
+                },
+                {
+                    "path": "auth/certifica/index",
+                    "style": {
+                        "navigationBarTitleText": ""
+                    }
+                },
+                {
+                    "path": "share/index",
+                    "style": {
+                        "navigationBarTitleText": "好友分享"
+                    }
+                },
+                {
+                    "path": "bp/internalList/index",
+                    "style": {
+                        "navigationBarTitleText": "诊断样本案例"
+                    }
+                }
+            ]
+        },
+        {
+            "root": "explainPages",
+            "name": "explain",
+            "pages": [{
+                    "path": "project/apply/index",
+                    "style": {
+                        "navigationBarTitleText": "项目发起标准和流程"
+                    }
+                },
+                {
+                    "path": "protocol/index",
+                    "style": {
+                        "navigationBarTitleText": "协议说明"
+                    }
+                },
+                {
+                    "path": "protocol/privacy/index",
+                    "style": {}
+                },
+                {
+                    "path": "campus/intro/index",
+                    "style": {
+                        "navigationBarTitleText": "校园合伙人介绍"
+                    }
+                },
+                {
+                    "path": "points/ruleState/index",
+                    "style": {
+                        "navigationBarTitleText": "积分管理制度"
+                    }
+                },
+                {
+                    "path": "points/obtain/index",
+                    "style": {
+                        "navigationBarTitleText": "积分获取方式说明"
+                    }
+                },
+                {
+                    "path": "news/mohe/index",
+                    "style": {}
+                },
+                {
+                    "path": "news/opencsg/index",
+                    "style": {}
+                }
+            ]
+        },
+        {
+            "root": "campusPages",
+            "name": "campus",
+            "pages": [{
+                    "path": "parter/apply/index",
+                    "style": {
+                        "navigationBarTitleText": "校园大使申请"
+                    }
+                },
+                {
+                    "path": "parter/list/index",
+                    "style": {
+                        "navigationBarTitleText": "校园合伙人风采"
+                    }
+                },
+                {
+                    "path": "activity/apply/index",
+                    "style": {
+                        "navigationBarTitleText": "活动报名"
+                    }
+                },
+                {
+                    "path": "activity/list/index",
+                    "style": {
+                        "navigationBarTitleText": "热门活动"
+                    }
+                },
+                {
+                    "path": "activity/detail/index",
+                    "style": {}
+                },
+                {
+                    "path": "activity/launch/index",
+                    "style": {}
+                },
+                {
+                    "path": "experience/rankingList/index",
+                    "style": {
+                        "navigationBarTitleText": "经验值排行榜"
+                    }
+                },
+                {
+                    "path": "experience/apply/index",
+                    "style": {
+                        "navigationBarTitleText": "经验值申报"
+                    }
+                },
+                {
+                    "path": "experience/detail/index",
+                    "style": {
+                        "navigationBarTitleText": "经验值明细"
+                    }
+                }
+            ]
+        },
+        {
+            "root": "managePages",
+            "name": "manage",
+            "pages": [{
+                    "path": "index/index",
+                    "style": {
+                        "navigationBarTitleText": "管理员操作中心"
+                    }
+                },
+                {
+                    "path": "director/addDirector/index",
+                    "style": {
+                        "navigationBarTitleText": "添加理事会成员"
+                    }
+                },
+                {
+                    "path": "point/enter/index",
+                    "style": {
+                        "navigationBarTitleText": "积分登记"
+                    }
+                },
+                {
+                    "path": "users/index/index",
+                    "style": {
+                        "navigationBarTitleText": "用户列表"
+                    }
+                },
+                {
+                    "path": "banner/add/index",
+                    "style": {}
+                },
+                {
+                    "path": "banner/delete/index",
+                    "style": {}
+                },
+                {
+                    "path": "users/contract/index",
+                    "style": {
+                        "navigationBarTitleText": "上传合同"
+                    }
+                }
+            ]
+        },
+        {
+            "root": "projectPages",
+            "name": "project",
+            "pages": [{
+                    "path": "memberInfo/index",
+                    "style": {
+                        "navigationBarTitleText": "成员信息"
+                    }
+                },
+                {
+                    "path": "workExperience/index",
+                    "style": {
+                        "navigationBarTitleText": "工作经历"
+                    }
+                },
+                {
+                    "path": "eduExperience/index",
+                    "style": {
+                        "navigationBarTitleText": "教育经历"
+                    }
+                },
+                {
+                    "path": "practiceExperience/index",
+                    "style": {
+                        "navigationBarTitleText": "实习经历"
+                    }
+                },
+                {
+                    "path": "hatchList/index",
+                    "style": {
+                        "navigationBarTitleText": "孵化项目"
+                    }
+                },
+                {
+                    "path": "directorJoined/index",
+                    "style": {}
+                },
+                {
+                    "path": "directorTBC/index",
+                    "style": {}
+                },
+                {
+                    "path": "directorFeedback/index",
+                    "style": {
+                        "navigationBarTitleText": "项目反馈"
+                    }
+                },
+                {
+                    "path": "list/index",
+                    "style": {
+                        "navigationBarTitleText": "项目列表"
+                    }
+                },
+                {
+                    "path": "updateBP/index",
+                    "style": {
+                        "navigationBarTitleText": "更新商业计划书"
+                    }
+                },
+                {
+                    "path": "updateIndex/index",
+                    "style": {
+                        "navigationBarTitleText": "项目资料更新"
+                    }
+                },
+                {
+                    "path": "updateFinance/index",
+                    "style": {}
+                }
+            ]
+        },
+        {
+            "root": "pages/users",
+            "name": "users",
+            "pages": [{
+                    "path": "user_invoice_list/index",
+                    "style": {
+                        "navigationBarTitleText": "发票管理"
+                    }
+                },
+                {
+                    "path": "user_invoice_form/index",
+                    "style": {
+                        "navigationBarTitleText": "添加新发票"
+                    }
+                },
+                {
+                    "path": "user_spread_code/index",
+                    "style": {
+                        "navigationBarTitleText": "推广名片"
+                    }
+                }
+            ]
+        }
+    ],
+    "tabBar": {
+        // 底部菜单
+        "color": "#D8D8D8",
+        "selectedColor": "#218DFF",
+        "backgroundColor": "#ffffff",
+        "list": [{
+                "pagePath": "pages/home/index/index",
+                "iconPath": "static/images/tabbar/icon_home_default.png",
+                "selectedIconPath": "static/images/tabbar/icon_home_active.png",
+                "text": "首页"
+            },
+            {
+                "pagePath": "pages/domain/index/index",
+                "iconPath": "static/images/tabbar/icon_gn_default.png",
+                "selectedIconPath": "static/images/tabbar/icon_gn_active.png",
+                "text": "动态"
+            },
+            {
+                "pagePath": "pages/mine/index/index",
+                "iconPath": "static/images/tabbar/icon_mine_default.png",
+                "selectedIconPath": "static/images/tabbar/icon_mine_acitve.png",
+                "text": "我的"
+            }
+        ]
     },
-    {
-      "root": "campusPages",
-      "name": "campus",
-      "pages": [
-        {
-          "path": "parter/apply/index",
-          "style": {
-            "navigationBarTitleText": "校园大使申请"
-          }
-        },
-        {
-          "path": "parter/list/index",
-          "style": {
-            "navigationBarTitleText": "校园合伙人风采"
-          }
-        },
-        {
-          "path": "activity/apply/index",
-          "style": {
-            "navigationBarTitleText": "活动报名"
-          }
-        },
-        {
-          "path": "activity/list/index",
-          "style": {
-            "navigationBarTitleText": "热门活动"
-          }
-        },
-        {
-          "path": "activity/detail/index",
-          "style": {}
-        },
-        {
-          "path": "activity/launch/index",
-          "style": {}
-        },
-        {
-          "path": "experience/rankingList/index",
-          "style": {
-            "navigationBarTitleText": "经验值排行榜"
-          }
-        },
-        {
-          "path": "experience/apply/index",
-          "style": {
-            "navigationBarTitleText": "经验值申报"
-          }
-        },
-        {
-          "path": "experience/detail/index",
-          "style": {
-            "navigationBarTitleText": "经验值明细"
-          }
-        }
-      ]
+    "globalStyle": {
+        "backgroundColor": "#F6F6F6",
+        "backgroundTextStyle": "light",
+        "navigationBarTitleText": "国信合创理事会",
+        "navigationBarTextStyle": "black",
+        "navigationBarBackgroundColor": "#ffffff"
     },
-    {
-      "root": "managePages",
-      "name": "manage",
-      "pages": [
-        {
-          "path": "index/index",
-          "style": {
-            "navigationBarTitleText": "管理员操作中心"
-          }
-        },
-        {
-          "path": "director/addDirector/index",
-          "style": {
-            "navigationBarTitleText": "添加理事会成员"
-          }
-        },
-        {
-          "path": "point/enter/index",
-          "style": {
-            "navigationBarTitleText": "积分登记"
-          }
-        },
-        {
-          "path": "users/index/index",
-          "style": {
-            "navigationBarTitleText": "用户列表"
-          }
-        },
-        {
-          "path": "banner/add/index",
-          "style": {}
-        },
-        {
-          "path": "banner/delete/index",
-          "style": {}
-        },
-        {
-          "path": "users/contract/index",
-          "style": {
-            "navigationBarTitleText": "上传合同"
-          }
-        }
-      ]
-    },
-    {
-      "root": "projectPages",
-      "name": "project",
-      "pages": [
-        {
-          "path": "memberInfo/index",
-          "style": {
-            "navigationBarTitleText": "成员信息"
-          }
-        },
-        {
-          "path": "workExperience/index",
-          "style": {
-            "navigationBarTitleText": "工作经历"
-          }
-        },
-        {
-          "path": "eduExperience/index",
-          "style": {
-            "navigationBarTitleText": "教育经历"
-          }
-        },
-        {
-          "path": "practiceExperience/index",
-          "style": {
-            "navigationBarTitleText": "实习经历"
-          }
-        },
-        {
-          "path": "hatchList/index",
-          "style": {
-            "navigationBarTitleText": "孵化项目"
-          }
-        },
-        {
-          "path": "directorJoined/index",
-          "style": {}
-        },
-        {
-          "path": "directorTBC/index",
-          "style": {}
-        },
-        {
-          "path": "directorFeedback/index",
-          "style": {
-            "navigationBarTitleText": "项目反馈"
-          }
-        },
-        {
-          "path": "list/index",
-          "style": {
-            "navigationBarTitleText": "项目列表"
-          }
-        },
-        {
-          "path": "updateBP/index",
-          "style": {
-            "navigationBarTitleText": "更新商业计划书"
-          }
-        },
-        {
-          "path": "updateIndex/index",
-          "style": {
-            "navigationBarTitleText": "项目资料更新"
-          }
-        },
-        {
-          "path": "updateFinance/index",
-          "style": {}
-        }
-      ]
-    },
-    {
-      "root": "pages/users",
-      "name": "users",
-      "pages": [
-        {
-          "path": "user_invoice_list/index",
-          "style": {
-            "navigationBarTitleText": "发票管理"
-          }
-        },
-        {
-          "path": "user_invoice_form/index",
-          "style": {
-            "navigationBarTitleText": "添加新发票"
-          }
-        },
-        {
-          "path": "user_spread_code/index",
-          "style": {
-            "navigationBarTitleText": "推广名片"
-          }
-        }
-      ]
-    }
-  ],
-  "tabBar": {
-    // 底部菜单
-    "color": "#D8D8D8",
-    "selectedColor": "#218DFF",
-    "backgroundColor": "#ffffff",
-    "list": [
-      {
-        "pagePath": "pages/home/index/index",
-        "iconPath": "static/images/tabbar/icon_home_default.png",
-        "selectedIconPath": "static/images/tabbar/icon_home_active.png",
-        "text": "首页"
-      },
-      {
-        "pagePath": "pages/domain/index/index",
-        "iconPath": "static/images/tabbar/icon_gn_default.png",
-        "selectedIconPath": "static/images/tabbar/icon_gn_active.png",
-        "text": "功能"
-      },
-      {
-        "pagePath": "pages/mine/index/index",
-        "iconPath": "static/images/tabbar/icon_mine_default.png",
-        "selectedIconPath": "static/images/tabbar/icon_mine_acitve.png",
-        "text": "我的"
-      }
-    ]
-  },
-  "globalStyle": {
-    "backgroundColor": "#F6F6F6",
-    "backgroundTextStyle": "light",
-    "navigationBarTitleText": "国信合创理事会",
-    "navigationBarTextStyle": "black",
-    "navigationBarBackgroundColor": "#ffffff"
-  },
-  "uniIdRouter": {}
+    "uniIdRouter": {}
 }
