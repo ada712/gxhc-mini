@@ -1,31 +1,45 @@
 <template>
   <view class="pages">
-    <div class="more">
-      <text class="more-t" @click="goMore">查看历史记录</text>
-      <image
-        class="right-icon"
-        src="/cloud/miniprogram/images/icons/icon-black-right.png"
-      ></image>
-    </div>
-    <view class="upload" @click="choosePDF">
-      <image
-        class="upload-img"
-        src="/cloud/miniprogram/images/subpackage1/upload-icon.png"
-      ></image>
-    </view>
-    <div class="tips">
-      <view class="line">
-        <text class="d-p">注意事项</text>
-        <text class="d-p">报告获取时间十分钟，完成后会通过短信通知</text>
+    <!-- BP文件上传区域 -->
+    <view class="upload-card" @click="choosePDF">
+      <view class="upload-icon-wrapper">
+        <image class="upload-icon" src="/pages/users/static/home/file.png" mode="aspectFit"></image>
       </view>
-      <text class="d-p">免责声明</text>
-      <text class="d-p"
-        >1.本工具生成内容完全由AI自动生成，信息内容来源于用户上传文件和全网信息，模型经过调优依然可能存在幻觉现象，不保证内容真实性，仅供参考</text
-      >
-      <text class="d-p"
-        >2.用户上传文件仅用于模型分析，未经授权不会用于商业目的</text
-      >
-    </div>
+      <text class="upload-title">选择BP文件上传</text>
+      <text class="upload-subtitle">(支持PDF 格式)</text>
+    </view>
+
+    <!-- 功能卡片区域 -->
+    <view class="feature-cards">
+      <view class="feature-card" @click="goDiagnosisRecord">
+        <view class="card-icon-wrapper">
+          <image class="card-icon" src="/pages/users/static/home/time.png" mode="aspectFit"></image>
+        </view>
+        <text class="card-text">诊断记录</text>
+      </view>
+      <view class="feature-card" @click="goLiveBooking">
+        <view class="card-icon-wrapper">
+          <image class="card-icon" src="/pages/users/static/home/live.png" mode="aspectFit"></image>
+        </view>
+        <text class="card-text">预约直播</text>
+      </view>
+    </view>
+
+    <!-- 注意事项 -->
+    <view class="notice-box">
+      <view class="notice-header">
+        <image class="notice-icon" src="/pages/users/static/home/warning.png" mode="aspectFit"></image>
+        <text class="notice-title">注意事项</text>
+      </view>
+      <text class="notice-content">报告获取时间约20分钟,诊断完成后 Uni Agent 会通过短信与服务号形式同时通知您</text>
+    </view>
+
+    <!-- 免责声明 -->
+    <view class="disclaimer">
+      <text class="disclaimer-title">免责声明</text>
+      <text class="disclaimer-item">1. Agent生成内容完全由AI自动生成,信息内容来源于用户上传文件与全网信息,模型经过工程手段调优后仍可能存在幻觉,国信合创与Uuni项目组不对内容真实性进行任何保证诊断内容仅供用户参考。</text>
+      <text class="disclaimer-item">2. 用户上传文件巾帼严格保密,仅用于模型分析,未经用户授权不会用于任何商业目的。</text>
+    </view>
   </view>
 </template>
 
@@ -43,14 +57,14 @@ export default {
     // this.postBP();
   },
   methods: {
-    goMore() {
+    goDiagnosisRecord() {
       uni.navigateTo({
         url: "/subpackage1/bp/list/index",
       });
     },
-    goPage() {
+    goLiveBooking() {
       uni.navigateTo({
-        url: "/subpackage1/bp/result/base/index",
+        url: "/subpackage1/bp/applyPlay/index",
       });
     },
     choosePDF() {
@@ -153,13 +167,9 @@ export default {
           console.log(data);
           // 判断上传是否成功
           if (data.status == 200) {
-            uni.showToast({
-              title: "上传成功",
-              icon: "none",
-            });
-            // 可以跳转到结果页面
-            uni.navigateTo({
-              url: "/subpackage1/bp/result/base/index?runId=" + data.data.run_id
+            // 跳转到加载页面
+            uni.redirectTo({
+              url: "/subpackage1/bp/loading/index?runId=" + data.data.run_id
             });
           } else {
             uni.showToast({
@@ -178,20 +188,6 @@ export default {
           });
         },
       });
-
-      // 模拟上传过程（演示用，实际应删除）
-      // setTimeout(() => {
-      //   uni.hideLoading();
-      //   this.uploading = false;
-      //   uni.showToast({
-      //     title: '上传成功',
-      //     icon: 'success'
-      //   });
-      //   // 模拟上传成功后跳转到结果页
-      //   setTimeout(() => {
-      //     this.goPage();
-      //   }, 1000);
-      // }, 2000);
     },
     postBP() {
       runBp({}).then((res) => {
@@ -204,53 +200,199 @@ export default {
 
 <style>
 page {
-  background: #f5f8ff;
+  background: #ffffff;
 }
 </style>
 <style lang="scss" scoped>
 .pages {
-  .more {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    margin: 24rpx 32rpx;
-    .more-t {
-      color: #182855;
-      font-size: 28rpx;
-      font-weight: 400;
-      margin-right: 20rpx;
-    }
-    .right-icon {
-      width: 14.2rpx;
-      height: 24.8rpx;
-    }
-  }
+  width: 100%;
+  box-sizing: border-box;
+  padding: 32rpx 28rpx;
+  background: #ffffff;
 
-  .upload {
-    margin: 0 32rpx;
-    border-radius: 28rpx;
+  // BP文件上传卡片
+  .upload-card {
+    width: 698rpx;
+    height: 298rpx;
+    border-radius: 46rpx;
     opacity: 1;
-    background: #ffffff;
-    padding: 26rpx 24rpx 20rpx 24rpx;
-    box-sizing: border-box;
-    .upload-img {
-      width: 100%;
-      height: 200rpx;
-      border-radius: 8rpx;
+    background: linear-gradient(155.4deg, #285ee7 0%, #403ccd 100%);
+    box-shadow: 0 8rpx 20rpx 0 #3715d333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 32rpx;
+
+    .upload-icon-wrapper {
+      margin-bottom: 26rpx;
+
+      .upload-icon {
+        width: 106rpx;
+        height: 106rpx;
+        opacity: 1;
+        border: 2rpx solid #ffffff66;
+        background: #6379e5;
+        border-radius: 50%;
+        box-sizing: border-box;
+      }
+    }
+
+    .upload-title {
+      width: 260rpx;
+      height: 44rpx;
+      opacity: 1;
+      color: #ffffff;
+      text-align: center;
+      font-size: 36rpx;
+      font-weight: 700;
+      font-family: "DIN Alternate";
+      line-height: 44rpx;
+      margin-bottom: 16rpx;
+      display: block;
+    }
+
+    .upload-subtitle {
+      width: 198rpx;
+      height: 44rpx;
+      opacity: 0.5;
+      color: #ffffff;
+      text-align: center;
+      font-size: 24rpx;
+      font-weight: 700;
+      font-family: "DIN Alternate";
+      line-height: 44rpx;
+      display: block;
     }
   }
 
-  .tips {
-    margin: 34rpx 48rpx;
-    .line {
-      margin-bottom: 30rpx;
+  // 功能卡片区域
+  .feature-cards {
+    display: flex;
+    gap: 32rpx;
+    margin-bottom: 32rpx;
+
+    .feature-card {
+      flex: 1;
+      height: 214rpx;
+      border-radius: 32rpx;
+      opacity: 1;
+      border: 2rpx solid #e6edf4;
+      background: #f4f7fa;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24rpx;
+      box-sizing: border-box;
+
+      .card-icon-wrapper {
+       
+        border-radius: 50%;
+        background: #ffffff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 14rpx;
+
+        .card-icon {
+          width: 88rpx;
+          height: 88rpx;
+          opacity: 1;
+        }
+      }
+
+      .card-text {
+        width: 96rpx;
+        height: 30rpx;
+        opacity: 1;
+        color: #000000;
+        text-align: left;
+        font-size: 24rpx;
+        font-weight: 400;
+        font-family: "PingFang SC";
+        line-height: 30rpx;
+        display: block;
+      }
     }
-    .d-p {
-      display: block;
-      color: #60738e;
-      font-size: 22rpx;
+  }
+
+  // 注意事项
+  .notice-box {
+    height: 188rpx;
+    border-radius: 32rpx;
+    opacity: 1;
+    border: 2rpx solid #fef7d9;
+    background: #fffbeb;
+    padding: 24rpx;
+    margin-bottom: 32rpx;
+    box-sizing: border-box;
+
+    .notice-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 16rpx;
+
+      .notice-icon {
+        width: 32rpx;
+        height: 32rpx;
+        margin-right: 12rpx;
+      }
+
+      .notice-title {
+        width: 96rpx;
+        height: 30rpx;
+        opacity: 1;
+        color: #d97757;
+        text-align: left;
+        font-size: 24rpx;
+        font-weight: 600;
+        font-family: "PingFang SC";
+        line-height: 30rpx;
+        display: block;
+      }
+    }
+
+    .notice-content {
+      width: 602rpx;
+      height: 70rpx;
+      opacity: 1;
+      color: #ca854c;
+      text-align: left;
+      font-size: 24rpx;
       font-weight: 400;
-      line-height: 36.82rpx;
+      font-family: "PingFang SC";
+      line-height: 30rpx;
+      display: block;
+    }
+  }
+
+  // 免责声明
+  .disclaimer {
+    .disclaimer-title {
+      width: 96rpx;
+      height: 30rpx;
+      opacity: 1;
+      color: #bcbcbc;
+      text-align: left;
+      font-size: 24rpx;
+      font-weight: 600;
+      font-family: "PingFang SC";
+      line-height: 30rpx;
+      display: block;
+      margin-bottom: 16rpx;
+    }
+
+    .disclaimer-item {
+      opacity: 1;
+      color: #a8a8a8;
+      text-align: left;
+      font-size: 24rpx;
+      font-weight: 400;
+      font-family: "PingFang SC";
+      line-height: 30rpx;
+      display: block;
+      margin-bottom: 16rpx;
     }
   }
 }

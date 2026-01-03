@@ -167,7 +167,7 @@
                 {
                     "path": "bp/index/index",
                     "style": {
-                        "navigationBarTitleText": "BP一键诊断"
+                        "navigationBarTitleText": "Uni 1.0 BP诊断Agent"
                     }
                 },
                 {
@@ -180,6 +180,12 @@
                     "path": "bp/detail/index",
                     "style": {
                         "navigationBarTitleText": "BP诊断报告"
+                    }
+                },
+                {
+                    "path": "bp/loading/index",
+                    "style": {
+                        "navigationBarTitleText": "Uni 1.0 BP诊断Agent"
                     }
                 },
                 {

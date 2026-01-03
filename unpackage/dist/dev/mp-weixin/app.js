@@ -47,6 +47,7 @@ if (!Math) {
   "./subpackage1/bp/index/index.js";
   "./subpackage1/bp/list/index.js";
   "./subpackage1/bp/detail/index.js";
+  "./subpackage1/bp/loading/index.js";
   "./subpackage1/bp/result/base/index.js";
   "./subpackage1/bp/result/plus/index.js";
   "./subpackage1/bp/applyPlay/index.js";

@@ -35,6 +35,7 @@
         "bp/index/index",
         "bp/list/index",
         "bp/detail/index",
+        "bp/loading/index",
         "bp/result/base/index",
         "bp/result/plus/index",
         "bp/applyPlay/index",
