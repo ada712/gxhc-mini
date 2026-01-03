@@ -1,336 +1,323 @@
 <template>
   <view class="pages">
-    <view class="card">
-      <text class="card-t">您目前已获得能量</text>
-      <text class="card-n">{{ energy }}</text>
-      <view class="line" @click="sharePopup = true">
-        <text class="line-t">已邀请助力</text>
-        <text class="line-t">{{ uids }} 位</text>
+    <!-- 背景图 -->
+    <image class="bg-image" src="/pages/users/static/my/power/power-bg.png" mode="aspectFill"></image>
+    <!-- 顶部标题区域 -->
+    <view class="header-section">
+      <view class="header-left">
+        <text class="main-title">能量任务中心</text>
+        <text class="subtitle">完成任务赚取能量,兑换更多权益</text>
       </view>
-    </view>
-    <view class="energy-more" @click="goPage">
-      <text class="energy-more-t">能量明细</text>
-      <view class="more">
-        <text class="more-t">查看明细</text>
-        <image
-          class="right-icon"
-          src="/cloud/miniprogram/images/icons/icon-black-right.png"
-        ></image>
+      <view class="header-right">
+        <view class="energy-display">
+          <image class="energy-icon" src="/h5/pages/users/static/my/wodenengliang.png" mode="aspectFit"></image>
+          <text class="energy-value">{{ formatEnergy(energy) }}</text>
+        </view>
+        <text class="energy-label">当前能量值 (PTS)</text>
       </view>
-    </view>
-    <view class="tips">
-      <text class="tips-t">能量说明</text>
-      <text class="tips-p">一、“能量”定义与规则</text>
-      <text class="tips-p mb">
-        “能量”是国信合创AI共创理事会小程序内的专属代币。能量可直接用于兑换或抵扣完整版BP诊断报告等指定增值服务。
-      </text>
-      <text class="tips-p mb">
-        能量用途：能量是平台内重要的兑换凭证，不可提现，亦不可在用户间转赠。</text
-      >
-      <text class="tips-p"> 二、 如何获取能量？</text>
-      <text class="tips-p mb">
-        目前，您可以通过邀请好友加入我们，轻松获取能量。</text
-      >
-      <text class="tips-p mb">
-        发起邀请：在活动页面生成您的专属邀请链接或海报，分享给需要进行BP诊断的好友。</text
-      >
-      <text class="tips-p mb">
-        有效邀请认定：您邀请的好友通过您的专属链接成功注册，并完成首次BP上传及基础版诊断后，即视为一次“有效邀请”。</text
-      >
-      <text class="tips-p mb">
-        能量发放：每成功邀请一位有效好友，系统将自动向您的账户发放 60能量。
-      </text>
-      <text class="tips-p"> 三、 如何解锁完整版BP诊断报告？</text>
-      <text class="tips-p mb"
-        >当您需要获取完整版BP诊断报告（价值299元）时，可在结算页面选择以下任一方式进行解锁：</text
-      >
-      <text class="tips-p mb">
-        方式一：直接支付 您可以选择直接支付299元，解锁完整版报告。</text
-      >
-      <text class="tips-p mb">
-        方式二：能量兑换与抵扣 您可以灵活使用账户中的能量来完成支付。</text
-      >
-      <text class="tips-p mb">
-        全额兑换：
-        当您的能量账户余额不少于299时，可选择消耗299能量，免费兑换完整版报告。</text
-      >
-      <text class="tips-p mb">
-        组合支付：当您的能量不足299时，可选择组合支付。系统将自动用尽您账户内的全部可用能量进行抵扣（抵扣时，1能量等同于1元价值），您仅需支付剩余差额部分即可。</text
-      >
-
-      <text class="tips-p mb">
-        示例： 您账户中有100能量，在解锁报告时可抵扣100元，您仅需再支付199元。
-      </text>
-      <text class="tips-p"> 四、 详细规则与条款 </text>
-      <text class="tips-p mb">
-        受邀好友必须为未使用过本小程序的新用户，且通过您的专属邀请链接完成指定流程，邀请方可生效。
-        “有效邀请”的判定标准以国信合创AI共创理事会系统后台记录为准。
-      </text>
-      <text class="tips-p mb">
-        能量长期有效，若未来规则变更，我们将通过平台公告等方式提前通知。
-      </text>
-      <text class="tips-p mb">
-        严禁通过任何作弊、违规或利用系统漏洞等不正当手段获取能量。一经发现，我们有权对违规账户进行处理，包括但不限于清空能量、限制账户功能，乃至封禁账户。
-      </text>
-      <text class="tips-p mb">
-        本规则的最终解释权在法律允许的范围内归国信合创AI共创理事会所有。
-      </text>
     </view>
 
-    <x-popup
-      :round="20"
-      :show="sharePopup && !pageLoading"
-      @close="handleCancelPopup"
-    >
-      <view class="popup">
-        <view class="head">
-          <text class="title">邀请好友助力</text>
-          <image
-            @click="handleCancelPopup"
-            class="close"
-            :src="imgUrl + '/subpackage1/close.png'"
-          />
+    <!-- 任务列表 -->
+    <view class="task-list">
+      <view class="task-card" v-for="(task, index) in taskList" :key="index">
+        <image class="task-icon" :src="task.icon" mode="aspectFit"></image>
+        <view class="task-content">
+          <text class="task-title">{{ task.title }}</text>
+          <text class="task-desc">{{ task.desc }}</text>
         </view>
-        <view class="list">
-          <view class="item" v-for="(item, key) in list" :key="key">
-            <image
-              v-if="!item.icon"
-              class="item-icon"
-              :src="imgUrl + '/subpackage1/add-png.png'"
-            />
-            <image v-else class="item-icon" :src="item.icon" />
-            <text class="item-t">{{ item.title || "邀请助力" }}</text>
-          </view>
+        <view class="task-btn" :class="task.btnType" @click="handleTask(task)">
+          <text class="task-btn-text">{{ task.btnText }}</text>
         </view>
       </view>
-    </x-popup>
+    </view>
+
+    <!-- 底部提示 -->
+    <view class="footer-tip">
+      <text class="footer-tip-text">更多任务即将上线</text>
+    </view>
   </view>
 </template>
 
 <script>
-import { imgUrls } from "@/config/app";
 import { userEnergy } from "@/api/gxhc";
+
 export default {
   data: function () {
     return {
-      imgUrl: imgUrls,
-      energy: 0,
-      uids: 0,
-      pageLoading: false,
-      sharePopup: false,
-      list: [
+      energy: 9700,
+      taskList: [
         {
-          icon: "",
-          title: "邀请助力",
+          id: 1,
+          title: "邀请5位好友",
+          desc: "没成功邀请1人 + 100pts",
+          icon: "/pages/users/static/my/power/pengyou.png",
+          color: "orange",
+          btnText: "去邀请",
+          btnType: "btn-black",
         },
         {
-          icon: "",
-          title: "邀请助力",
+          id: 2,
+          title: "完善项目信息",
+          desc: "没成功邀请1人+100pts",
+          icon: "/pages/users/static/my/power/xiangmu.png",
+          color: "blue",
+          btnText: "去完善",
+          btnType: "btn-white",
         },
         {
-          icon: "",
-          title: "邀请助力",
-        },
-        {
-          icon: "",
-          title: "邀请助力",
-        },
-        {
-          icon: "",
-          title: "邀请助力",
+          id: 3,
+          title: "填写需求问卷",
+          desc: "没成功邀请1人+ 100pts",
+          icon: "/pages/users/static/my/power/wenquan.png",
+          color: "purple",
+          btnText: "去填写",
+          btnType: "btn-white",
         },
       ],
     };
   },
   onLoad(options) {
-    this.getData();
+    this.getEnergyData();
   },
   methods: {
-    handleCancelPopup() {
-      this.sharePopup = false;
-    },
-    getData() {
+    getEnergyData() {
       userEnergy()
         .then((res) => {
           if (res.status === 200 && res.data) {
-            // 更新用户能量值
             this.energy = res.data.energy || 0;
-            this.uids = res.data.spredadUids || 0;
-            if (res.data.spredadUidsList.length > 0) {
-              this.list = res.data.spredadUidsList.map((item) => ({
-                ...item,
-                icon: item.avatar,
-                title: item.nickname,
-              }));
-            }
-          } else {
-            uni.showToast({
-              title: "获取能量数据失败",
-              icon: "none",
-            });
           }
         })
         .catch((error) => {
-          uni.showToast({
-            title: "网络错误",
-            icon: "none",
-          });
           console.error("获取能量数据异常:", error);
         });
     },
-    goPage() {
-      uni.navigateTo({
-        url: "/subpackage1/energy/list/index",
+    formatEnergy(energy) {
+      return energy.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    },
+    handleTask(task) {
+      uni.showToast({
+        title: `功能开发中: ${task.title}`,
+        icon: "none",
       });
     },
   },
 };
 </script>
 
-<style>
-page {
-  background: #f5f8ff;
-}
-</style>
 <style lang="scss" scoped>
+page {
+  background: #ffffff;
+}
+
 .pages {
-  padding-bottom: 80rpx;
-  .popup {
-    height: 468rpx;
-    .head {
-      margin: 32rpx 30rpx;
-      display: flex;
-      align-items: center;
-      text-align: center;
-      justify-content: center;
-      position: relative;
-      .close {
-        position: absolute;
-        right: 0;
-        top: 0;
-        width: 48rpx;
-        height: 48rpx;
-      }
-    }
-    .list {
-      display: flex;
-      align-items: center;
-      text-align: center;
-      margin: 50rpx 60rpx 0 60rpx;
-      flex-wrap: wrap;
-      .item {
-        margin-right: 50rpx;
-        margin-bottom: 30rpx;
-        box-sizing: border-box;
-        text-align: center;
-        &:last-child {
-          margin-right: 0;
-        }
-        .item-icon {
-          width: 80rpx;
-          height: 80rpx;
-          display: block;
-        }
-        .item-t {
-          color: #1b2132;
-          font-size: 20rpx;
-          margin-top: 20rpx;
-          display: block;
-        }
-      }
-    }
+  position: relative;
+  min-height: 100vh;
+  padding: 32rpx 28rpx;
+  padding-bottom: 100rpx;
+
+  .bg-image {
+    position: absolute;
+    top: -30rpx;
+    right: -20rpx;
+    left: 0;
+    width: 806.88rpx;
+    height: 619.52rpx;
+    opacity: 1;
+    z-index: 0;
   }
-  .mb {
-    text-indent: 1em;
+
+  .header-section,
+  .task-list,
+  .footer-tip {
+    position: relative;
+    z-index: 1;
   }
-  .card {
-    margin: 24rpx;
-    border-radius: 28rpx;
-    overflow: hidden;
-    padding-bottom: 46rpx;
-    @include bmgOss("/subpackage1/energy-icon.png");
-    .card-t {
-      color: #404040;
-      font-size: 28rpx;
-      font-weight: 500;
-      margin-left: 24rpx;
-      margin-top: 62rpx;
-      display: block;
-    }
-    .card-n {
-      color: #000000;
-      font-size: 72rpx;
-      margin-left: 24rpx;
-      margin-top: 4rpx;
-      font-weight: 500;
-      display: block;
-    }
-    .line {
-      margin: 40rpx 24rpx 0 24rpx;
-      border-radius: 28rpx;
-      background: #ffffff;
-      padding: 28rpx 24rpx;
-      box-sizing: border-box;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      .line-t {
-        color: #e96f03;
-        font-size: 28rpx;
-        font-weight: 500;
-      }
-    }
-  }
-  .energy-more {
+
+  .header-section {
     display: flex;
-    align-items: center;
     justify-content: space-between;
-    border-radius: 28rpx;
-    background: #ffffff;
-    padding: 20rpx 24rpx;
-    margin: 32rpx 24rpx 0 24rpx;
-    box-sizing: border-box;
-    .energy-more-t {
-      color: #182855;
-      font-size: 24rpx;
-      font-weight: 600;
-    }
-    .more {
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      .more-t {
-        color: #182855;
-        font-size: 24rpx;
-        font-weight: 400;
-        margin-right: 14rpx;
+    align-items: flex-start;
+    margin-bottom: 40rpx;
+
+    .header-left {
+      flex: 1;
+
+      .main-title {
+        width: 288rpx;
+        height: 60rpx;
+        opacity: 1;
+        color: #000000;
+        text-align: left;
+        font-size: 48rpx;
+        font-weight: 600;
+        font-family: "PingFang SC";
+        line-height: 60rpx;
+        display: block;
+        margin-bottom: 16rpx;
       }
-      .right-icon {
-        width: 14.2rpx;
-        height: 24.8rpx;
+
+      .subtitle {
+        font-size: 24rpx;
+        color: #666666;
+        display: block;
+        font-family: "PingFang SC";
+      }
+    }
+
+    .header-right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+
+      .energy-display {
+        display: flex;
+        align-items: center;
+        gap: 8rpx;
+        margin-bottom: 8rpx;
+
+        .energy-icon {
+          width: 32rpx;
+          height: 50rpx;
+        }
+
+        .energy-value {
+          width: 152rpx;
+          height: 80rpx;
+          opacity: 1;
+          color: #000000;
+          text-align: left;
+          font-size: 64rpx;
+          font-weight: 600;
+          font-family: "PingFang SC";
+          line-height: 80rpx;
+          display: block;
+        }
+      }
+
+      .energy-label {
+        width: 216rpx;
+        height: 30rpx;
+        opacity: 1;
+        color: #757575;
+        text-align: right;
+        font-size: 24rpx;
+        font-weight: 600;
+        font-family: "PingFang SC";
+        line-height: 30rpx;
+        display: block;
       }
     }
   }
-  .tips {
-    border-radius: 28rpx;
-    background: #ffffff;
-    padding: 20rpx 24rpx;
-    margin: 32rpx 24rpx 0 24rpx;
-    box-sizing: border-box;
-    .tips-t {
-      color: #182855;
-      font-size: 24rpx;
-      font-weight: 600;
-      display: block;
-      margin-bottom: 14rpx;
+
+  .task-list {
+    .task-card {
+      width: 702rpx;
+      height: 182rpx;
+      border-radius: 28rpx;
+      opacity: 1;
+      border: 2rpx solid #f4f7fa;
+      background: #ffffff;
+      box-shadow: 0 4rpx 4rpx 0 #8384871a;
+      display: flex;
+      align-items: center;
+      padding: 32rpx 24rpx;
+      margin-bottom: 24rpx;
+      box-sizing: border-box;
+
+      .task-icon {
+        width: 80rpx;
+        height: 80rpx;
+        margin-right: 36rpx;
+        flex-shrink: 0;
+      }
+
+      .task-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 8rpx;
+
+        .task-title {
+          height: 40rpx;
+          opacity: 1;
+          color: #000000;
+          text-align: left;
+          font-size: 32rpx;
+          font-weight: 400;
+          font-family: "PingFang SC";
+          line-height: 40rpx;
+          display: block;
+        }
+
+        .task-desc {
+          width: 260rpx;
+          height: 30rpx;
+          opacity: 1;
+          color: #a4b0c2;
+          text-align: left;
+          font-size: 24rpx;
+          font-weight: 500;
+          font-family: "PingFang SC";
+          line-height: 30rpx;
+          display: block;
+        }
+      }
+
+      .task-btn {
+        width: 122rpx;
+        height: 68rpx;
+        border-radius: 12rpx;
+        opacity: 1;
+        border: 1rpx solid #000000;
+        background: #ffffff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        box-sizing: border-box;
+
+        &.btn-black {
+          background: #000000;
+          border: 1rpx solid #000000;
+
+          .task-btn-text {
+            color: #ffffff;
+          }
+        }
+
+        &.btn-white {
+          background: #ffffff;
+          border: 1rpx solid #000000;
+
+          .task-btn-text {
+            color: #000000;
+          }
+        }
+
+        .task-btn-text {
+          width: 72rpx;
+          height: 30rpx;
+          opacity: 1;
+          color: #000000;
+          text-align: left;
+          font-size: 24rpx;
+          font-weight: 600;
+          font-family: "PingFang SC";
+          line-height: 30rpx;
+          display: block;
+        }
+      }
     }
-    .tips-p {
-      margin-bottom: 14rpx;
-      line-height: 42.4rpx;
-      color: #3d3d3d;
+  }
+
+  .footer-tip {
+    text-align: center;
+    margin-top: 60rpx;
+
+    .footer-tip-text {
       font-size: 24rpx;
-      font-weight: 600;
-      display: block;
+      color: #cccccc;
+      font-family: "PingFang SC";
     }
   }
 }

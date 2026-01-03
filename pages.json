@@ -221,7 +221,7 @@
                 {
                     "path": "energy/index/index",
                     "style": {
-                        "navigationBarTitleText": "我的能量"
+                        "navigationBarTitleText": "能量任务中心"
                     }
                 },
                 {
