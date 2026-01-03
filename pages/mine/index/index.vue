@@ -35,14 +35,12 @@
               </view>
             </view>
           </view>
-          <view class="row-right" @click="goMessageList">
-            <view class="message-box">
-              <image
-                :src="imgPath + '/mine/icon-lingdang.png'"
-                class="icon-ld"
-              />
-              消息
-            </view>
+          <view class="row-right">
+            <image
+              src="/pages/users/static/my/msg.png"
+              class="message-icon"
+              @click="goMessageList"
+            />
           </view>
         </view>
       </view>
@@ -63,10 +61,35 @@
     </view>
     <view class="content-module">
       <image
+        v-if="false"
         :src="imgPath + '/mine/banner240.png'"
         class="img-banner"
         @click="goGxhcIntroduce"
       />
+
+      <!-- 统计卡片 -->
+      <view class="stats-cards" v-if="isLogin">
+        <view class="stats-card stats-card-blue" @click="goBpList">
+          <view class="stats-label">
+            <image class="stats-label-icon" src="/pages/users/static/my/wodebaogao.png" mode="aspectFit"></image>
+            <text class="stats-label-text">我的报告</text>
+          </view>
+          <view class="stats-value-wrapper">
+            <text class="stats-value-number">{{ reportCount }}</text>
+            <text class="stats-value-unit">份</text>
+          </view>
+        </view>
+        <view class="stats-card stats-card-orange" @click="goEnergyPage">
+          <view class="stats-label">
+            <image class="stats-label-icon" src="/pages/users/static/my/wodenengliang.png" mode="aspectFit"></image>
+            <text class="stats-label-text">我的能量</text>
+          </view>
+          <view class="stats-value-wrapper">
+            <text class="stats-value-number">{{ formatEnergy(energy) }}</text>
+            <text class="stats-value-unit">点</text>
+          </view>
+        </view>
+      </view>
 
       <view class="message-row" v-if="isLogin && messageTips">
         <image :src="imgPath + '/mine/icon_tongzhi.png'" class="icon-noice" />
@@ -127,10 +150,55 @@
             />
           </view>
         </view>
-        <view class="row common-row" v-if="isLogin" @click="goClientCenterPage">
+        <view class="row common-row" v-if="isLogin" @click="goAgencyCenter">
           <view class="left">
             <image
-              :src="imgPath + '/mine/icon_khzx.png'"
+              src="/pages/users/static/my/dailizhongxin.png"
+              class="icon_brief_menu"
+            />
+            <text class="ft32">代理中心</text>
+          </view>
+          <view class="right">
+            <image
+              :src="imgPath + '/icons/icon-gray-right2.png'"
+              class="icon_right_arrow"
+            />
+          </view>
+        </view>
+        <view class="row common-row" v-if="isLogin" @click="goProjectRegister">
+          <view class="left">
+            <image
+              src="/pages/users/static/my/xiangmudengji.png"
+              class="icon_brief_menu"
+            />
+            <text class="ft32">项目登记</text>
+          </view>
+          <view class="right">
+            <image
+              :src="imgPath + '/icons/icon-gray-right2.png'"
+              class="icon_right_arrow"
+            />
+          </view>
+        </view>
+        <view class="row common-row" v-if="isLogin" @click="goEcosystemPlatform">
+          <view class="left">
+            <image
+              src="/pages/users/static/my/shengtaipingtai.png"
+              class="icon_brief_menu"
+            />
+            <text class="ft32">生态平台</text>
+          </view>
+          <view class="right">
+            <image
+              :src="imgPath + '/icons/icon-gray-right2.png'"
+              class="icon_right_arrow"
+            />
+          </view>
+        </view>
+        <view class="row common-row" v-if="false && isLogin" @click="goClientCenterPage">
+          <view class="left">
+            <image
+              src="/pages/users/static/my/daili.png"
               class="icon_brief_menu"
             />
             <text class="ft32">客户中心</text>
@@ -145,7 +213,7 @@
         <view class="row common-row" v-if="isLogin" @click="goInvoicePage">
           <view class="left">
             <image
-              :src="imgPath + '/mine/icon_fpgl.png'"
+              src="/pages/users/static/my/fapiaoguanli.png"
               class="icon_brief_menu"
             />
             <text class="ft32">发票管理</text>
@@ -160,7 +228,7 @@
         <view class="row common-row" v-if="isLogin" @click="goInvitePage">
           <view class="left">
             <image
-              :src="imgPath + '/mine/icon_kfzx.png'"
+              src="/pages/users/static/my/tuiguangmingpian.png"
               class="icon_brief_menu"
             />
             <text class="ft32">推广名片</text>
@@ -175,7 +243,7 @@
         <view class="row common-row" @click="goProtocolPage">
           <view class="left">
             <image
-              :src="imgPath + '/mine/icon_xysm.png'"
+              src="/pages/users/static/my/xiangmudengji.png"
               class="icon_brief_menu"
             />
             <text class="ft32">协议说明</text>
@@ -190,7 +258,7 @@
         <button class="row common-row" open-type="feedback">
           <view class="left">
             <image
-              :src="imgPath + '/mine/icon_fkjy.png'"
+              src="/pages/users/static/my/yijianfankui.png"
               class="icon_brief_menu"
             />
             <text class="ft32">意见反馈</text>
@@ -217,10 +285,26 @@
             />
           </view>
         </view>
+        <view class="row common-row" v-if="isLogin" @click="goLiveVoucher">
+          <view class="left">
+            <image
+              src="/pages/users/static/my/zhiboquanyuliang.png"
+              class="icon_brief_menu"
+            />
+            <text class="ft32">直播卷余量</text>
+          </view>
+          <view class="right">
+            <text class="voucher-count">{{ liveVoucherCount }}张</text>
+            <image
+              :src="imgPath + '/icons/icon-gray-right2.png'"
+              class="icon_right_arrow"
+            />
+          </view>
+        </view>
         <view class="row common-row" @click="goCustomerPage2">
           <view class="left">
             <image
-              :src="imgPath + '/mine/icon_zxkf.png'"
+              src="/pages/users/static/my/bangzhuyukefu.png"
               class="icon_brief_menu"
             />
             <text class="ft32">帮助与客服</text>
@@ -233,18 +317,25 @@
           </view>
         </view>
       </view>
+      
+      <!-- 版本信息 -->
+      <view class="version-info">VERSION 1.0.5 LAB</view>
     </view>
   </view>
 </template>
 
 <script>
 import { getUserInfo, userEdit } from "@/api/user.js";
+import { userEnergy, getBpResultList } from "@/api/gxhc.js";
 import { mapGetters } from "vuex";
 import { imgUrls } from "@/config/app";
 export default {
   data: function () {
     return {
       imgPath: imgUrls,
+      energy: 0,
+      reportCount: 0,
+      liveVoucherCount: 1,
       campusMenus: [
         {
           icon: `${imgUrls}/mine/icon_xy_jyzsh.png`,
@@ -321,6 +412,8 @@ export default {
   onShow() {
     if (this.isLogin) {
       this.getUserInfo();
+      this.getUserEnergy();
+      this.getReportCount();
     }
   },
   methods: {
@@ -425,13 +518,75 @@ export default {
     goMessageList() {
       this.navigateToPage("/pages/mine/message/index");
     },
+    getUserEnergy() {
+      userEnergy()
+        .then((res) => {
+          if (res.status === 200 && res.data) {
+            this.energy = res.data.energy || 0;
+          }
+        })
+        .catch((error) => {
+          console.error("获取能量数据异常:", error);
+        });
+    },
+    getReportCount() {
+      getBpResultList({ page: 1, limit: 1 })
+        .then((res) => {
+          if (res.status === 200 && res.data) {
+            this.reportCount = res.data.total || 0;
+          }
+        })
+        .catch((error) => {
+          console.error("获取报告数量异常:", error);
+        });
+    },
+    formatEnergy(energy) {
+      if (energy >= 1000) {
+        return (energy / 1000).toFixed(1) + "k";
+      }
+      return energy.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    },
+    goBpList() {
+      this.navigateToPage("/subpackage1/bp/list/index");
+    },
+    goEnergyPage() {
+      this.navigateToPage("/subpackage1/energy/index/index");
+    },
+    goAgencyCenter() {
+      // 代理中心
+      uni.showToast({
+        title: "功能开发中",
+        icon: "none",
+      });
+    },
+    goProjectRegister() {
+      // 项目登记
+      uni.showToast({
+        title: "功能开发中",
+        icon: "none",
+      });
+    },
+    goEcosystemPlatform() {
+      // 生态平台
+      uni.showToast({
+        title: "功能开发中",
+        icon: "none",
+      });
+    },
+    goLiveVoucher() {
+      // 直播卷余量
+      uni.showToast({
+        title: "功能开发中",
+        icon: "none",
+      });
+    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
 page {
-  background: #f4f5f6;
+  background: #ffffff;
 }
 
 button {
@@ -564,25 +719,9 @@ button {
         flex-direction: row;
         justify-content: flex-end;
 
-        .message-box {
-          display: flex;
-          flex-direction: row;
-          align-items: center;
-          justify-content: center;
-          width: 124rpx;
-          height: 56rpx;
-          background: linear-gradient(270deg, #1a9dff 0%, #1a5eff 100%);
-          box-shadow: 0rpx 16rpx 40rpx -12rpx rgba(26, 94, 255, 0.5);
-          border-radius: 28rpx;
-          font-size: 24rpx;
-          color: #ffffff;
-          line-height: 36rpx;
-
-          .icon-ld {
-            width: 21rpx;
-            height: 24rpx;
-            margin-right: 8rpx;
-          }
+        .message-icon {
+          width: 92rpx;
+          height: 92rpx;
         }
       }
     }
@@ -612,15 +751,124 @@ button {
     }
 
     .ft32 {
-      font-weight: bold;
+      height: 44rpx;
+      opacity: 1;
+      color: #16171a;
+      text-align: left;
       font-size: 32rpx;
-      line-height: 48rpx;
+      font-weight: 500;
+      font-family: "Alibaba PuHuiTi 3.0";
+      line-height: 44rpx;
+      display: block;
     }
 
     .img-banner {
       width: 100%;
       height: 240rpx;
       margin-bottom: 24rpx;
+    }
+
+    .stats-cards {
+      display: flex;
+      gap: 24rpx;
+      margin-bottom: 24rpx;
+
+      .stats-card {
+        flex: 1;
+        height: 326rpx;
+        border-radius: 24rpx;
+        padding: 24rpx;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+
+        &.stats-card-blue {
+          background: linear-gradient(155.4deg, #285ee7 0%, #403ccd 100%);
+          
+          .stats-label-text {
+            color: #3f5bda;
+          }
+        }
+
+        &.stats-card-orange {
+          background: linear-gradient(135.3deg, #fa9336 0%, #f69e0f 100%);
+          
+          .stats-label-text {
+            color: #ed6712;
+          }
+        }
+
+        .stats-label {
+          width: 240rpx;
+          height: 90rpx;
+          border-radius: 224rpx;
+          opacity: 1;
+          background: #ffffff;
+          box-shadow: 0 8rpx 20rpx 0 #d886104d;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 12rpx 24rpx;
+          margin-bottom: 68rpx;
+          gap: 12rpx;
+          box-sizing: border-box;
+
+          .stats-label-icon {
+            width: 32rpx;
+            height: 32rpx;
+          }
+
+          .stats-label-text {
+            width: 96rpx;
+            height: 30rpx;
+            opacity: 1;
+            color: #16171a;
+            text-align: left;
+            font-size: 24rpx;
+            font-weight: 600;
+            font-family: "PingFang SC";
+            line-height: 30rpx;
+            display: block;
+          }
+        }
+
+        .stats-value-wrapper {
+          display: flex;
+          align-items: baseline;
+          justify-content: center;
+          gap: 8rpx;
+
+          .stats-value-number {
+            width: 42rpx;
+            height: 44rpx;
+            opacity: 1;
+            color: #ffffff;
+            text-align: left;
+            font-size: 84rpx;
+            font-weight: 700;
+            font-family: "DIN Alternate";
+            line-height: 44rpx;
+            display: block;
+          }
+
+          .stats-value-unit {
+            width: 24rpx;
+            height: 30rpx;
+            opacity: 1;
+            color: #ffffff;
+            text-align: left;
+            font-size: 24rpx;
+            font-weight: 600;
+            font-family: "PingFang SC";
+            line-height: 30rpx;
+            display: block;
+          }
+        }
+      }
     }
 
     .message-row {
@@ -700,12 +948,16 @@ button {
     .common-box {
       background: #ffffff;
       border-radius: 24rpx;
-
       .common-row {
-        width: 100%;
-        height: 110rpx;
+        width: 696rpx;
+        height: 154rpx;
+        border-radius: 36rpx;
+        opacity: 1;
+        background: #ffffff;
+        box-shadow: 0 0 8rpx 0 #0000001a;
         box-sizing: border-box;
         padding: 0 32rpx;
+        margin-bottom: 32rpx;
 
         .left {
           width: 80%;
@@ -714,9 +966,9 @@ button {
           align-items: center;
 
           .icon_brief_menu {
-            width: 64rpx;
-            height: 64rpx;
-            margin-right: 24rpx;
+            width: 80rpx;
+            height: 80rpx;
+            margin-right: 38rpx;
           }
         }
 
@@ -732,8 +984,23 @@ button {
             width: 12rpx;
             height: 24rpx;
           }
+
+          .voucher-count {
+            font-size: 28rpx;
+            color: #909399;
+            margin-right: 16rpx;
+          }
         }
       }
+    }
+
+    .version-info {
+      text-align: center;
+      font-size: 24rpx;
+      color: #909399;
+      margin-top: 40rpx;
+      margin-bottom: 20rpx;
+      font-family: "PingFang SC";
     }
   }
 }
