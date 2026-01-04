@@ -111,6 +111,20 @@
             }
         },
         {
+            "path": "pages/mine/exchange/index",
+            "style": {
+                "navigationBarTitleText": "兑换中心",
+                "navigationStyle": "custom"
+            }
+        },
+        {
+            "path": "pages/mine/exchange/record/index",
+            "style": {
+                "navigationBarTitleText": "生成记录",
+                "navigationStyle": "custom"
+            }
+        },
+        {
             "path": "pages/project/detail/index",
             "style": {
                 "navigationBarTitleText": "项目详情"

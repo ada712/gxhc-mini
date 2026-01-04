@@ -174,3 +174,24 @@ export function feedBack(data) {
     noAuth: false,
   });
 }
+
+// 兑换码兑换
+export function redeemCode(data) {
+  return request.post("redeem/code", data, {
+    noAuth: false,
+  });
+}
+
+// 获取兑换记录
+export function getRedeemRecord(data) {
+  return request.get("redeem/record", data, {
+    noAuth: false,
+  });
+}
+
+// 生成兑换码
+export function generateRedeemCode(data) {
+  return request.post("redeem/generate", data, {
+    noAuth: false,
+  });
+}

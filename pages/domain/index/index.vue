@@ -93,7 +93,7 @@
               <text class="update-time">{{ item.time }}</text>
             </view>
           </view>
-          <image class="full-updates-btn" src="/static/images/domain/wzdt.png" mode="widthFix" @click="goFullUpdates"></image>
+          <image class="full-updates-btn" src="/static/images/domain/com.png" mode="widthFix" @click="goFullUpdates"></image>
         </view>
       </view>
     </view>
@@ -456,7 +456,7 @@ page {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 32rpx;
+    padding: 44rpx;
     box-sizing: border-box;
   }
 
@@ -488,6 +488,7 @@ page {
       }
 
       .update-time {
+        width: 46rpx;
         height: 28rpx;
         opacity: 1;
         color: #a8b4d0;

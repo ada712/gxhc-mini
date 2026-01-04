@@ -301,6 +301,21 @@
             />
           </view>
         </view>
+        <view class="row common-row" v-if="isLogin" @click="goExchangeCenter">
+          <view class="left">
+            <image
+              src="/static/images/my/tuiguangmingpian.png"
+              class="icon_brief_menu"
+            />
+            <text class="ft32">兑换中心</text>
+          </view>
+          <view class="right">
+            <image
+              :src="imgPath + '/icons/icon-gray-right2.png'"
+              class="icon_right_arrow"
+            />
+          </view>
+        </view>
         <view class="row common-row" @click="goCustomerPage2">
           <view class="left">
             <image
@@ -580,14 +595,18 @@ export default {
         icon: "none",
       });
     },
+    goExchangeCenter() {
+      // 兑换中心
+      this.navigateToPage("/pages/mine/exchange/index");
+    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-page {
-  background: #ffffff;
-}
+// page {
+//   background: #ffffff;
+// }
 
 button {
   background: none;
@@ -651,7 +670,7 @@ button {
           display: flex;
           align-items: center;
           justify-content: center;
-          background: #f1f2f6;
+          background: #fff;
           box-shadow: 0rpx 2rpx 10rpx 0rpx rgba(0, 0, 0, 0.1);
           margin-right: 24rpx;
 
@@ -736,6 +755,7 @@ button {
   }
 
   .content-module {
+  background: #fff;
     width: 100%;
     box-sizing: border-box;
     padding: 0rpx 24rpx 56rpx 24rpx;

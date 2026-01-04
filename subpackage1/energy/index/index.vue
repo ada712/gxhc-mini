@@ -12,7 +12,7 @@
         <view class="energy-display">
           <image class="energy-icon" src="/static/images/my/wodenengliang.png" mode="aspectFit"></image>
           <text class="energy-value">{{ formatEnergy(energy) }}</text>
-        </view>
+    </view>
         <text class="energy-label">当前能量值 (PTS)</text>
       </view>
     </view>
@@ -110,13 +110,13 @@ page {
 }
 
 .pages {
-  position: relative;
+      position: relative;
   min-height: 100vh;
   padding: 32rpx 28rpx;
   padding-bottom: 100rpx;
 
   .bg-image {
-    position: absolute;
+        position: absolute;
     top: -30rpx;
     right: -20rpx;
     left: 0;
@@ -170,8 +170,8 @@ page {
       align-items: flex-end;
 
       .energy-display {
-        display: flex;
-        align-items: center;
+      display: flex;
+      align-items: center;
         gap: 8rpx;
         margin-bottom: 8rpx;
 
@@ -204,8 +204,8 @@ page {
         font-weight: 600;
         font-family: "PingFang SC";
         line-height: 30rpx;
-        display: block;
-      }
+      display: block;
+    }
     }
   }
 
@@ -256,12 +256,12 @@ page {
           color: #a4b0c2;
           text-align: left;
           font-size: 24rpx;
-          font-weight: 500;
+        font-weight: 500;
           font-family: "PingFang SC";
           line-height: 30rpx;
           display: block;
-        }
-      }
+    }
+  }
 
       .task-btn {
         width: 122rpx;
@@ -270,8 +270,8 @@ page {
         opacity: 1;
         border: 1rpx solid #000000;
         background: #ffffff;
-        display: flex;
-        align-items: center;
+    display: flex;
+    align-items: center;
         justify-content: center;
         flex-shrink: 0;
         box-sizing: border-box;
@@ -286,7 +286,7 @@ page {
         }
 
         &.btn-white {
-          background: #ffffff;
+    background: #ffffff;
           border: 1rpx solid #000000;
 
           .task-btn-text {
@@ -300,14 +300,14 @@ page {
           opacity: 1;
           color: #000000;
           text-align: left;
-          font-size: 24rpx;
-          font-weight: 600;
+      font-size: 24rpx;
+      font-weight: 600;
           font-family: "PingFang SC";
           line-height: 30rpx;
           display: block;
-        }
       }
     }
+  }
   }
 
   .footer-tip {

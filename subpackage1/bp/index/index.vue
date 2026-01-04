@@ -299,8 +299,8 @@ page {
           width: 88rpx;
           height: 88rpx;
           opacity: 1;
-        }
-      }
+    }
+  }
 
       .card-text {
         width: 96rpx;
@@ -350,8 +350,8 @@ page {
         font-family: "PingFang SC";
         line-height: 30rpx;
         display: block;
-      }
     }
+  }
 
     .notice-content {
       width: 602rpx;

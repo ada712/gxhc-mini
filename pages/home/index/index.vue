@@ -101,7 +101,7 @@
         :y="serviceBtnY"
         @click="goCustomerService"
       >
-        <image class="service-icon" src="/static/images/home/kefu.png" mode="aspectFit"></image>
+        <image class="service-icon" src="/static/images/home/service.png" mode="aspectFit"></image>
       </movable-view>
     </movable-area>
   </view>
