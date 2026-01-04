@@ -125,6 +125,13 @@
             }
         },
         {
+            "path": "pages/mine/agent/index",
+            "style": {
+                "navigationBarTitleText": "代理与协议中心",
+                "navigationStyle": "custom"
+            }
+        },
+        {
             "path": "pages/project/detail/index",
             "style": {
                 "navigationBarTitleText": "项目详情"

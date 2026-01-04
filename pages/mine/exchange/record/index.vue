@@ -1,12 +1,6 @@
 <template>
   <view class="record-page">
     <x-navbar title="生成记录" :letfArrow="true">
-      <template #right>
-        <view class="navbar-right-icons">
-          <view class="icon-btn" @click="handleMoreClick">⋯</view>
-          <view class="icon-btn" @click="handleEyeClick">👁</view>
-        </view>
-      </template>
     </x-navbar>
 
     <!-- 顶部背景区域 -->

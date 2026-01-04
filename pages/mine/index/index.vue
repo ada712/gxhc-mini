@@ -569,10 +569,7 @@ export default {
     },
     goAgencyCenter() {
       // 代理中心
-      uni.showToast({
-        title: "功能开发中",
-        icon: "none",
-      });
+      this.navigateToPage("/pages/mine/agent/index");
     },
     goProjectRegister() {
       // 项目登记

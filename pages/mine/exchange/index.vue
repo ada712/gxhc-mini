@@ -1,12 +1,6 @@
 <template>
   <view class="exchange-page">
-    <x-navbar title="兑换中心" :letfArrow="true">
-      <template #right>
-        <view class="navbar-right-icons">
-          <view class="icon-btn" @click="handleMoreClick">⋯</view>
-          <view class="icon-btn" @click="handleEyeClick">👁</view>
-        </view>
-      </template>
+    <x-navbar title="兑换中心" :letfArrow="true" :customBack="goBackToMine">
     </x-navbar>
 
     <!-- 顶部背景区域 -->
@@ -162,6 +156,12 @@ export default {
     this.getUserBalance();
   },
   methods: {
+    goBackToMine() {
+      // 返回到我的页面
+      uni.switchTab({
+        url: "/pages/mine/index/index",
+      });
+    },
     switchTab(tab) {
       this.activeTab = tab;
       if (tab === "redeem") {
@@ -497,6 +497,9 @@ export default {
     background: #f8fafc;
     margin: 0 auto 40rpx;
     box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     .code-input {
       width: 100%;
@@ -521,6 +524,9 @@ export default {
       font-weight: 600;
       font-family: "PingFang SC";
       line-height: 108rpx;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
   }
 
