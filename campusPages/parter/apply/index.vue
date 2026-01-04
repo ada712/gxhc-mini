@@ -349,7 +349,7 @@
 
 <script>
 import { imgUrls } from "@/config/app";
-import { PARTNER_BASE_DATA } from "@/const/campus";
+import { PARTNER_BASE_DATA } from "../../const/campus";
 export default {
   data: function () {
     return {

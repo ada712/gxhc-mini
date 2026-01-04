@@ -2,17 +2,17 @@
   <view class="pages">
     <!-- 实时战报区域 -->
     <view class="realtime-report">
-      <image class="report-bg" src="/pages/users/static/domain/img-bg.png" mode="aspectFill"></image>
+      <image class="report-bg" src="/static/images/domain/img-bg.png" mode="aspectFill"></image>
       <view class="report-header">
         <view class="report-title-wrapper">
           <view class="report-dot"></view>
           <text class="report-title">Uni 1.0 实时战报</text>
         </view>
-        <image class="live-stats-btn" src="/pages/users/static/domain/live_start.png" mode="widthFix"></image>
+        <image class="live-stats-btn" src="/static/images/domain/live_start.png" mode="widthFix"></image>
       </view>
       <view class="stats-grid">
         <view class="stat-item">
-          <image class="stat-icon" src="/pages/users/static/domain/top1.png" mode="aspectFit"></image>
+          <image class="stat-icon" src="/static/images/domain/top1.png" mode="aspectFit"></image>
           <view class="stat-content">
             <view class="stat-value-wrapper">
               <text class="stat-value">320</text>
@@ -22,7 +22,7 @@
           </view>
         </view>
         <view class="stat-item">
-          <image class="stat-icon" src="/pages/users/static/domain/top2.png" mode="aspectFit"></image>
+          <image class="stat-icon" src="/static/images/domain/top2.png" mode="aspectFit"></image>
           <view class="stat-content">
             <view class="stat-value-wrapper">
               <text class="stat-value">45</text>
@@ -32,7 +32,7 @@
           </view>
         </view>
         <view class="stat-item">
-          <image class="stat-icon" src="/pages/users/static/domain/top3.png" mode="aspectFit"></image>
+          <image class="stat-icon" src="/static/images/domain/top3.png" mode="aspectFit"></image>
           <view class="stat-content">
             <view class="stat-value-wrapper">
               <text class="stat-value">580</text>
@@ -42,7 +42,7 @@
           </view>
         </view>
         <view class="stat-item">
-          <image class="stat-icon" src="/pages/users/static/domain/top4.png" mode="aspectFit"></image>
+          <image class="stat-icon" src="/static/images/domain/top4.png" mode="aspectFit"></image>
           <view class="stat-content">
             <view class="stat-value-wrapper">
               <text class="stat-value">8</text>
@@ -63,7 +63,7 @@
           <text class="section-title">直播实战精华</text>
         </view>
         <view class="live-highlight-card">
-          <image class="video-thumbnail" src="/pages/users/static/home/video_img.png" mode="aspectFill"></image>
+          <image class="video-thumbnail" src="/static/images/home/video_img.png" mode="aspectFill"></image>
           <!-- 左上角标签 -->
           <view class="video-tag">
             <text class="video-tag-text">ju DSEJF</text>
@@ -75,7 +75,7 @@
           <!-- 底部按钮 -->
           <view class="more-btn" @click="goMoreHighlights">
             <text class="more-btn-text">更多实战点评</text>
-            <image class="more-btn-arrow" src="/pages/users/static/domain/more.png" mode="aspectFit"></image>
+            <image class="more-btn-arrow" src="/static/images/domain/more.png" mode="aspectFit"></image>
           </view>
         </view>
       </view>
@@ -93,7 +93,7 @@
               <text class="update-time">{{ item.time }}</text>
             </view>
           </view>
-          <image class="full-updates-btn" src="/pages/users/static/domain/com.png" mode="widthFix" @click="goFullUpdates"></image>
+          <image class="full-updates-btn" src="/static/images/domain/wzdt.png" mode="widthFix" @click="goFullUpdates"></image>
         </view>
       </view>
     </view>
@@ -106,12 +106,12 @@
       </view>
       <view class="faq-list">
         <view class="faq-item" v-for="(item, index) in faqList" :key="index" @click="goFaqDetail(item)">
-          <image class="faq-icon" src="/pages/users/static/domain/question.png" mode="aspectFit"></image>
+          <image class="faq-icon" src="/static/images/domain/question.png" mode="aspectFit"></image>
           <view class="faq-content">
             <text class="faq-question">{{ item.question }}</text>
             <text class="faq-answer">{{ item.answer }}</text>
           </view>
-          <image class="faq-arrow" src="/pages/users/static/domain/more.png" mode="aspectFit"></image>
+          <image class="faq-arrow" src="/static/images/domain/more.png" mode="aspectFit"></image>
         </view>
       </view>
     </view>
@@ -217,7 +217,6 @@ page {
         }
 
         .report-title {
-          width: 212rpx;
           height: 40rpx;
           opacity: 1;
           color: #ffffff;
@@ -457,7 +456,7 @@ page {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 44rpx;
+    padding: 32rpx;
     box-sizing: border-box;
   }
 
@@ -489,7 +488,6 @@ page {
       }
 
       .update-time {
-        width: 46rpx;
         height: 28rpx;
         opacity: 1;
         color: #a8b4d0;

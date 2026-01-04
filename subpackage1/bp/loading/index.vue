@@ -30,7 +30,7 @@
         </view>
         <!-- 文档+放大镜图标 -->
         <view class="loading-icon-wrapper">
-          <image class="loading-icon" src="/pages/users/static/home/file.png" mode="aspectFit"></image>
+          <image class="loading-icon" src="/static/images/home/file.png" mode="aspectFit"></image>
         </view>
       </view>
 

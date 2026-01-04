@@ -37,7 +37,7 @@
           </view>
           <view class="row-right">
             <image
-              src="/pages/users/static/my/msg.png"
+              src="/static/images/my/msg.png"
               class="message-icon"
               @click="goMessageList"
             />
@@ -71,7 +71,7 @@
       <view class="stats-cards" v-if="isLogin">
         <view class="stats-card stats-card-blue" @click="goBpList">
           <view class="stats-label">
-            <image class="stats-label-icon" src="/pages/users/static/my/wodebaogao.png" mode="aspectFit"></image>
+            <image class="stats-label-icon" src="/static/images/my/wodebaogao.png" mode="aspectFit"></image>
             <text class="stats-label-text">我的报告</text>
           </view>
           <view class="stats-value-wrapper">
@@ -81,7 +81,7 @@
         </view>
         <view class="stats-card stats-card-orange" @click="goEnergyPage">
           <view class="stats-label">
-            <image class="stats-label-icon" src="/pages/users/static/my/wodenengliang.png" mode="aspectFit"></image>
+            <image class="stats-label-icon" src="/static/images/my/wodenengliang.png" mode="aspectFit"></image>
             <text class="stats-label-text">我的能量</text>
           </view>
           <view class="stats-value-wrapper">
@@ -153,7 +153,7 @@
         <view class="row common-row" v-if="isLogin" @click="goAgencyCenter">
           <view class="left">
             <image
-              src="/pages/users/static/my/dailizhongxin.png"
+              src="/static/images/my/dailizhongxin.png"
               class="icon_brief_menu"
             />
             <text class="ft32">代理中心</text>
@@ -168,7 +168,7 @@
         <view class="row common-row" v-if="isLogin" @click="goProjectRegister">
           <view class="left">
             <image
-              src="/pages/users/static/my/xiangmudengji.png"
+              src="/static/images/my/xiangmudengji.png"
               class="icon_brief_menu"
             />
             <text class="ft32">项目登记</text>
@@ -183,7 +183,7 @@
         <view class="row common-row" v-if="isLogin" @click="goEcosystemPlatform">
           <view class="left">
             <image
-              src="/pages/users/static/my/shengtaipingtai.png"
+              src="/static/images/my/shengtaipingtai.png"
               class="icon_brief_menu"
             />
             <text class="ft32">生态平台</text>
@@ -198,7 +198,7 @@
         <view class="row common-row" v-if="false && isLogin" @click="goClientCenterPage">
           <view class="left">
             <image
-              src="/pages/users/static/my/daili.png"
+              src="/static/images/my/daili.png"
               class="icon_brief_menu"
             />
             <text class="ft32">客户中心</text>
@@ -213,7 +213,7 @@
         <view class="row common-row" v-if="isLogin" @click="goInvoicePage">
           <view class="left">
             <image
-              src="/pages/users/static/my/fapiaoguanli.png"
+              src="/static/images/my/fapiaoguanli.png"
               class="icon_brief_menu"
             />
             <text class="ft32">发票管理</text>
@@ -228,7 +228,7 @@
         <view class="row common-row" v-if="isLogin" @click="goInvitePage">
           <view class="left">
             <image
-              src="/pages/users/static/my/tuiguangmingpian.png"
+              src="/static/images/my/tuiguangmingpian.png"
               class="icon_brief_menu"
             />
             <text class="ft32">推广名片</text>
@@ -243,7 +243,7 @@
         <view class="row common-row" @click="goProtocolPage">
           <view class="left">
             <image
-              src="/pages/users/static/my/xiangmudengji.png"
+              src="/static/images/my/xiangmudengji.png"
               class="icon_brief_menu"
             />
             <text class="ft32">协议说明</text>
@@ -258,7 +258,7 @@
         <button class="row common-row" open-type="feedback">
           <view class="left">
             <image
-              src="/pages/users/static/my/yijianfankui.png"
+              src="/static/images/my/yijianfankui.png"
               class="icon_brief_menu"
             />
             <text class="ft32">意见反馈</text>
@@ -288,7 +288,7 @@
         <view class="row common-row" v-if="isLogin" @click="goLiveVoucher">
           <view class="left">
             <image
-              src="/pages/users/static/my/zhiboquanyuliang.png"
+              src="/static/images/my/zhiboquanyuliang.png"
               class="icon_brief_menu"
             />
             <text class="ft32">直播卷余量</text>
@@ -304,7 +304,7 @@
         <view class="row common-row" @click="goCustomerPage2">
           <view class="left">
             <image
-              src="/pages/users/static/my/bangzhuyukefu.png"
+              src="/static/images/my/bangzhuyukefu.png"
               class="icon_brief_menu"
             />
             <text class="ft32">帮助与客服</text>

@@ -3,7 +3,7 @@
     <!-- BP文件上传区域 -->
     <view class="upload-card" @click="choosePDF">
       <view class="upload-icon-wrapper">
-        <image class="upload-icon" src="/pages/users/static/home/file.png" mode="aspectFit"></image>
+        <image class="upload-icon" src="/static/images/home/file.png" mode="aspectFit"></image>
       </view>
       <text class="upload-title">选择BP文件上传</text>
       <text class="upload-subtitle">(支持PDF 格式)</text>
@@ -13,13 +13,13 @@
     <view class="feature-cards">
       <view class="feature-card" @click="goDiagnosisRecord">
         <view class="card-icon-wrapper">
-          <image class="card-icon" src="/pages/users/static/home/time.png" mode="aspectFit"></image>
+          <image class="card-icon" src="/static/images/home/time.png" mode="aspectFit"></image>
         </view>
         <text class="card-text">诊断记录</text>
       </view>
       <view class="feature-card" @click="goLiveBooking">
         <view class="card-icon-wrapper">
-          <image class="card-icon" src="/pages/users/static/home/live.png" mode="aspectFit"></image>
+          <image class="card-icon" src="/static/images/home/live.png" mode="aspectFit"></image>
         </view>
         <text class="card-text">预约直播</text>
       </view>
@@ -28,7 +28,7 @@
     <!-- 注意事项 -->
     <view class="notice-box">
       <view class="notice-header">
-        <image class="notice-icon" src="/pages/users/static/home/warning.png" mode="aspectFit"></image>
+        <image class="notice-icon" src="/static/images/home/warning.png" mode="aspectFit"></image>
         <text class="notice-title">注意事项</text>
       </view>
       <text class="notice-content">报告获取时间约20分钟,诊断完成后 Uni Agent 会通过短信与服务号形式同时通知您</text>

@@ -1,7 +1,7 @@
 <template>
   <view class="pages">
     <!-- 背景图 -->
-    <image class="bg-image" src="/pages/users/static/my/power/power-bg.png" mode="aspectFill"></image>
+    <image class="bg-image" src="/static/images/my/power/power-bg.png" mode="aspectFill"></image>
     <!-- 顶部标题区域 -->
     <view class="header-section">
       <view class="header-left">
@@ -10,7 +10,7 @@
       </view>
       <view class="header-right">
         <view class="energy-display">
-          <image class="energy-icon" src="/h5/pages/users/static/my/wodenengliang.png" mode="aspectFit"></image>
+          <image class="energy-icon" src="/static/images/my/wodenengliang.png" mode="aspectFit"></image>
           <text class="energy-value">{{ formatEnergy(energy) }}</text>
         </view>
         <text class="energy-label">当前能量值 (PTS)</text>
@@ -50,7 +50,7 @@ export default {
           id: 1,
           title: "邀请5位好友",
           desc: "没成功邀请1人 + 100pts",
-          icon: "/pages/users/static/my/power/pengyou.png",
+          icon: "/static/images/my/power/pengyou.png",
           color: "orange",
           btnText: "去邀请",
           btnType: "btn-black",
@@ -59,7 +59,7 @@ export default {
           id: 2,
           title: "完善项目信息",
           desc: "没成功邀请1人+100pts",
-          icon: "/pages/users/static/my/power/xiangmu.png",
+          icon: "/static/images/my/power/xiangmu.png",
           color: "blue",
           btnText: "去完善",
           btnType: "btn-white",
@@ -68,7 +68,7 @@ export default {
           id: 3,
           title: "填写需求问卷",
           desc: "没成功邀请1人+ 100pts",
-          icon: "/pages/users/static/my/power/wenquan.png",
+          icon: "/static/images/my/power/wenquan.png",
           color: "purple",
           btnText: "去填写",
           btnType: "btn-white",

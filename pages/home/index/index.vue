@@ -6,10 +6,10 @@
     
     <!-- 顶部视频展示区域 -->
     <view class="video-showcase">
-      <image class="video-bg" src="/pages/users/static/home/video_img.png" mode="aspectFill"></image>
+      <image class="video-bg" src="/static/images/home/video_img.png" mode="aspectFill"></image>
       <view class="video-content">
         <view class="play-btn-wrapper" @click="handleVideoPlay">
-          <image class="play-icon" src="/pages/users/static/home/start.png" mode="aspectFit"></image>
+          <image class="play-icon" src="/static/images/home/start.png" mode="aspectFit"></image>
         </view>
         <text class="video-text">PRODUCT SHOWCASE</text>
       </view>
@@ -28,7 +28,7 @@
             <text class="card-subtitle">投资人是叫的优化建议</text>
             <view class="card-btn" @click.stop="goPage('/subpackage1/bp/index/index')">
               <text class="btn-text">立即使用</text>
-              <image class="btn-icon" src="/pages/users/static/home/huojian.png" mode="aspectFit"></image>
+              <image class="btn-icon" src="/static/images/home/huojian.png" mode="aspectFit"></image>
             </view>
           </view>
         </view>
@@ -38,7 +38,7 @@
             <text class="card-subtitle">30分钟导师深度咨询</text>
             <view class="card-btn" @click.stop="goPage('/subpackage1/bp/applyPlay/index')">
               <text class="btn-text">立即预约</text>
-              <image class="btn-icon" src="/pages/users/static/home/rili.png" mode="aspectFit"></image>
+              <image class="btn-icon" src="/static/images/home/rili.png" mode="aspectFit"></image>
             </view>
           </view>
         </view>
@@ -101,7 +101,7 @@
         :y="serviceBtnY"
         @click="goCustomerService"
       >
-        <image class="service-icon" src="/pages/users/static/home/service.png" mode="aspectFit"></image>
+        <image class="service-icon" src="/static/images/home/kefu.png" mode="aspectFit"></image>
       </movable-view>
     </movable-area>
   </view>
@@ -123,9 +123,9 @@ export default {
         { text: "导师咨询非常有用", user: "创业者B" },
       ],
       comingSoonList: [
-        { icon: "/pages/users/static/home/people.png", title: "导师对练\nAgent" },
-        { icon: "/pages/users/static/home/company.png", title: "上市公司服务\nAgent" },
-        { icon: "/pages/users/static/home/paper.png", title: "行业研究\nAgent" },
+        { icon: "/static/images/home/people.png", title: "导师对练\nAgent" },
+        { icon: "/static/images/home/company.png", title: "上市公司服务\nAgent" },
+        { icon: "/static/images/home/paper.png", title: "行业研究\nAgent" },
       ],
       serviceBtnX: 0,
       serviceBtnY: 0,
@@ -312,7 +312,6 @@ uni-page-body {
     }
 
     .video-text {
-      width: 312rpx;
       height: 40rpx;
       opacity: 1;
       color: #ffffff;

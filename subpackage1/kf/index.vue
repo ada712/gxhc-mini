@@ -292,7 +292,7 @@ page {
 
 .consultant-info {
   position: fixed;
-  top: 94rpx; // 导航栏高度
+  top:8rpx;
   left: 0;
   right: 0;
   width: 100%;
@@ -321,7 +321,6 @@ page {
   }
 
   .consultant-status {
-    width: 256rpx; // 128px * 2
     height: 30rpx; // 15px * 2
     opacity: 1;
     color: #94acd1;

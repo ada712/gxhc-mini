@@ -167,7 +167,6 @@ page {
   }
 
   .poster-title {
-    width: 294rpx;
     height: 60rpx;
     opacity: 1;
     color: #ffffff;
