@@ -215,7 +215,8 @@
                 {
                     "path": "kf/index",
                     "style": {
-                        "navigationBarTitleText": "客服"
+                        "navigationBarTitleText": "国信合创Lab",
+                        "disableScroll": true
                     }
                 },
                 {
@@ -500,7 +501,7 @@
         "backgroundColor": "#ffffff",
         "list": [{
                 "pagePath": "pages/home/index/index",
-                "iconPath": "static/images/tabbar/icon_home_default.png",
+                "iconPath": "static/images/tabbar/icon_home_default1.png",
                 "selectedIconPath": "static/images/tabbar/icon_home_active.png",
                 "text": "首页"
             },

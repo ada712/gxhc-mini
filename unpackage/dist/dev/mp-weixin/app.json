@@ -134,7 +134,7 @@
     "list": [
       {
         "pagePath": "pages/home/index/index",
-        "iconPath": "static/images/tabbar/icon_home_default.png",
+        "iconPath": "static/images/tabbar/icon_home_default1.png",
         "selectedIconPath": "static/images/tabbar/icon_home_active.png",
         "text": "首页"
       },
