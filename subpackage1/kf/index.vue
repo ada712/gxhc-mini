@@ -15,7 +15,7 @@
         </view>
         <view class="message-content">
           <view class="message-bubble">
-            <text class="message-text">您好!我是您的专属管家&lt;中智飞&gt;, 很高兴为您服务,请问有什么可以帮您的?</text>
+            <text class="message-text">您好!我是您的专属管家【中智飞】, 很高兴为您服务,请问有什么可以帮您的?</text>
           </view>
           <view class="suggested-questions">
             <text class="suggest-title">猜你想问</text>

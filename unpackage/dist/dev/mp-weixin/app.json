@@ -46,6 +46,7 @@
         "auth/index/index",
         "auth/certifica/index",
         "share/index",
+        "poster/index",
         "bp/internalList/index"
       ],
       "name": "subpackage"

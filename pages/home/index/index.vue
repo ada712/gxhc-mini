@@ -108,14 +108,13 @@
 </template>
 
 <script>
-import { imgUrls, env } from "@/config/app";
+import { imgUrls } from "@/config/app";
 import { getShare } from "@/api/public.js";
 import { getShare as getShare2 } from "@/api/gxhc";
 import { mapGetters } from "vuex";
 export default {
   data: function () {
     return {
-      env: env,
       imgUrl: imgUrls,
       shareInfo: {},
       feedbackList: [

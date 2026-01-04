@@ -1,18 +1,13 @@
 "use strict";
 const common_vendor = require("../common/vendor.js");
 const config_app = require("../config/app.js");
+const libs_login = require("../libs/login.js");
 const store_index = require("../store/index.js");
-require("./cache.js");
 function baseRequest(url, method, data, { noAuth = false, noVerify = false }) {
   let Url = config_app.HTTP_REQUEST_URL, header = config_app.HEADER;
   if (!noAuth) {
     if (!store_index.store.state.app.token) {
-      console.warn("测试模式：检测到未登录，但不跳转登录页面");
-      common_vendor.index.showToast({
-        title: "未登录（测试模式）",
-        icon: "none",
-        duration: 2e3
-      });
+      libs_login.toLogin();
       return Promise.reject({
         msg: `未登录`
       });
@@ -37,12 +32,7 @@ function baseRequest(url, method, data, { noAuth = false, noVerify = false }) {
         else if (res.data.status == 200)
           reslove(res.data, res);
         else if ([110002, 110003, 110004].indexOf(res.data.status) !== -1) {
-          console.warn("测试模式：检测到登录过期，但不跳转登录页面", res.data);
-          common_vendor.index.showToast({
-            title: res.data.msg || "请登录（测试模式）",
-            icon: "none",
-            duration: 2e3
-          });
+          libs_login.toLogin();
           reject(res.data);
         } else if (res.data.status == 100103) {
           common_vendor.index.showModal({

@@ -251,7 +251,6 @@
                     "path": "poster/index",
                     "style": {
                         "navigationBarTitleText": "分享海报",
-                        "navigationBarBackgroundColor": "transparent",
                         "navigationBarTextStyle": "black"
                     }
                 },

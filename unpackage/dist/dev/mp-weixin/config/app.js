@@ -15,6 +15,5 @@ exports.HEADER = HEADER;
 exports.HTTP_REQUEST_URL = HTTP_REQUEST_URL;
 exports.TIMEOUT = TIMEOUT;
 exports.TOKENNAME = TOKENNAME;
-exports.env = env;
 exports.imgUrls = imgUrls;
 exports.miniprogramUrl = miniprogramUrl;
