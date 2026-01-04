@@ -489,7 +489,7 @@ export default {
       this.navigateToPage("/pages/users/user_invoice_list/index");
     },
     goInvitePage() {
-      this.navigateToPage("/pages/users/user_spread_code/index");
+      this.navigateToPage("/subpackage1/poster/index");
     },
     goPersonInfoPage() {
       this.navigateToPage("/pages/mine/customer/personInfo/index");

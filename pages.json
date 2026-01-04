@@ -248,6 +248,14 @@
                     }
                 },
                 {
+                    "path": "poster/index",
+                    "style": {
+                        "navigationBarTitleText": "分享海报",
+                        "navigationBarBackgroundColor": "transparent",
+                        "navigationBarTextStyle": "black"
+                    }
+                },
+                {
                     "path": "bp/internalList/index",
                     "style": {
                         "navigationBarTitleText": "诊断样本案例"
