@@ -1,7 +1,7 @@
 <template>
   <view class="pages">
     <!-- 背景图 -->
-    <image class="bg-image" src="/static/images/my/power/power-bg.png" mode="aspectFill"></image>
+    <image class="bg-image" src="/static/images/my/power/p-bg.png" mode="aspectFill"></image>
     <!-- 顶部标题区域 -->
     <view class="header-section">
       <view class="header-left">
@@ -92,7 +92,8 @@ export default {
         });
     },
     formatEnergy(energy) {
-      return energy.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      // return energy.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");  
+      return energy;
     },
     handleTask(task) {
       uni.showToast({
@@ -176,8 +177,8 @@ page {
         margin-bottom: 8rpx;
 
         .energy-icon {
-          width: 32rpx;
-          height: 50rpx;
+          width: 40rpx;
+          height: 70rpx;  
         }
 
         .energy-value {

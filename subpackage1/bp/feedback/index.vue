@@ -6,10 +6,15 @@
       <view class="header">
         <view class="header-content">
           <view class="header-title">
-            <text class="header-text">BP优化建议书 反馈中心</text>
+            <image
+              class="header-icon"
+              src="/static/images/my/feekback/center.png"
+              mode="aspectFit"
+            />
+            <text class="header-text">反馈中心</text>
           </view>
           <text class="header-subtitle"
-            >帮助我们进化，为您提供更精准的BP诊断</text
+            >帮助我们进化，提供更精准的BP诊断</text
           >
         </view>
       </view>
@@ -41,6 +46,13 @@
                 :class="{ active: selectedCategory === category.id }"
                 @click="selectCategory(category.id)"
               >
+                <image
+                  v-if="category.iconPath"
+                  class="category-icon"
+                  :class="{ 'active-icon': selectedCategory === category.id }"
+                  :src="selectedCategory === category.id ? (category.iconPathActive || category.iconPath) : category.iconPath"
+                  mode="aspectFit"
+                />
                 <text class="category-label">{{ category.label }}</text>
               </view>
             </view>
@@ -48,59 +60,28 @@
 
           <!-- Feedback Input -->
           <view class="feedback-section">
-            <view class="feedback-header">
-              <text class="section-label">您的具体建议</text>
-            </view>
-
             <view class="feedback-input-container">
-              <!-- Inspiration Guide -->
-              <view v-if="selectedCategory" class="inspiration-guide">
-                <view class="guide-content">
-                  <!-- <image
-                    class="quote-icon"
-                    :src="imgUrl + '/subpackage1/quote.png'"
-                  /> -->
-                  <view class="guide-text-container">
-                    <text class="guide-category"
-                      >{{ currentCategory.label }} · 思考引导</text
-                    >
-                    <text class="guide-text"
-                      >"{{ currentCategory.placeholder }}"</text
-                    >
-                  </view>
-                </view>
-              </view>
-
-              <!-- Textarea -->
+              <text class="section-label">您的具体建议</text>
               <textarea
                 class="feedback-textarea"
                 v-model="feedbackText"
-                placeholder="点击此处开始输入..."
+                placeholder="请输入"
               >
               </textarea>
-
-              <!-- Character Count -->
-              <view class="char-count">
-                <text class="char-count-text"
-                  >{{ feedbackText.length }} 字</text
-                >
-              </view>
             </view>
           </view>
 
           <!-- Submit Button -->
-          <view class="submit-section">
-            <button
-              class="submit-button"
-              :class="{ disabled: !canSubmit }"
-              :disabled="!canSubmit || isSubmitting"
-              @click="handleSubmit"
-            >
-              <text v-if="isSubmitting">提交中...</text>
-              <view v-else class="submit-content">
-                <text>提交反馈</text>
-              </view>
-            </button>
+          <view
+            class="submit-button"
+            :class="{ disabled: !canSubmit }"
+            :disabled="!canSubmit || isSubmitting"
+            @click="handleSubmit"
+          >
+            <text v-if="isSubmitting">提交中...</text>
+            <view v-else class="submit-content">
+              <text>提交反馈</text>
+            </view>
           </view>
         </form>
       </view>
@@ -124,41 +105,53 @@ export default {
         {
           id: "report_logic",
           label: "逻辑策略",
-          icon: "trending-up.png",
+          icon: "11.png",
+          iconPath: "/static/images/my/feekback/11.png",
+          iconPathActive: "/static/images/my/feekback/12.png",
           placeholder:
-            "我觉得关于“竞争壁垒”的优化建议不够落地，实际上我们的核心优势是...",
+            "我觉得关于\"竞争壁垒\"的优化建议不够落地，实际上我们的核心优势是...",
         },
         {
           id: "report_data",
           label: "财务数据",
-          icon: "file-text.png",
+          icon: "21.png",
+          iconPath: "/static/images/my/feekback/21.png",
+          iconPathActive: "/static/images/my/feekback/22.png",
           placeholder:
             "报告中关于SAM市场规模的测算逻辑太保守了，我们实际的客单价是...",
         },
         {
           id: "report_tone",
           label: "措辞表达",
-          icon: "pen-tool.png",
+          icon: "41.png",
+          iconPath: "/static/images/my/feekback/41.png",
+          iconPathActive: "/static/images/my/feekback/42.png",
           placeholder: "产品亮点的描述太过于技术化，希望能更通俗易懂一点...",
         },
         {
           id: "feature_new",
           label: "功能需求",
-          icon: "lightbulb.png",
+          icon: "61.png",
+          iconPath: "/static/images/my/feekback/61.png",
+          iconPathActive: "/static/images/my/feekback/62.png",
           placeholder:
-            "我希望增加一个“一键生成路演逐字稿”的功能，或者支持Excel数据导入...",
+            "我希望增加一个\"一键生成路演逐字稿\"的功能，或者支持Excel数据导入...",
         },
         {
           id: "feature_ui",
           label: "体验优化",
-          icon: "cpu.png",
+          icon: "51.png",
+          iconPath: "/static/images/my/feekback/51.png",
+          iconPathActive: "/static/images/my/feekback/52.png",
           placeholder:
-            "希望能支持在BP预览页上直接对特定页面进行“意见映射”标注，方便对照修改...",
+            "希望能支持在BP预览页上直接对特定页面进行\"意见映射\"标注，方便对照修改...",
         },
         {
           id: "other",
-          label: "其他吐槽",
-          icon: "message-square.png",
+          label: "其它吐槽",
+          icon: "31.png",
+          iconPath: "/static/images/my/feekback/31.png",
+          iconPathActive: "/static/images/my/feekback/32.png",
           placeholder: "请畅所欲言，您的每一个字都在帮助我们进化...",
         },
       ],
@@ -207,8 +200,7 @@ export default {
 <style lang="scss" scoped>
 .container {
   min-height: 100vh;
-  background-color: #f1f5f9;
-  padding: 30rpx;
+  background-color: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -220,21 +212,17 @@ export default {
   width: 100%;
   max-width: 700px;
   background-color: #ffffff;
-  border-radius: 24rpx;
   box-shadow: 0 20rpx 25rpx -5rpx rgba(0, 0, 0, 0.1),
     0 10rpx 10rpx -5rpx rgba(0, 0, 0, 0.04);
   border: 1rpx solid #e2e8f0;
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 60rpx);
-  max-height: 900px;
 }
 
 .header {
-  background: linear-gradient(90deg, #2563eb, #3b82f6, #2dd4bf);
+  background: linear-gradient(180deg, #e0f2fe 0%, #ffffff 100%);
   padding: 40rpx 30rpx;
-  border-radius: 24rpx 24rpx 0 0;
-  color: white;
+  color: #1e293b;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -258,17 +246,29 @@ export default {
   flex-shrink: 0;
 }
 
+.header-icon {
+  width: 38rpx;
+  height: 38rpx;
+  flex-shrink: 0;
+}
+
 .header-text {
-  font-size: 32rpx;
-  font-weight: bold;
-  color: white;
+  width: 192rpx;
+  height: 60rpx;
+  opacity: 1;
+  color: #000000;
+  text-align: left;
+  font-size: 48rpx;
+  font-weight: 600;
+  font-family: "PingFang SC";
+  line-height: 60rpx;
 }
 
 .header-subtitle {
-  font-size: 20rpx;
-  color: rgba(255, 255, 255, 0.9);
-  font-weight: 500;
-  margin-top: 6rpx;
+  font-size: 24rpx;
+  color: #64748b;
+  font-weight: 400;
+  margin-top: 12rpx;
 }
 
 .version-tag {
@@ -341,61 +341,77 @@ export default {
 }
 
 .section-label {
-  font-size: 22rpx;
-  font-weight: bold;
-  color: #94a3b8;
-  text-transform: uppercase;
-  letter-spacing: 1rpx;
+  height: 30rpx;
+  opacity: 1;
+  color: #a4b0c2;
+  text-align: left;
+  font-size: 24rpx;
+  font-weight: 600;
+  font-family: "PingFang SC";
+  line-height: 30rpx;
   margin-bottom: 24rpx;
   display: block;
+  text-transform: none;
+  letter-spacing: 0;
 }
 
 .category-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 16rpx;
+  gap: 28rpx;
+  width: 100%;
 }
 
 .category-item {
+  width: 190rpx;
+  height: 132rpx;
+  border-radius: 28rpx;
+  opacity: 1;
+  background: #fafcfd;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 12rpx;
-  padding: 20rpx 10rpx;
-  border-radius: 16rpx;
+  padding: 24rpx 16rpx;
   border: 1rpx solid #e2e8f0;
-  background-color: #ffffff;
   transition: all 0.2s ease;
   text-align: center;
+  box-sizing: border-box;
 }
 
 .category-item.active {
-  border-color: #3b82f6;
-  background-color: #3b82f6;
+  border-color: #2B7EFF;
+  background-color: #ffffff;
   transform: scale(1.02);
-  box-shadow: 0 4rpx 6rpx -1rpx rgba(59, 130, 246, 0.2),
-    0 2rpx 4rpx -1rpx rgba(59, 130, 246, 0.1);
+  box-shadow: 0 0 0 2rpx rgba(59, 130, 246, 0.2);
 }
 
 .category-icon {
-  width: 36rpx;
-  height: 36rpx;
+  width: 48rpx;
+  height: 48rpx;
   flex-shrink: 0;
 }
 
 .category-icon.active-icon {
-  filter: brightness(0) invert(1);
+  filter: brightness(0) saturate(100%) invert(27%) sepia(95%) saturate(2075%) hue-rotate(210deg) brightness(98%) contrast(98%);
 }
 
 .category-label {
-  font-size: 22rpx;
-  font-weight: bold;
-  color: #64748b;
+  width: 96rpx;
+  height: 30rpx;
+  opacity: 1;
+  color: #a3afc1;
+  text-align: left;
+  font-size: 24rpx;
+  font-weight: 600;
+  font-family: "PingFang SC";
+  line-height: 30rpx;
 }
 
 .category-item.active .category-label {
-  color: white;
+  color: #2B7EFF;
+  font-weight: 600;
 }
 
 .feedback-section {
@@ -406,116 +422,90 @@ export default {
   margin-bottom: 40rpx;
 }
 
-.feedback-header {
-  margin-bottom: 24rpx;
-}
-
 .feedback-input-container {
-  flex: 1;
+  width: 702rpx;
+  height: 596rpx;
+  border-radius: 28rpx;
+  opacity: 1;
+  border: 2rpx solid #f4f7fa;
+  box-shadow: 0 4rpx 4rpx 0 rgba(131, 132, 135, 0.1);
   display: flex;
   flex-direction: column;
-  border-radius: 20rpx;
-  box-shadow: 0 0 15rpx rgba(0, 0, 0, 0.05);
-  border: 2rpx solid #f1f5f9;
-  overflow: hidden;
+  background-color: #ffffff;
+  padding: 24rpx;
+  box-sizing: border-box;
   transition: all 0.3s ease;
 }
 
 .feedback-input-container:focus-within {
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 4rpx rgba(59, 130, 246, 0.1);
+  border-color: #2B7EFF;
 }
 
-.inspiration-guide {
-  background-color: rgba(219, 234, 254, 0.8);
-  border-bottom: 1rpx solid #dbeafe;
-  padding: 24rpx;
-  transition: all 0.3s ease;
-}
-
-.guide-content {
-  display: flex;
-  gap: 20rpx;
-}
-
-.quote-icon {
-  width: 24rpx;
-  height: 24rpx;
-  flex-shrink: 0;
-  margin-top: 6rpx;
-}
-
-.guide-text-container {
-  flex: 1;
-}
-
-.guide-category {
-  font-size: 22rpx;
-  font-weight: bold;
-  color: #60a5fa;
-  text-transform: uppercase;
-  letter-spacing: 0.5rpx;
-  margin-bottom: 6rpx;
-  display: block;
-}
-
-.guide-text {
-  font-size: 20rpx;
-  color: #999;
-  font-weight: 500;
-  font-style: italic;
-  line-height: 1.4;
+.feedback-input-container .section-label {
+  width: 144rpx;
+  height: 30rpx;
+  opacity: 1;
+  color: #a4b0c2;
+  text-align: left;
+  font-size: 24rpx;
+  font-weight: 600;
+  font-family: "PingFang SC";
+  line-height: 30rpx;
+  margin-bottom: 16rpx;
 }
 
 .feedback-textarea {
   flex: 1;
   width: 100%;
-  padding: 30rpx 30rpx;
+  min-height: 200rpx;
+  padding: 0;
   box-sizing: border-box;
-  background-color: white;
+  background-color: transparent;
   color: #1e293b;
   font-size: 28rpx;
   resize: none;
+  border: none;
+  outline: none;
 }
 
 .feedback-textarea::placeholder {
-  color: #cbd5e1;
+  width: 72rpx;
+  height: 30rpx;
+  opacity: 1;
+  color: #a4b0c2;
+  text-align: left;
+  font-size: 24rpx;
+  font-weight: 600;
+  font-family: "PingFang SC";
+  line-height: 30rpx;
+  display: block;
 }
 
-.char-count {
-  background-color: white;
-  padding: 16rpx 24rpx;
-  display: flex;
-  justify-content: flex-end;
-}
-
-.char-count-text {
-  font-size: 22rpx;
-  color: #cbd5e1;
-}
-
-.submit-section {
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  padding-top: 30rpx;
+.uni-textarea-placeholder {
+  color: #A4B0C2 !important;
+  font-size: 24rpx;
 }
 
 .submit-button {
+  width: 702rpx;
+  height: 128rpx;
+  border-radius: 20rpx;
+  opacity: 1;
+  background: #e2e8f0;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 16rpx;
-  padding: 0rpx 48rpx;
+  padding: 0;
   box-sizing: border-box;
-  border-radius: 16rpx;
-  font-weight: bold;
-  font-size: 28rpx;
-  color: white;
-  background: linear-gradient(90deg, #2563eb, #2dd4bf);
   transition: all 0.2s ease;
   transform: scale(1);
+  border: none;
+  margin-top: 40rpx;
+}
+
+.submit-button:not(.disabled) {
+  background: #0f172a;
 }
 
 .submit-button:active {
@@ -540,6 +530,17 @@ export default {
   gap: 16rpx;
 }
 
+.submit-content text,
+.submit-button text {
+  opacity: 1;
+  color: #ffffff;
+  text-align: center;
+  font-size: 32rpx;
+  font-weight: 700;
+  font-family: "Alibaba PuHuiTi 3.0";
+  line-height: 50.6rpx;
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -554,7 +555,7 @@ export default {
 /* 响应式调整 */
 @media (max-width: 768px) {
   .category-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
   }
 
   .header-text {

@@ -6,13 +6,11 @@
     <view class="page-content">
       <!-- 我要成为代理按钮 -->
       <view class="become-agent-button" @click="handleBecomeAgent">
-        <view class="button-left">
-          <view class="button-icon">👥</view>
-        </view>
-        <view class="button-right">
+        <view class="button-top">
+          <image src="/static/images/my/people.png" class="button-icon" mode="aspectFit" />
           <view class="button-title">我要成为代理</view>
-          <view class="button-subtitle">点击联系人工客服开通</view>
         </view>
+        <view class="button-subtitle">点击联系人工客服开通</view>
       </view>
 
       <!-- 代理签约状态 -->
@@ -209,50 +207,44 @@ export default {
   padding: 32rpx;
   box-sizing: border-box;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 24rpx;
+  justify-content: center;
+  gap: 12rpx;
   margin: 0 auto 32rpx;
 
-  .button-left {
-    .button-icon {
-      width: 80rpx;
-      height: 80rpx;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 60rpx;
-    }
-  }
-
-  .button-right {
-    flex: 1;
+  .button-top {
     display: flex;
-    flex-direction: column;
+    align-items: center;
     gap: 12rpx;
+    
+    .button-icon {
+      width: 34rpx;
+      height: 28rpx;
+      flex-shrink: 0;
+    }
 
     .button-title {
-      width: 216rpx;
       height: 44rpx;
       opacity: 1;
       color: #ffffff;
-      text-align: center;
+      text-align: left;
       font-size: 36rpx;
       font-weight: 700;
       font-family: "DIN Alternate";
       line-height: 44rpx;
     }
+  }
 
-    .button-subtitle {
-      width: 240rpx;
-      height: 44rpx;
-      opacity: 0.5;
-      color: #ffffff;
-      text-align: center;
-      font-size: 24rpx;
-      font-weight: 700;
-      font-family: "DIN Alternate";
-      line-height: 44rpx;
-    }
+  .button-subtitle {
+    height: 44rpx;
+    opacity: 0.5;
+    color: #ffffff;
+    text-align: center;
+    font-size: 24rpx;
+    font-weight: 700;
+    font-family: "DIN Alternate";
+    line-height: 44rpx;
   }
 }
 

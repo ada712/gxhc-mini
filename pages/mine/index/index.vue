@@ -255,7 +255,7 @@
             />
           </view>
         </view>
-        <button class="row common-row" open-type="feedback">
+        <view class="row common-row" @click="goFeedbackPage">
           <view class="left">
             <image
               src="/static/images/my/yijianfankui.png"
@@ -269,7 +269,7 @@
               class="icon_right_arrow"
             />
           </view>
-        </button>
+        </view>
         <view class="row common-row" v-if="false" @click="goCustomerPage">
           <view class="left">
             <image
@@ -530,6 +530,9 @@ export default {
     goCustomerPage2() {
       this.navigateToPage("/subpackage1/kf/index");
     },
+    goFeedbackPage() {
+      this.navigateToPage("/subpackage1/bp/feedback/index");
+    },
     goMessageList() {
       this.navigateToPage("/pages/mine/message/index");
     },
@@ -545,14 +548,24 @@ export default {
         });
     },
     getReportCount() {
+      if (!this.isLogin) {
+        this.reportCount = 0;
+        return;
+      }
+      
       getBpResultList({ page: 1, limit: 1 })
         .then((res) => {
           if (res.status === 200 && res.data) {
+            // 接口返回的数据结构：{ list: [], total: 总数 }
             this.reportCount = res.data.total || 0;
+          } else {
+            // 如果接口返回错误，设置为0
+            this.reportCount = 0;
           }
         })
         .catch((error) => {
           console.error("获取报告数量异常:", error);
+          this.reportCount = 0;
         });
     },
     formatEnergy(energy) {
