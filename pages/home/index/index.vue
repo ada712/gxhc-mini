@@ -733,7 +733,6 @@ uni-page-body {
           }
 
           .header-subtitle {
-            width: 256rpx;
             height: 30rpx;
             opacity: 1;
             color: #94acd1;
