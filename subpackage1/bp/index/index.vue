@@ -47,6 +47,9 @@
 import { runBp } from "@/api/gxhc.js";
 import { HTTP_REQUEST_URL, TOKENNAME } from "@/config/app";
 import { imgUrls } from "@/config/app";
+import { toLogin } from "@/libs/login";
+import store from "@/store";
+
 export default {
   data: function () {
     return {
@@ -69,6 +72,23 @@ export default {
     },
     choosePDF() {
       if (this.uploading) {
+        return;
+      }
+
+      // 检查登录状态
+      if (!store.state.app.token) {
+        uni.showModal({
+          title: "提示",
+          content: "请先登录后再上传文件",
+          showCancel: true,
+          confirmText: "去登录",
+          cancelText: "取消",
+          success: (res) => {
+            if (res.confirm) {
+              toLogin();
+            }
+          },
+        });
         return;
       }
 
@@ -124,70 +144,28 @@ export default {
     },
     uploadPDF(file) {
       this.uploading = true;
-      // 显示上传提示
-      uni.showLoading({
-        title: "上传中...",
-      });
-      uni.uploadFile({
-        url: HTTP_REQUEST_URL + "/api/runBp", // 替换为实际的API地址
-        // url: HTTP_REQUEST_URL+'/bp/api/runs', // 替换为实际的API地址
-        // url: 'https://gxhc-agent.mahanova.com/api/runs', // 替换为实际的API地址
-        filePath: file.path || file,
-        name: "files",
-        header: {
-          // #ifdef MP
-          "Content-Type": "multipart/form-data",
-          // "Content-Type": "application/json",
-          // #endif
-          // 'Authorization': "Bearer sk-SDQ2J97ezAs1iILJzn00LQ"
-          [TOKENNAME]: "Bearer " + this.$store.state.app.token,
-        },
-        formData: {
-          // 其他需要提交的表单数据
-          pipeline: "bp_diagnosis",
-          target: "export_preliminary",
-          filename: file.name || "unknown.pdf", // 添加原文件名
-        },
-        success: (uploadFileRes) => {
-          uni.hideLoading();
-          this.uploading = false;
-
-          // 解析返回结果
-          let data;
-          try {
-            data = JSON.parse(uploadFileRes.data);
-          } catch (e) {
-            console.error("解析响应失败", e);
-            uni.showToast({
-              title: "上传失败",
-              icon: "none",
-            });
-            return;
-          }
-          console.log(data);
-          // 判断上传是否成功
-          if (data.status == 200) {
-            // 跳转到加载页面
-            uni.redirectTo({
-              url: "/subpackage1/bp/loading/index?runId=" + data.data.run_id
-            });
-          } else {
-            uni.showToast({
-              title: data.msg || "上传失败",
-              icon: "none",
-            });
-          }
-        },
-        fail: (err) => {
-          uni.hideLoading();
-          this.uploading = false;
-          console.error("上传失败", err);
-          uni.showToast({
-            title: "上传失败",
-            icon: "none",
-          });
-        },
-      });
+      
+      // 将文件信息存储到本地存储，然后跳转到加载页面
+      const fileInfo = {
+        path: file.path || file,
+        name: file.name || "unknown.pdf",
+        size: file.size || 0
+      };
+      
+      try {
+        uni.setStorageSync('bp_upload_file', fileInfo);
+        // 立即跳转到加载页面
+        uni.redirectTo({
+          url: "/subpackage1/bp/loading/index"
+        });
+      } catch (e) {
+        console.error("存储文件信息失败", e);
+        this.uploading = false;
+        uni.showToast({
+          title: "跳转失败",
+          icon: "none",
+        });
+      }
     },
     postBP() {
       runBp({}).then((res) => {

@@ -50,6 +50,9 @@
 
 <script>
 import { getBpInfo } from "@/api/gxhc.js";
+import { HTTP_REQUEST_URL, TOKENNAME } from "@/config/app";
+import { toLogin } from "@/libs/login";
+import store from "@/store";
 
 export default {
   data() {
@@ -59,13 +62,38 @@ export default {
       runId: "",
       timer: null,
       checkTimer: null,
+      uploading: false, // 是否正在上传
     };
   },
   onLoad(options) {
+    // 检查登录状态
+    if (!store.state.app.token) {
+      uni.showModal({
+        title: "提示",
+        content: "请先登录后再进行操作",
+        showCancel: true,
+        confirmText: "去登录",
+        cancelText: "取消",
+        success: (res) => {
+          if (res.confirm) {
+            toLogin();
+          } else {
+            uni.navigateBack();
+          }
+        },
+      });
+      return;
+    }
+
+    // 如果已经有 runId，说明是从其他地方跳转过来的，直接开始检查状态
     if (options.runId) {
       this.runId = options.runId;
       this.startProgress();
       this.checkStatus();
+    } else {
+      // 如果没有 runId，说明需要先上传文件
+      this.startProgress();
+      this.uploadFile();
     }
   },
   onUnload() {
@@ -86,7 +114,117 @@ export default {
         }
       }, 500);
     },
+    uploadFile() {
+      // 从本地存储获取文件信息
+      try {
+        const fileInfo = uni.getStorageSync('bp_upload_file');
+        if (!fileInfo || !fileInfo.path) {
+          uni.showToast({
+            title: "文件信息丢失",
+            icon: "none",
+          });
+          setTimeout(() => {
+            uni.navigateBack();
+          }, 1500);
+          return;
+        }
+
+        this.uploading = true;
+        
+        // 执行上传
+        uni.uploadFile({
+          url: HTTP_REQUEST_URL + "/api/runBp",
+          filePath: fileInfo.path,
+          name: "files",
+          header: {
+            // #ifdef MP
+            "Content-Type": "multipart/form-data",
+            // #endif
+            [TOKENNAME]: "Bearer " + this.$store.state.app.token,
+          },
+          formData: {
+            pipeline: "bp_diagnosis",
+            target: "export_preliminary",
+            filename: fileInfo.name || "unknown.pdf",
+          },
+          success: (uploadFileRes) => {
+            this.uploading = false;
+            
+            // 清除本地存储的文件信息
+            try {
+              uni.removeStorageSync('bp_upload_file');
+            } catch (e) {
+              console.error("清除文件信息失败", e);
+            }
+
+            // 解析返回结果
+            let data;
+            try {
+              data = JSON.parse(uploadFileRes.data);
+            } catch (e) {
+              console.error("解析响应失败", e);
+              uni.showToast({
+                title: "上传失败",
+                icon: "none",
+              });
+              setTimeout(() => {
+                uni.navigateBack();
+              }, 1500);
+              return;
+            }
+
+            // 判断上传是否成功
+            if (data.status == 200 && data.data && data.data.run_id) {
+              this.runId = data.data.run_id;
+              // 开始检查状态
+              this.checkStatus();
+            } else {
+              uni.showToast({
+                title: data.msg || "上传失败",
+                icon: "none",
+              });
+              setTimeout(() => {
+                uni.navigateBack();
+              }, 1500);
+            }
+          },
+          fail: (err) => {
+            this.uploading = false;
+            console.error("上传失败", err);
+            
+            // 清除本地存储的文件信息
+            try {
+              uni.removeStorageSync('bp_upload_file');
+            } catch (e) {
+              console.error("清除文件信息失败", e);
+            }
+            
+            uni.showToast({
+              title: "上传失败",
+              icon: "none",
+            });
+            setTimeout(() => {
+              uni.navigateBack();
+            }, 1500);
+          },
+        });
+      } catch (e) {
+        console.error("获取文件信息失败", e);
+        this.uploading = false;
+        uni.showToast({
+          title: "文件信息获取失败",
+          icon: "none",
+        });
+        setTimeout(() => {
+          uni.navigateBack();
+        }, 1500);
+      }
+    },
     checkStatus() {
+      if (!this.runId) {
+        return;
+      }
+      
       // 轮询检查状态
       this.checkTimer = setInterval(() => {
         getBpInfo({ run_id: this.runId, target: "export_preliminary" })
@@ -202,17 +340,28 @@ page {
     }
 
     .loading-main-text {
-      font-size: 36rpx;
+      width: 344rpx;
+      height: 50rpx;
+      opacity: 1;
+      color: #000000;
+      text-align: center;
+      font-size: 40rpx;
       font-weight: 600;
-      color: #182855;
-      margin-bottom: 24rpx;
       font-family: "PingFang SC";
+      line-height: 50rpx;
+      margin-bottom: 24rpx;
     }
 
     .loading-sub-text {
-      font-size: 28rpx;
-      color: #909399;
+      width: 310rpx;
+      height: 30rpx;
+      opacity: 1;
+      color: #000000;
+      text-align: center;
+      font-size: 24rpx;
+      font-weight: 400;
       font-family: "PingFang SC";
+      line-height: 30rpx;
     }
   }
 

@@ -32,11 +32,11 @@
             </view>
           </view>
         </view>
-        <view class="feature-card card-orange" @click="goPage('/subpackage1/bp/applyPlay/index')">
+        <view class="feature-card card-orange" @click="showBookingModal">
           <view class="card-content">
             <text class="card-title">创业导师\n直播连线</text>
             <text class="card-subtitle">30分钟导师深度咨询</text>
-            <view class="card-btn" @click.stop="goPage('/subpackage1/bp/applyPlay/index')">
+            <view class="card-btn" @click.stop="showBookingModal">
               <text class="btn-text">立即预约</text>
               <image class="btn-icon" src="/static/images/home/rili.png" mode="aspectFit"></image>
             </view>
@@ -101,9 +101,64 @@
         :y="serviceBtnY"
         @click="goCustomerService"
       >
-        <image class="service-icon" src="/static/images/home/service.png" mode="aspectFit"></image>
+        <image class="service-icon" src="/static/images/home/kefu.png" mode="aspectFit"></image>
       </movable-view>
     </movable-area>
+
+    <!-- 预约弹窗 -->
+    <view class="booking-modal-overlay" v-if="showBookingModalFlag" @click="closeBookingModal">
+      <view class="booking-modal" @click.stop>
+        <!-- 弹窗头部 -->
+        <view class="modal-header">
+          <view class="header-left">
+            <image class="header-icon" src="/static/images/home/yuyue.png" mode="aspectFit"></image>
+            <view class="header-text">
+              <text class="header-title">创业导师连线预约</text>
+              <text class="header-subtitle">ONLINE CONSULTING</text>
+            </view>
+          </view>
+          <image class="modal-close" src="/static/images/my/clear.png" mode="aspectFit" @click="closeBookingModal"></image>
+        </view>
+
+        <!-- 弹窗内容 -->
+        <view class="modal-body">
+          <view class="balance-row">
+            <text class="balance-label">当前可用直播</text>
+            <view class="balance-value">
+              <text class="balance-number">{{ bookingBalance }}</text>
+              <text class="balance-unit">张</text>
+            </view>
+          </view>
+
+          <!-- 有直播券时的提示框 -->
+          <view class="success-box" v-if="bookingBalance > 0">
+            <view class="success-dot"></view>
+            <text class="success-text">您当前拥有预约资格,可直接进行时段选择。</text>
+          </view>
+
+          <!-- 无直播券时的警告提示框 -->
+          <view class="warning-box" v-else>
+            <image class="warning-icon" src="/static/images/code/error.png" mode="aspectFit"></image>
+            <view class="warning-content">
+              <text class="warning-title">温馨提示:预约资格已用完</text>
+              <text class="warning-desc">请点击左侧按钮购买一次升级服务包,即可重新解锁预约机会</text>
+            </view>
+          </view>
+        </view>
+
+        <!-- 弹窗底部按钮 -->
+        <view class="modal-footer">
+          <view class="footer-btn btn-primary" @click="goToBP">
+            <image class="btn-icon" src="/static/images/home/huoj.png" mode="aspectFit"></image>
+            <text class="btn-text">BP诊断Agent</text>
+          </view>
+          <view class="footer-btn booking-btn" :class="bookingBalance > 0 ? 'btn-primary' : 'btn-disabled'" @click="handleBooking">
+            <text class="btn-text">立即预约</text>
+            <image v-if="bookingBalance > 0" class="btn-arrow" src="/static/images/icons/icon-gray-right2.png" mode="aspectFit"></image>
+          </view>
+        </view>
+      </view>
+    </view>
   </view>
 </template>
 
@@ -129,6 +184,8 @@ export default {
       ],
       serviceBtnX: 0,
       serviceBtnY: 0,
+      showBookingModalFlag: false, // 显示预约弹窗
+      bookingBalance: 1, // 预约资格余额（可用直播券数量）
     };
   },
   computed: { ...mapGetters(["uid"]) },
@@ -233,6 +290,30 @@ export default {
       uni.navigateTo({
         url: "/subpackage1/kf/index",
       });
+    },
+    showBookingModal() {
+      // 显示预约弹窗
+      this.showBookingModalFlag = true;
+      // 这里可以调用API获取预约资格余额
+      // this.getBookingBalance();
+    },
+    closeBookingModal() {
+      this.showBookingModalFlag = false;
+    },
+    goToBP() {
+      // 跳转到BP诊断页面
+      this.closeBookingModal();
+      this.goPage('/subpackage1/bp/index/index');
+    },
+    handleBooking() {
+      // 处理预约
+      if (this.bookingBalance > 0) {
+        // 有直播券，跳转到预约页面
+        this.closeBookingModal();
+        this.goPage('/subpackage1/bp/applyPlay/index');
+      } else {
+        // 无直播券，不执行任何操作（按钮已禁用）
+      }
     },
   },
 };
@@ -592,6 +673,303 @@ uni-page-body {
     .service-icon {
       width: 120rpx;
       height: 120rpx;
+    }
+  }
+
+  // 预约弹窗
+  .booking-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    z-index: 10000;
+  }
+
+  .booking-modal {
+    width: 100%;
+    max-width: 750rpx;
+    background: #ffffff;
+    border-radius: 24rpx 24rpx 0 0;
+    overflow: hidden;
+    position: relative;
+
+    .modal-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      padding: 32rpx;
+      border-bottom: 1rpx solid #f1f5f9;
+
+      .header-left {
+        display: flex;
+        align-items: center;
+        gap: 20rpx;
+
+        .header-icon {
+          width: 80rpx;
+          height: 80rpx;
+        }
+
+        .header-text {
+          display: flex;
+          flex-direction: column;
+          gap: 8rpx;
+
+          .header-title {
+            width: 320rpx;
+            height: 50rpx;
+            opacity: 1;
+            color: #000000;
+            text-align: left;
+            font-size: 40rpx;
+            font-weight: 600;
+            font-family: "PingFang SC";
+            line-height: 50rpx;
+          }
+
+          .header-subtitle {
+            width: 256rpx;
+            height: 30rpx;
+            opacity: 1;
+            color: #94acd1;
+            text-align: left;
+            font-size: 24rpx;
+            font-weight: 600;
+            font-family: "PingFang SC";
+            line-height: 30rpx;
+          }
+        }
+      }
+
+      .modal-close {
+        width: 48rpx;
+        height: 48rpx;
+      }
+    }
+
+    .modal-body {
+      width: 668rpx;
+      height: 270rpx;
+      border-radius: 38rpx;
+      opacity: 1;
+      border: 2rpx solid rgba(0, 0, 0, 0.04);
+      background: #f8fafc;
+      padding: 32rpx;
+      margin: 0 auto;
+      box-sizing: border-box;
+
+      .balance-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 24rpx;
+
+        .balance-label {
+          width: 224rpx;
+          height: 36rpx;
+          opacity: 1;
+          color: #64748b;
+          text-align: left;
+          font-size: 28rpx;
+          font-weight: 600;
+          font-family: "PingFang SC";
+          line-height: 35rpx;
+        }
+
+      .balance-value {
+        display: flex;
+        align-items: baseline;
+        gap: 0;
+      }
+
+      .balance-number {
+        width: 48rpx;
+        height: 60rpx;
+        opacity: 0.5;
+        color: #000000;
+        text-align: right;
+        font-size: 48rpx;
+        font-weight: 600;
+        font-family: "PingFang SC";
+        line-height: 60rpx;
+      }
+
+      .balance-unit {
+        width: 48rpx;
+        height: 60rpx;
+        opacity: 0.5;
+        color: #000000;
+        text-align: right;
+        font-size: 28rpx;
+        font-weight: 600;
+        font-family: "PingFang SC";
+        line-height: 35rpx;
+      }
+    }
+
+    .success-box {
+      width: 600rpx;
+      height: 96rpx;
+      border-radius: 38rpx;
+      opacity: 1;
+      border: 2rpx solid rgba(16, 185, 129, 0.5);
+      background: #ecfdf5;
+      display: flex;
+      align-items: center;
+      gap: 12rpx;
+      padding: 24rpx;
+      margin-bottom: 0;
+      box-sizing: border-box;
+
+      .success-dot {
+        width: 16rpx;
+        height: 16rpx;
+        background: #22c55e;
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
+
+      .success-text {
+        width: 480rpx;
+        height: 30rpx;
+        opacity: 1;
+        color: #047857;
+        text-align: left;
+        font-size: 24rpx;
+        font-weight: 600;
+        font-family: "PingFang SC";
+        line-height: 30rpx;
+        flex: 1;
+      }
+    }
+
+    .warning-box {
+        display: flex;
+        align-items: flex-start;
+        gap: 16rpx;
+        padding: 24rpx;
+        background: #fff7ed;
+        border-radius: 12rpx;
+
+        .warning-icon {
+          width: 32rpx;
+          height: 32rpx;
+          flex-shrink: 0;
+          margin-top: 4rpx;
+        }
+
+        .warning-content {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          gap: 12rpx;
+
+          .warning-title {
+            font-size: 28rpx;
+            font-weight: 600;
+            color: #1a1a1a;
+            line-height: 36rpx;
+          }
+
+          .warning-desc {
+            font-size: 24rpx;
+            color: #64748b;
+            line-height: 32rpx;
+          }
+        }
+      }
+    }
+
+    .modal-footer {
+      display: flex;
+      gap: 16rpx;
+      padding: 32rpx;
+      border-top: 1rpx solid #f1f5f9;
+
+      .footer-btn {
+        flex: 1;
+        height: 128rpx;
+        border-radius: 20rpx;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 24rpx;
+
+        &.btn-primary {
+          width: 340rpx;
+          height: 128rpx;
+          border-radius: 20rpx;
+          opacity: 1;
+          background: linear-gradient(140.7deg, #6365f1 0%, #8f37eb 100%);
+
+          .btn-icon {
+            width: 32rpx;
+            height: 32rpx;
+          }
+
+          .btn-arrow {
+            width: 24rpx;
+            height: 24rpx;
+          }
+
+          .btn-text {
+            width: 210rpx;
+            height: 50.6rpx;
+            opacity: 1;
+            color: #ffffff;
+            text-align: left;
+            font-size: 32rpx;
+            font-weight: 700;
+            font-family: "Alibaba PuHuiTi 3.0";
+            line-height: 50.6rpx;
+          }
+        }
+
+        &.booking-btn.btn-primary {
+          width: 340rpx;
+          height: 128rpx;
+          border-radius: 20rpx;
+          opacity: 1;
+          background: #0f172a;
+
+          .btn-text {
+            width: 173.62rpx;
+            height: 50.6rpx;
+            opacity: 1;
+            color: #ffffff;
+            text-align: center;
+            font-size: 32rpx;
+            font-weight: 700;
+            font-family: "Alibaba PuHuiTi 3.0";
+            line-height: 50.6rpx;
+          }
+        }
+
+        &.btn-disabled {
+          width: 340rpx;
+          height: 128rpx;
+          border-radius: 20rpx;
+          opacity: 1;
+          background: #e2e8f0;
+
+          .btn-text {
+            width: 173.62rpx;
+            height: 50.6rpx;
+            opacity: 1;
+            color: #94a3b8;
+            text-align: center;
+            font-size: 32rpx;
+            font-weight: 700;
+            font-family: "Alibaba PuHuiTi 3.0";
+            line-height: 50.6rpx;
+          }
+        }
+      }
     }
   }
 }

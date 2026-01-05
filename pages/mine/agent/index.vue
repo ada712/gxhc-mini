@@ -1,6 +1,6 @@
 <template>
   <view class="agent-page">
-    <x-navbar title="代理与协议中心" :letfArrow="true">
+    <x-navbar title="代理与协议中心" :letfArrow="true" :customBack="goBackToMine">
     </x-navbar>
 
     <view class="page-content">
@@ -178,6 +178,12 @@ export default {
       //   url: '/pages/mine/agent/agreement/index'
       // });
     },
+    goBackToMine() {
+      // 返回到"我的"页面（tabBar页面）
+      uni.switchTab({
+        url: "/pages/mine/index/index",
+      });
+    },
   },
 };
 </script>
@@ -333,8 +339,6 @@ export default {
     border-top: 1rpx solid #f1f5f9;
     
     .task-title {
-      width: 166rpx;
-      height: 40rpx;
       opacity: 1;
       color: #16171a;
       text-align: left;

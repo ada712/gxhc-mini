@@ -37,7 +37,7 @@ function baseRequest(url, method, data, { noAuth = false, noVerify = false }) {
                 if (noVerify) reslove(res.data, res);
                 else if (res.data.status == 200) reslove(res.data, res);
                 else if ([110002, 110003, 110004].indexOf(res.data.status) !== -1) {
-                    // toLogin();
+                    toLogin();
                     reject(res.data);
                 } else if (res.data.status == 100103) {
                     uni.showModal({

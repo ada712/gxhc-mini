@@ -35,6 +35,9 @@ if (!Math) {
   "./pages/mine/customer/index/index.js";
   "./pages/mine/login/index.js";
   "./pages/mine/message/index.js";
+  "./pages/mine/exchange/index.js";
+  "./pages/mine/exchange/record/index.js";
+  "./pages/mine/agent/index.js";
   "./pages/project/detail/index.js";
   "./pages/project/evolve/index.js";
   "./pages/project/apply/index.js";

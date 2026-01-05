@@ -94,6 +94,10 @@ const looseToNumber = (val) => {
   const n2 = parseFloat(val);
   return isNaN(n2) ? val : n2;
 };
+const toNumber = (val) => {
+  const n2 = isString(val) ? Number(val) : NaN;
+  return isNaN(n2) ? val : n2;
+};
 function normalizeStyle(value) {
   if (isArray(value)) {
     const res = {};
@@ -4165,7 +4169,7 @@ function resolveMergedOptions(instance) {
   } else {
     resolved = {};
     if (globalMixins.length) {
-      globalMixins.forEach((m) => mergeOptions(resolved, m, optionMergeStrategies, true));
+      globalMixins.forEach((m2) => mergeOptions(resolved, m2, optionMergeStrategies, true));
     }
     mergeOptions(resolved, base, optionMergeStrategies);
   }
@@ -4180,7 +4184,7 @@ function mergeOptions(to, from, strats, asMixin = false) {
     mergeOptions(to, extendsOptions, strats, true);
   }
   if (mixins) {
-    mixins.forEach((m) => mergeOptions(to, m, strats, true));
+    mixins.forEach((m2) => mergeOptions(to, m2, strats, true));
   }
   for (const key in from) {
     if (asMixin && key === "expose") {
@@ -6061,6 +6065,27 @@ function setRef(ref2, id, opts = {}) {
   const { $templateRefs } = getCurrentInstance();
   $templateRefs.push({ i: id, r: ref2, k: opts.k, f: opts.f });
 }
+function withModelModifiers(fn, { number, trim }, isComponent = false) {
+  if (isComponent) {
+    return (...args) => {
+      if (trim) {
+        args = args.map((a) => a.trim());
+      } else if (number) {
+        args = args.map(toNumber);
+      }
+      return fn(...args);
+    };
+  }
+  return (event) => {
+    const value = event.detail.value;
+    if (trim) {
+      event.detail.value = value.trim();
+    } else if (number) {
+      event.detail.value = toNumber(value);
+    }
+    return fn(event);
+  };
+}
 const o = (value, key) => vOn(value, key);
 const f = (source, renderItem) => vFor(source, renderItem);
 const s = (value) => stringifyStyle(value);
@@ -6069,6 +6094,7 @@ const n = (value) => normalizeClass(value);
 const t = (val) => toDisplayString(val);
 const p = (props) => renderProps(props);
 const sr = (ref2, id, opts) => setRef(ref2, id, opts);
+const m = (fn, modifiers, isComponent = false) => withModelModifiers(fn, modifiers, isComponent);
 function createApp$1(rootComponent, rootProps = null) {
   rootComponent && (rootComponent.mpType = "app");
   return createVueApp(rootComponent, rootProps).use(plugin);
@@ -7625,16 +7651,19 @@ function getModuleByNamespace(store, helper, namespace) {
   return module2;
 }
 exports._export_sfc = _export_sfc;
+exports.computed = computed;
 exports.createSSRApp = createSSRApp;
 exports.createStore = createStore;
 exports.defineComponent = defineComponent;
 exports.e = e;
 exports.f = f;
 exports.index = index;
+exports.m = m;
 exports.mapGetters = mapGetters;
 exports.n = n;
 exports.o = o;
 exports.p = p;
+exports.ref = ref;
 exports.resolveComponent = resolveComponent;
 exports.s = s;
 exports.sr = sr;

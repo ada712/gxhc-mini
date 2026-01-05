@@ -93,7 +93,7 @@
               <text class="update-time">{{ item.time }}</text>
             </view>
           </view>
-          <image class="full-updates-btn" src="/static/images/domain/com.png" mode="widthFix" @click="goFullUpdates"></image>
+          <image class="full-updates-btn" src="/static/images/domain/wzdt.png" mode="widthFix" @click="goFullUpdates"></image>
         </view>
       </view>
     </view>

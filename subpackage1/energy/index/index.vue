@@ -238,7 +238,6 @@ page {
         gap: 8rpx;
 
         .task-title {
-          height: 40rpx;
           opacity: 1;
           color: #000000;
           text-align: left;
