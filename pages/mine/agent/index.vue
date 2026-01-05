@@ -156,13 +156,13 @@ export default {
     goToUserAgreement() {
       // 跳转到用户服务协议页面
       uni.navigateTo({
-        url: "/explainPages/protocol/index",
+        url: "/explainPages/protocol/privacy/index?type=4",
       });
     },
     goToPrivacyPolicy() {
       // 跳转到隐私政策页面
       uni.navigateTo({
-        url: "/explainPages/protocol/privacy/index",
+        url: "/explainPages/protocol/privacy/index?type=3",
       });
     },
     viewAgreement() {
@@ -361,7 +361,7 @@ export default {
 
 .agreement-card {
   width: 100%;
-  margin-bottom: 24rpx;
+  padding: 24rpx 0rpx;
   box-sizing: border-box;
   overflow: hidden;
 

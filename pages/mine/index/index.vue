@@ -553,11 +553,11 @@ export default {
         return;
       }
       
-      getBpResultList({ page: 1, limit: 1 })
+      getBpResultList({ page: 1, limit: 1000 })
         .then((res) => {
           if (res.status === 200 && res.data) {
             // 接口返回的数据结构：{ list: [], total: 总数 }
-            this.reportCount = res.data.total || 0;
+            this.reportCount = res.data.list.length || 0;
           } else {
             // 如果接口返回错误，设置为0
             this.reportCount = 0;

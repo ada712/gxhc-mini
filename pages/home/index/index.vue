@@ -47,7 +47,7 @@
 
     <!-- 用户反馈 -->
     <view class="feedback-section">
-      <text class="feedback-label">——"来自用户的真实反馈"</text>
+      <image src="/static/images/home/feedback-text.png" class="feedback-text-img" mode="aspectFit" />
       <!-- 第一行：向左滚动 -->
       <view class="feedback-row feedback-row-left">
         <view class="feedback-content">
@@ -532,13 +532,13 @@ uni-page-body {
     margin: 60rpx 32rpx 0;
     padding-bottom: 20rpx;
 
-    .feedback-label {
+    .feedback-text-img {
       display: block;
-      text-align: center;
-      font-size: 24rpx;
-      color: #999;
-      margin-bottom: 24rpx;
+      width: 422rpx;
+      height: 32rpx;
+      margin: 0 auto 24rpx;
     }
+
 
     .feedback-row {
       width: 100%;
