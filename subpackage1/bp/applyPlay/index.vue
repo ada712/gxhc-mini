@@ -5,7 +5,7 @@
     <view class="alert-banner">
       <image class="alert-icon" src="/static/images/code/error.png" mode="aspectFit"></image>
       <text class="alert-text">3月15日场次当前可约,快来抢占名额!</text>
-    </view>
+        </view>
 
     <!-- 第一步：选择您的创业导师 -->
     <view class="section">
@@ -25,7 +25,7 @@
           <text class="mentor-exp">{{ mentor.experience }}</text>
         </view>
       </scroll-view>
-    </view>
+      </view>
 
     <!-- 第二步：选择日期 -->
     <view class="section">
@@ -43,7 +43,7 @@
         <view 
           class="calendar-day" 
           v-for="(day, index) in calendarDays" 
-          :key="index"
+            :key="index"
           :class="getDayClass(day)"
           @click="selectDate(day)"
         >
@@ -51,29 +51,29 @@
           <text class="day-status" v-if="day.status">{{ day.status }}</text>
         </view>
       </view>
-    </view>
+          </view>
 
     <!-- 第三步：选择时段 -->
-    <view class="section" v-if="selectedDate">
+    <view class="section time-section" v-if="selectedDate">
       <view class="section-title">{{ selectedDate.date }}日 可选时段</view>
       <view class="time-slots">
-        <view 
+            <view
           class="time-slot-card" 
           v-for="(slot, index) in availableTimeSlots" 
-          :key="index"
+              :key="index"
           :class="{ selected: selectedTimeSlot === slot.time }"
-          @click="selectTimeSlot(slot)"
-        >
+              @click="selectTimeSlot(slot)"
+            >
           <text class="time-text">{{ slot.time }}</text>
           <text class="time-remaining">剩余{{ slot.remaining }}</text>
+            </view>
+          </view>
         </view>
-      </view>
-    </view>
 
     <!-- 确认预约按钮 -->
     <view class="confirm-btn-wrapper">
       <view class="confirm-btn" @click="confirmBooking">
-        <image class="confirm-icon" src="/static/images/icons/icon-check.png" mode="aspectFit"></image>
+        <image class="confirm-icon" src="/static/images/my/confirm.png" mode="aspectFit"></image>
         <text class="confirm-text">确认预约</text>
       </view>
     </view>
@@ -103,6 +103,70 @@ export default {
         {
           id: 2,
           name: "赵总",
+          avatar: "/static/images/mentors/zhao2.png",
+          track: "人工智能赛道",
+          desc: "专注AI与大数据投资",
+          experience: "10年经验"
+        },
+        {
+          id: 3,
+          name: "李总",
+          avatar: "/static/images/mentors/zhao.png",
+          track: "人工智能赛道",
+          desc: "专注AI与大数据投资",
+          experience: "10年经验"
+        },
+        {
+          id: 4,
+          name: "王总",
+          avatar: "/static/images/mentors/zhao2.png",
+          track: "人工智能赛道",
+          desc: "专注AI与大数据投资",
+          experience: "10年经验"
+        },
+        {
+          id: 5,
+          name: "张总",
+          avatar: "/static/images/mentors/zhao.png",
+          track: "人工智能赛道",
+          desc: "专注AI与大数据投资",
+          experience: "10年经验"
+        },
+        {
+          id: 6,
+          name: "刘总",
+          avatar: "/static/images/mentors/zhao2.png",
+          track: "人工智能赛道",
+          desc: "专注AI与大数据投资",
+          experience: "10年经验"
+        },
+        {
+          id: 7,
+          name: "陈总",
+          avatar: "/static/images/mentors/zhao.png",
+          track: "人工智能赛道",
+          desc: "专注AI与大数据投资",
+          experience: "10年经验"
+        },
+        {
+          id: 8,
+          name: "杨总",
+          avatar: "/static/images/mentors/zhao2.png",
+          track: "人工智能赛道",
+          desc: "专注AI与大数据投资",
+          experience: "10年经验"
+        },
+        {
+          id: 9,
+          name: "周总",
+          avatar: "/static/images/mentors/zhao.png",
+          track: "人工智能赛道",
+          desc: "专注AI与大数据投资",
+          experience: "10年经验"
+        },
+        {
+          id: 10,
+          name: "吴总",
           avatar: "/static/images/mentors/zhao2.png",
           track: "人工智能赛道",
           desc: "专注AI与大数据投资",
@@ -137,6 +201,10 @@ export default {
     };
   },
   mounted() {
+    // 默认选中第一个导师
+    if (this.mentorList.length > 0) {
+      this.selectedMentor = this.mentorList[0].id;
+    }
     this.initCalendar();
     this.loadBookedSlots();
   },
@@ -233,11 +301,28 @@ export default {
     
     // 加载时段
     loadTimeSlots(date) {
-      // 模拟时段数据
-      this.availableTimeSlots = [
-        { time: '13:00 - 13:30', remaining: 1 },
-        { time: '13:00 - 13:30', remaining: 1 }
-      ];
+      // 随机生成6个可预约时间段
+      const timeSlots = [];
+      const startHour = 9; // 从9点开始
+      const endHour = 18; // 到18点结束
+      const slotDuration = 30; // 每个时段30分钟
+      
+      // 生成所有可能的时间段
+      const allSlots = [];
+      for (let hour = startHour; hour < endHour; hour++) {
+        for (let minute = 0; minute < 60; minute += slotDuration) {
+          const startTime = `${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}`;
+          const endMinute = minute + slotDuration;
+          const endHourTime = endMinute >= 60 ? hour + 1 : hour;
+          const endMinuteTime = endMinute >= 60 ? endMinute - 60 : endMinute;
+          const endTime = `${String(endHourTime).padStart(2, '0')}:${String(endMinuteTime).padStart(2, '0')}`;
+          allSlots.push({ time: `${startTime} - ${endTime}`, remaining: Math.floor(Math.random() * 5) + 1 });
+        }
+      }
+      
+      // 随机选择6个时间段
+      const shuffled = allSlots.sort(() => 0.5 - Math.random());
+      this.availableTimeSlots = shuffled.slice(0, 6);
     },
     
     // 选择时段
@@ -264,23 +349,23 @@ export default {
         uni.showToast({ title: "请选择创业导师", icon: "none" });
         return;
       }
-      
-      if (!this.selectedDate) {
+
+        if (!this.selectedDate) {
         uni.showToast({ title: "请选择预约日期", icon: "none" });
         return;
       }
-      
+
       if (!this.selectedTimeSlot) {
         uni.showToast({ title: "请选择预约时段", icon: "none" });
         return;
       }
-      
+
       uni.showLoading({ title: "提交中..." });
-      
+
       try {
         const res = await applyLiveApply(this.formData);
         uni.hideLoading();
-        
+
         if (res.status === 200) {
           uni.showModal({
             title: "预约成功",
@@ -312,6 +397,7 @@ export default {
 .booking-page {
   min-height: 100vh;
   background: #f5f5f5;
+  background: #f8fafc;
   padding-bottom: 200rpx;
 }
 
@@ -329,7 +415,15 @@ export default {
     margin-right: 16rpx;
   }
   
-  .alert-text {
+    .alert-text {
+      height: 30rpx;
+      opacity: 1;
+      color: #d97757;
+      text-align: left;
+      font-size: 24rpx;
+      font-weight: 600;
+      font-family: "PingFang SC";
+      line-height: 30rpx;
     font-size: 28rpx;
     color: #1a1a1a;
   }
@@ -341,8 +435,17 @@ export default {
   padding: 32rpx;
   margin-bottom: 24rpx;
   
+  // 时段选择区块的特殊样式
+  &.time-section {
+    border-radius: 32rpx;
+    opacity: 1;
+    border: 2rpx solid #e6edf4;
+    background: #ffffff;
+    box-shadow: 0 8rpx 20rpx 0 rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+  }
+  
   .section-title {
-    width: 674rpx;
     height: 32rpx;
     opacity: 1;
     color: #596b86;
@@ -354,25 +457,52 @@ export default {
     letter-spacing: 2rpx;
     margin-bottom: 24rpx;
   }
+  
+  // 时段选择区块的标题样式
+  &.time-section .section-title {
+    height: 30rpx;
+    opacity: 1;
+    color: #000000;
+    text-align: left;
+    font-size: 24rpx;
+    font-weight: 600;
+    font-family: "PingFang SC";
+    line-height: 30rpx;
+  }
 }
 
 // 导师列表
 .mentor-list {
   white-space: nowrap;
+  display: flex;
+  justify-content: center;
+  
+  // 隐藏滚动条
+  ::-webkit-scrollbar {
+    display: none;
+  }
+  scrollbar-width: none;
+  -ms-overflow-style: none;
   
   .mentor-card {
     display: inline-block;
-    width: 280rpx;
+    width: 308rpx;
+    height: 456rpx;
     padding: 24rpx;
     margin-right: 24rpx;
     border: 2rpx solid #f1f5f9;
-    border-radius: 16rpx;
+    border-radius: 46rpx;
+    opacity: 0.8;
+    background: #ffffff;
     text-align: center;
     vertical-align: top;
+    box-sizing: border-box;
     
     &.selected {
       border-color: #2969ff;
-      background: #f0f9ff;
+      background: #fff;
+      opacity: 1;
+
     }
     
     .mentor-avatar {
@@ -384,33 +514,84 @@ export default {
     
     .mentor-name {
       display: block;
-      font-size: 32rpx;
+      height: 50rpx;
+      opacity: 1;
+      color: #000000;
+      text-align: center;
+      font-size: 40rpx;
       font-weight: 600;
-      color: #1a1a1a;
-      margin-bottom: 12rpx;
+      font-family: "PingFang SC";
+      line-height: 50rpx;
+      margin-bottom: 16rpx;
+    }
+    
+    &.selected .mentor-name {
+      height: 50rpx;
+      opacity: 1;
+      color: #2969ff;
+      text-align: center;
+      font-size: 40rpx;
+      font-weight: 600;
+      font-family: "PingFang SC";
+      line-height: 50rpx;
     }
     
     .mentor-tag {
       display: inline-block;
-      padding: 8rpx 16rpx;
-      background: #e0f2fe;
-      color: #0369a1;
+      width: 188rpx;
+      height: 50rpx;
+      border-radius: 268rpx;
+      opacity: 1;
+      background: #2969ff;
+      box-shadow: 0 8rpx 20rpx 0 rgba(16, 26, 134, 0.3);
+      color: #ffffff;
       font-size: 24rpx;
-      border-radius: 20rpx;
-      margin-bottom: 12rpx;
+      line-height: 50rpx;
+      text-align: center;
+      margin-bottom: 18rpx;
+      box-sizing: border-box;
+    }
+    
+    &.selected .mentor-tag {
+      height: 50rpx;
+      border-radius: 268rpx;
+      opacity: 1;
+      background: #2969ff;
+      box-shadow: 0 8rpx 20rpx 0 rgba(16, 26, 134, 0.3);
     }
     
     .mentor-desc {
       display: block;
+      opacity: 0.5;
+      color: #000000;
+      text-align: center;
       font-size: 24rpx;
-      color: #64748b;
+      font-weight: 400;
+      font-family: "PingFang SC";
+      line-height: 30rpx;
       margin-bottom: 8rpx;
     }
     
     .mentor-exp {
       display: block;
+      opacity: 0.5;
+      color: #000000;
+      text-align: center;
       font-size: 24rpx;
-      color: #64748b;
+      font-weight: 400;
+      font-family: "PingFang SC";
+      line-height: 30rpx;
+    }
+    
+    &.selected .mentor-desc,
+    &.selected .mentor-exp {
+      opacity: 0.5;
+      color: #000000;
+  text-align: center;
+      font-size: 24rpx;
+      font-weight: 400;
+      font-family: "PingFang SC";
+      line-height: 30rpx;
     }
   }
 }
@@ -423,25 +604,65 @@ export default {
   margin-bottom: 24rpx;
   
   .calendar-title {
-    font-size: 32rpx;
+    width: 352rpx;
+    height: 32rpx;
+    opacity: 1;
+    color: #000000;
+    text-align: center;
+    font-size: 44rpx;
     font-weight: 600;
-    color: #1a1a1a;
+    font-family: "PingFang SC";
+    line-height: 32rpx;
+    letter-spacing: 2rpx;
   }
   
   .month-switch {
     display: flex;
+    align-items: center;
     gap: 16rpx;
+    width: 226rpx;
+    height: 56rpx;
+    border-radius: 8rpx;
+    opacity: 1;
+    background: #f1f2f3;
+    padding: 0;
+    box-sizing: border-box;
     
     .switch-btn {
-      padding: 8rpx 24rpx;
-      background: #f1f5f9;
-      border-radius: 20rpx;
-      font-size: 24rpx;
-      color: #64748b;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 44rpx;
+      opacity: 1;
+      color: #171a1d;
+      text-align: center;
+    font-size: 28rpx;
+      font-family: "PingFang SC";
+      line-height: 44rpx;
+      background: transparent;
+      border-radius: 0;
+      
+      // 当月按钮样式
+      &:first-child {
+        width: 72rpx;
+        font-weight: 600;
+      }
+      
+      // 下月按钮样式
+      &:last-child {
+        width: 84rpx;
+        font-weight: 400;
+      }
       
       &.active {
-        background: #2969ff;
-        color: #ffffff;
+        width: 104rpx;
+        height: 48rpx;
+        border-radius: 8rpx;
+        opacity: 1;
+        background: #ffffff;
+        box-shadow: 0 2rpx 8rpx 0 rgba(0, 0, 0, 0.16);
+        color: #171a1d;
       }
     }
   }
@@ -454,7 +675,7 @@ export default {
   .weekday {
     flex: 1;
     text-align: center;
-    font-size: 24rpx;
+  font-size: 24rpx;
     color: #64748b;
   }
 }
@@ -466,73 +687,131 @@ export default {
   .calendar-day {
     width: calc(100% / 7);
     aspect-ratio: 1;
-    display: flex;
+  display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  align-items: center;
+  justify-content: center;
     border-radius: 8rpx;
     margin-bottom: 8rpx;
     
     &.disabled {
-      opacity: 0.3;
+      opacity: 1;
+      
+      .day-number {
+        width: 64rpx;
+        height: 44rpx;
+        opacity: 1;
+        color: #171a1d;
+        text-align: center;
+        font-size: 34rpx;
+        font-weight: 400;
+        font-family: "PingFang SC";
+        line-height: 44rpx;
+      }
     }
-    
-    &.selected {
+
+  &.selected {
+      width: 82rpx;
+      height: 108rpx;
+      border-radius: 22rpx;
+      opacity: 1;
       background: #2969ff;
       color: #ffffff;
+      
+      .day-number {
+        color: #ffffff;
+      }
+      
+      .day-status {
+        color: #ffffff;
+      }
     }
     
     &.full {
-      background: #f1f5f9;
+      background: #ffffff;
     }
     
     &.available {
-      background: #f0fdf4;
+      background: #ffffff;
     }
     
     .day-number {
-      font-size: 28rpx;
+  font-size: 28rpx;
       font-weight: 600;
     }
     
     .day-status {
-      font-size: 20rpx;
+      font-size: 22rpx;
+      color: #171a1d;
       margin-top: 4rpx;
+    }
+    
+    &.full .day-status {
+      font-size: 22rpx;
+      color: #171a1d;
+    }
+    
+    &.available .day-status {
+      font-size: 22rpx;
+      color: #10b981;
     }
   }
 }
 
 // 时段选择
 .time-slots {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16rpx;
   gap: 16rpx;
   
   .time-slot-card {
-    flex: 1;
-    min-width: calc(50% - 8rpx);
-    padding: 24rpx;
-    border: 2rpx solid #f1f5f9;
-    border-radius: 12rpx;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 316rpx;
+    height: 128rpx;
+    border-radius: 20rpx;
+    opacity: 1;
+    border: 2rpx solid #5a5a5a;
+    background: #ffffff;
     text-align: center;
-    
-    &.selected {
+    box-sizing: border-box;
+
+  &.selected {
       border-color: #2969ff;
       background: #f0f9ff;
+      border: 1px solid #dbeafe;
     }
     
     .time-text {
       display: block;
-      font-size: 28rpx;
-      font-weight: 600;
-      color: #1a1a1a;
-      margin-bottom: 8rpx;
+      opacity: 1;
+      color: #000000;
+      text-align: center;
+      font-size: 32rpx;
+      font-weight: 700;
+      
+      line-height: 50.6rpx;
+      margin-top:20rpx;
     }
+    &.selected .time-text {
+      color: #2969ff;
+    }
+    
+    
     
     .time-remaining {
       display: block;
+      opacity: 1;
+      color: #5a5a5a;
+      text-align: center;
       font-size: 24rpx;
-      color: #64748b;
+      font-weight: 500;
+      
+    }
+    &.selected .time-remaining {
+      color: #2969ff;
     }
   }
 }
@@ -543,9 +822,6 @@ export default {
   bottom: 0;
   left: 0;
   right: 0;
-  padding: 24rpx 32rpx;
-  background: #ffffff;
-  box-shadow: 0 -4rpx 12rpx rgba(0, 0, 0, 0.1);
   
   .confirm-btn {
     display: flex;
@@ -562,7 +838,7 @@ export default {
     }
     
     .confirm-text {
-      font-size: 32rpx;
+  font-size: 32rpx;
       font-weight: 600;
       color: #ffffff;
     }
