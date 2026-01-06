@@ -133,8 +133,7 @@ export default {
         
         // 执行上传
         uni.uploadFile({
-          url: HTTP_REQUEST_URL + "/api/runs",
-          // url: HTTP_REQUEST_URL + "/api/runBp",
+          url: HTTP_REQUEST_URL + "/api/runBp",
           filePath: fileInfo.path,
           name: "files",
           header: {

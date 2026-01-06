@@ -100,6 +100,7 @@
         :x="serviceBtnX"
         :y="serviceBtnY"
         @click="goCustomerService"
+        @change="onServiceBtnChange"
       >
         <image class="service-icon" src="/static/images/home/kefu.png" mode="aspectFit"></image>
       </movable-view>
@@ -290,6 +291,26 @@ export default {
       uni.navigateTo({
         url: "/subpackage1/kf/index",
       });
+    },
+    onServiceBtnChange(e) {
+      // 拖拽结束后，根据位置自动吸附到左边或右边
+      const systemInfo = uni.getSystemInfoSync();
+      const screenWidth = systemInfo.windowWidth;
+      const screenCenter = screenWidth / 2;
+      const btnWidth = uni.upx2px(120);
+      const rightMargin = uni.upx2px(32);
+      const leftMargin = uni.upx2px(32);
+      
+      // 判断当前位置是在屏幕左侧还是右侧
+      if (e.detail.x < screenCenter) {
+        // 靠左
+        this.serviceBtnX = leftMargin;
+      } else {
+        // 靠右
+        this.serviceBtnX = screenWidth - btnWidth - rightMargin;
+      }
+      // 保持Y坐标不变
+      this.serviceBtnY = e.detail.y;
     },
     showBookingModal() {
       // 显示预约弹窗
